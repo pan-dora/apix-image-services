@@ -4,9 +4,9 @@ This is a collection of services that extend the functionality of a Fedora4 repo
 
 ##Services
 
-Id Mapping Service: This maps a public ID to a (internal and much longer) fedora URI
-Id Mapping Service Database: This exposes a Postgres datastore for use with the Id Mapping service
-Minter: This mints random (public) URIs for use with fedora resources
+* Id Mapping Service: This maps a public ID to a (internal and much longer) fedora URI
+* Id Mapping Service Database: This exposes a Postgres datastore for use with the Id Mapping service
+* Minter: This mints random (public) URIs for use with fedora resources
 
 ##Building
 
