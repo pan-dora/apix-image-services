@@ -11,11 +11,26 @@
     <feature version="${camel.version}">camel-blueprint</feature>
     <feature version="${camel.version}">camel-jetty</feature>
     <feature version="${camel.version}">camel-jackson</feature>
+    <feature version="${camel.version}">camel-sql</feature>
     <feature version="${fcrepo-camel.version}">fcrepo-camel</feature>
 
-    <bundle>mvn:edu.amherst.acdc/repo-id-mapper/{project.version}</bundle>
+    <bundle>mvn:edu.amherst.acdc/acrepo-idmapper/{project.version}</bundle>
 
     <configfile finalname="/etc/edu.amherst.acdc.idmapper.cfg">mvn:edu.amherst.acdc/acrepo-idmapper/${project.version}/cfg/configuration</configfile>
+  </feature>
+
+  <feature name="acrepo-idmapper-pgsql" version="${project.version}" resolver="(obr)" start-level="50">
+    <details>Installs the id mapping service database</details>
+
+    <feature>jdbc</feature>
+    <feature>transaction</feature>
+    <feature>jndi</feature>
+
+    <bundle dependency="true">wrap:mvn:postgresql/postgresql/${postgresql.version}</bundle>
+
+    <bundle>mvn:edu.amherst.acdc/acrepo-idmapper-pgsql/{project.version}</bundle>
+
+    <configfile finalname="/etc/edu.amherst.acdc.idmapper.pgsql.cfg">mvn:edu.amherst.acdc/acrepo-idmapper-pgsql/${project.version}/cfg/configuration</configfile>
   </feature>
 
   <feature name="acrepo-mint" version="${project.version}" resolver="(obr)" start-level="50">

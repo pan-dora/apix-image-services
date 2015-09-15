@@ -61,7 +61,15 @@ public class EventRouter extends RouteBuilder {
              System.getProperty("acdc.ext.idmapper.port", port));
 
         /**
-         * Process a message.
+         * REST configuration
+         */
+        rest("{{rest.prefix}}")
+            .get("{id}").to("direct:get")
+            .put("{id}").to("direct:update")
+            .delete("{id}").to("direct:delete");
+
+        /**
+         * Process a message via JMS
          */
         from("{{input.stream}}")
             .routeId("IdMappingRouter")
@@ -77,23 +85,24 @@ public class EventRouter extends RouteBuilder {
               .process(new IdProcessor())
               .to("direct:update");
 
+        /**
+         * Handle CRUD operations
+         */
         from("direct:update")
             .routeId("IdMappingUpdateRouter")
-            .to("sql:select count(*) from uris");
+            .to("sql:UPDATE idmapper SET fedora=:#fedora WHERE public=:#public")
+            .filter(simple("${body} == 0"))
+              .to("sql:INSERT INTO idmapper (fedora, public) VALUES (:#fedora, :#public)");
 
         from("direct:get")
             .routeId("IdMappingFetchRouter")
             .log("${headers}")
-            .to("mock:jdbc:idmapper");
-
-        from("direct:put")
-            .routeId("IdMappingPutRouter")
-            .log("${headers}")
-            .to("direct:update");
+            .to("sql:SELECT fedora FROM idmapper WHERE public=:#public");
 
         from("direct:delete")
             .routeId("IdMappingDeleteRouter")
             .log("${headers}")
-            .to("mock:jdbc:idmapper");
+            .to("sql:DELETE FROM idmapper WHERE public=:#public");
+
     }
 }
