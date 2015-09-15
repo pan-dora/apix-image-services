@@ -9,9 +9,8 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>repo-karaf</artifactId>
+  <artifactId>acrepo-karaf</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.0-SNAPSHOT</version>
 
   <name>Karaf Provisioning Features for repository services</name>
 

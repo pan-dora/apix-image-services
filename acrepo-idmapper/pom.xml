@@ -9,7 +9,7 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>repo-id-mapper</artifactId>
+  <artifactId>acrepo-idmapper</artifactId>
   <packaging>bundle</packaging>
 
   <name>ID mapping service</name>
@@ -25,12 +25,11 @@
     </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>
-      <artifactId>camel-blueprint</artifactId>
+      <artifactId>camel-sql</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>
-      <artifactId>camel-cassandraql</artifactId>
-      <version>${camel.version}</version>
+      <artifactId>camel-blueprint</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.activemq</groupId>
@@ -40,6 +39,17 @@
       <groupId>org.fcrepo.camel</groupId>
       <artifactId>fcrepo-camel</artifactId>
     </dependency>
+    <dependency>
+      <groupId>postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.woodstox</groupId>
+      <artifactId>woodstox-core-asl</artifactId>
+      <version>4.4.1</version>
+    </dependency>
+
 
     <!-- logging -->
     <dependency>
@@ -48,13 +58,28 @@
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
     </dependency>
 
     <!-- testing -->
     <dependency>
+      <groupId>edu.amherst.acdc</groupId>
+      <artifactId>acrepo-idmapper-pgsql</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-test-blueprint</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

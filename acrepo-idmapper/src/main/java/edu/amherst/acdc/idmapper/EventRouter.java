@@ -13,15 +13,16 @@
  */
 package edu.amherst.acdc.idmapper;
 
-import org.apache.camel.builder.xml.Namespaces;
 import org.apache.camel.LoggingLevel;
+import org.apache.camel.PropertyInject;
+import org.apache.camel.RuntimeCamelException;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.builder.xml.Namespaces;
 
 /**
  * A content router for handling JMS events.
  *
  * @author Aaron Coburn
- * @author escowles
  */
 public class EventRouter extends RouteBuilder {
 
@@ -29,14 +30,25 @@ public class EventRouter extends RouteBuilder {
     private static final String CQL_GET = "";
     private static final String CQL_DELETE = "";
 
+    @PropertyInject(value = "rest.port", defaultValue = "9081")
+    private String port;
+
     /**
      * Configure the message route workflow.
      */
     public void configure() throws Exception {
 
         final Namespaces ns = new Namespaces("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-        ns.add("dc", "http://purl.org/dc/elements/1.1/");
 
+        try {
+            final String property = getContext().resolvePropertyPlaceholders("{{id.property}}");
+            final String namespace = getContext().resolvePropertyPlaceholders("{{id.namespace}}");
+            final String prefix = property.substring(0, property.indexOf(":"));
+            ns.add(prefix, namespace);
+
+        } catch (final Exception ex) {
+            throw new RuntimeCamelException("Could not resolve property placeholders", ex);
+        }
 
         /**
          * A generic error handler (specific to this RouteBuilder)
@@ -45,11 +57,14 @@ public class EventRouter extends RouteBuilder {
             .maximumRedeliveries("{{error.maxRedeliveries}}")
             .log("Event Routing Error: ${routeId}");
 
+        restConfiguration().component("jetty").port(
+             System.getProperty("acdc.ext.idmapper.port", port));
+
         /**
          * Process a message.
          */
         from("{{input.stream}}")
-            .routeId("IdMapperRouter")
+            .routeId("IdMappingRouter")
             .to("direct:event");
 
         from("direct:event")
@@ -57,12 +72,14 @@ public class EventRouter extends RouteBuilder {
             .log(LoggingLevel.INFO, "edu.amherst.acdc.idmapper",
                     "IdMapping Event: ${headers[org.fcrepo.jms.identifier]}")
             .to("fcrepo:localhost:8080/rest?preferOmit=PreferContainment")
-            .filter(ns.xpath("/rdf:RDF/rdf:Description/dc:identifier"))
-              .split().xtokenize("//dc:identifier", ns)
-                .transform().xpath("/dc:identifier/@rdf:resource|/dc:identifier/text()", String.class, ns)
-                .log("Body: ${body}")
-                .process(new IdProcessor())
-                .to("jdbc:idmapper");
+            .split().xtokenize("//{{id.property}}", 'i', ns)
+              .transform().xpath("/{{id.property}}/@rdf:resource | /{{id.property}}/text()", String.class, ns)
+              .process(new IdProcessor())
+              .to("direct:update");
+
+        from("direct:update")
+            .routeId("IdMappingUpdateRouter")
+            .to("sql:select count(*) from uris");
 
         from("direct:get")
             .routeId("IdMappingFetchRouter")
@@ -72,7 +89,7 @@ public class EventRouter extends RouteBuilder {
         from("direct:put")
             .routeId("IdMappingPutRouter")
             .log("${headers}")
-            .to("mock:jdbc:idmapper");
+            .to("direct:update");
 
         from("direct:delete")
             .routeId("IdMappingDeleteRouter")

@@ -13,20 +13,24 @@
        <cm:property name="error.maxRedeliveries" value="10"/>
        <cm:property name="jms.brokerUrl" value="tcp://localhost:61616"/>
        <cm:property name="input.stream" value="activemq:topic:fedora"/>
-       <cm:property name="triplestore.baseUrl" value="localhost:8080/fuseki/test/update"/>
-       <!-- Base URI to be used in contructing the URI for the JMS event -->
-       <cm:property name="event.baseUri" value="http://example.com/event"/>
-       <cm:property name="audit.container" value="/audit"/>
+       <cm:property name="id.property" value="dc:identifier"/>
+       <cm:property name="id.namespace" value="http://purl.org/dc/elements/1.1/"/>
      </cm:default-properties>
    </cm:property-placeholder>
 
+  <reference id="dataSource" interface="javax.sql.DataSource" filter="(osgi.jndi.service.name=idmapperds)"/>
+
+  <!-- component-wide configuration of jdbc -->
+  <bean id="sql" class="org.apache.camel.component.sql.SqlComponent">
+    <property name="dataSource" ref="dataSource"/>
+  </bean>
 
   <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
     <property name="brokerURL" value="${jms.brokerUrl}"/>
   </bean>
 
   <camelContext xmlns="http://camel.apache.org/schema/blueprint">
-    <package>org.fcrepo.camel.audit.triplestore</package>
+    <package>edu.amherst.acdc.idmapper</package>
   </camelContext>
 
 </blueprint>

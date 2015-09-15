@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<features xmlns="http://karaf.apache.org/xmlns/features/v1.0.0" name="amherst-acdc-repo-services-${project.version}">
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.0.0" name="amherst-repo-services-${project.version}">
   <repository>mvn:org.fcrepo.camel/fcrepo-camel/${fcrepo-camel.version}/xml/features</repository>
   <repository>mvn:org.apache.camel.karaf/apache-camel/${camel.version}/xml/features</repository>
   <repository>mvn:org.apache.activemq/activemq-karaf/${activemq.version}/xml/features</repository>
 
-  <feature name="repo-id-mapper" version="${project.version}" resolver="(obr)" start-level="50">
-    <details>Installs the geneva synchronizer</details>
+  <feature name="acrepo-idmapper" version="${project.version}" resolver="(obr)" start-level="50">
+    <details>Installs the id mapping service</details>
 
     <feature version="${camel.version}">camel</feature>
     <feature version="${camel.version}">camel-blueprint</feature>
@@ -15,15 +15,15 @@
 
     <bundle>mvn:edu.amherst.acdc/repo-id-mapper/{project.version}</bundle>
 
-    <configfile finalname="/etc/edu.amherst.acdc.idmapper.cfg">mvn:edu.amherst.acdc/repo-id-mapper/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/edu.amherst.acdc.idmapper.cfg">mvn:edu.amherst.acdc/acrepo-idmapper/${project.version}/cfg/configuration</configfile>
   </feature>
 
-  <feature name="repo-id-minter" version="${project.version}" resolver="(obr)" start-level="50">
+  <feature name="acrepo-mint" version="${project.version}" resolver="(obr)" start-level="50">
     <details>Installs the id minter</details>
 
-    <bundle>mvn:edu.amherst.acdc/repo-id-minter/${project.version}</bundle>
+    <bundle>mvn:edu.amherst.acdc/acrepo-mint/${project.version}</bundle>
 
-    <configfile finalname="/etc/edu.amherst.acdc.minter.cfg">mvn:edu.amherst.acdc/repo-id-minter/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/edu.amherst.acdc.mint.cfg">mvn:edu.amherst.acdc/acrepo-mint/${project.version}/cfg/configuration</configfile>
   </feature>
 
 </features>
