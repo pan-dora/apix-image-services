@@ -10,7 +10,7 @@
   </parent>
 
   <groupId>edu.amherst.acdc</groupId>
-  <artifactId>repo-services</artifactId>
+  <artifactId>repository-services</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
@@ -141,7 +141,6 @@
     </pluginManagement>
 
     <plugins>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>

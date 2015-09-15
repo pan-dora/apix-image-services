@@ -8,7 +8,7 @@
        http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
 
    <!-- OSGI blueprint property placeholder -->
-   <cm:property-placeholder persistent-id="org.fcrepo.camel.audit" update-strategy="reload">
+   <cm:property-placeholder persistent-id="edu.amherst.acdc.idmapper" update-strategy="reload">
      <cm:default-properties>
        <cm:property name="error.maxRedeliveries" value="10"/>
        <cm:property name="jms.brokerUrl" value="tcp://localhost:61616"/>
