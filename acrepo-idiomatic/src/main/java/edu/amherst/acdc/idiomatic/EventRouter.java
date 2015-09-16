@@ -75,6 +75,15 @@ public class EventRouter extends RouteBuilder {
               .to("direct:update");
 
         /**
+         * REST routing
+         */
+        rest("{{rest.prefix}}")
+            .get("/{id}").to("direct:get")
+            .post("/").to("direct:minter")
+            .put("/{id}").to("direct:update")
+            .delete("/{id}").to("direct:delete");
+
+        /**
          * Handle CRUD operations
          */
         from("direct:update")

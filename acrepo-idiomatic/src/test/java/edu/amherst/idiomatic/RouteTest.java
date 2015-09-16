@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import edu.amherst.acdc.mint.MinterService;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
@@ -31,9 +32,6 @@ import org.apache.camel.util.KeyValueHolder;
 import org.apache.camel.util.ObjectHelper;
 import org.apache.commons.io.IOUtils;
 import org.fcrepo.camel.JmsHeaders;
-import org.postgresql.ds.PGPoolingDataSource;
-import edu.amherst.acdc.mint.MinterService;
-
 import org.junit.Test;
 
 /**
@@ -43,6 +41,8 @@ import org.junit.Test;
  * @since 2015-04-10
  */
 public class RouteTest extends CamelBlueprintTestSupport {
+
+    private final int MINT_LENGTH = 7;
 
     @EndpointInject(uri = "mock:result")
     protected MockEndpoint resultEndpoint;
@@ -74,8 +74,7 @@ public class RouteTest extends CamelBlueprintTestSupport {
 
     @Override
     protected void addServicesOnStartup(final Map<String, KeyValueHolder<Object, Dictionary>> services) {
-        services.put("dataSource", asService(new PGPoolingDataSource(), "name", "idmapperds"));
-        services.put("minterService", asService(new MinterService(7), "name", "minter"));
+        services.put("minterService", asService(new MinterService(MINT_LENGTH), "name", "minter"));
     }
 
     @Test
@@ -100,10 +99,10 @@ public class RouteTest extends CamelBlueprintTestSupport {
         template.sendBody("direct:minter", null);
         template.sendBody("direct:minter", null);
 
-        final String id1 = getMockEndpoint("mock:result").getExchanges().get(0).getIn().getBody(String.class);
-        final String id2 = getMockEndpoint("mock:result").getExchanges().get(1).getIn().getBody(String.class);
-        assertEquals(7, id1.length());
-        assertEquals(7, id2.length());
+        final String id1 = resultEndpoint.getExchanges().get(0).getIn().getBody(String.class);
+        final String id2 = resultEndpoint.getExchanges().get(1).getIn().getBody(String.class);
+        assertEquals(MINT_LENGTH, id1.length());
+        assertEquals(MINT_LENGTH, id2.length());
         assertFalse(id1.equals(id2));
 
         assertMockEndpointsSatisfied();
@@ -137,7 +136,7 @@ public class RouteTest extends CamelBlueprintTestSupport {
 
         context.start();
 
-        getMockEndpoint("mock:result").expectedMessageCount(2);
+        resultEndpoint.expectedMessageCount(2);
         final Map<String, Object> headers = new HashMap<>();
         headers.put(JmsHeaders.IDENTIFIER, "/foo/bar");
         template.sendBodyAndHeaders(

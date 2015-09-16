@@ -8,27 +8,25 @@
        http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
 
    <!-- OSGI blueprint property placeholder -->
-   <cm:property-placeholder persistent-id="edu.amherst.acdc.idmapper" update-strategy="reload">
+   <cm:property-placeholder persistent-id="edu.amherst.acdc.idiomatic" update-strategy="reload">
      <cm:default-properties>
        <cm:property name="error.maxRedeliveries" value="10"/>
        <cm:property name="jms.brokerUrl" value="tcp://localhost:61616"/>
        <cm:property name="input.stream" value="activemq:topic:fedora"/>
-       <cm:property name="rest.prefix" value="idmapper"/>
+       <cm:property name="rest.prefix" value="idiomatic"/>
        <cm:property name="rest.port" value="9080"/>
        <cm:property name="id.property" value="dc:identifier"/>
        <cm:property name="id.namespace" value="http://purl.org/dc/elements/1.1/"/>
      </cm:default-properties>
    </cm:property-placeholder>
 
-  <reference id="dataSource" interface="javax.sql.DataSource" filter="(osgi.jndi.service.name=idmapperds)"/>
+  <reference id="databaseSource" interface="javax.sql.DataSource" availability="optional" filter="(osgi.jndi.service.name=idiomaticds)"/>
 
-  <reference id="minterService"
-    interface="org.fcrepo.kernel.api.services.functions.UniqueValueSupplier"
-    filter="(osgi.jndi.service.name=minter)"/>
+  <reference id="minterService" interface="org.fcrepo.kernel.api.services.functions.UniqueValueSupplier" />
 
   <!-- component-wide configuration of jdbc -->
   <bean id="sql" class="org.apache.camel.component.sql.SqlComponent">
-    <property name="dataSource" ref="dataSource"/>
+    <property name="dataSource" ref="databaseSource"/>
   </bean>
 
   <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
@@ -39,23 +37,7 @@
 
     <package>edu.amherst.acdc.idiomatic</package>
 
-    <restConfiguration bindingMode="auto" component="restlet"
-      contextPath="{{rest.prefix}}" port="{{rest.port}}"/>
-
-    <rest>
-      <post uri="/">
-        <to uri="direct:minter"/>
-      </post>
-      <get uri="/{id}">
-        <to uri="direct:get"/>
-      </get>
-      <put uri="/{id}">
-        <to uri="direct:update"/>
-      </put>
-      <delete uri="/{id}">
-        <to uri="direct:delete"/>
-      </delete>
-    </rest>
+    <restConfiguration bindingMode="auto" component="restlet" port="{{rest.port}}"/>
 
     <route id="MinterRoute">
       <description>Create a freshly minted ID</description>

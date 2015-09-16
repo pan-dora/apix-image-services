@@ -18,7 +18,6 @@ package edu.amherst.acdc.mint;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 
-import org.apache.camel.Handler;
 import org.fcrepo.kernel.api.services.functions.UniqueValueSupplier;
 
 /**
@@ -43,7 +42,6 @@ public class MinterService implements UniqueValueSupplier {
      *
      * @return the new ID
      */
-    @Handler
     public String get() {
         return randomAlphanumeric(length).toLowerCase();
     }

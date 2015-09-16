@@ -26,9 +26,13 @@
     <fcrepo.version>4.3.1-SNAPSHOT</fcrepo.version>
     <jsonld.version>0.6.0</jsonld.version>
     <logback.version>1.1.2</logback.version>
-    <postgresql.version>9.1-901.jdbc4</postgresql.version>
+    <postgresql.version>9.4-1201-jdbc41</postgresql.version>
     <slf4j.version>1.7.7</slf4j.version>
     <junit.version>4.11</junit.version>
+    <woodstox.version>4.4.1</woodstox.version>
+    <pax-jdbc.version>0.7.0</pax-jdbc.version>
+    <spring.version>4.1.7.RELEASE</spring.version>
+    <osgi.import.packages>*</osgi.import.packages>
   </properties>
 
   <modules>
@@ -48,6 +52,11 @@
       <dependency>
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-blueprint</artifactId>
+        <version>${camel.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-restlet</artifactId>
         <version>${camel.version}</version>
       </dependency>
       <dependency>
@@ -91,7 +100,12 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>postgresql</groupId>
+        <groupId>org.codehaus.woodstox</groupId>
+        <artifactId>woodstox-core-asl</artifactId>
+        <version>${woodstox.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
         <version>${postgresql.version}</version>
       </dependency>

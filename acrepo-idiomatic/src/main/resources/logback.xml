@@ -2,18 +2,18 @@
 <!DOCTYPE configuration>
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>                                                           
+        <encoder>
             <pattern>%p %d{HH:mm:ss.SSS} \(%c{0}\) %m%n</pattern>
         </encoder>
     </appender>
 
-  <logger name="org.fcrepo.camel.audit" additivity="false" level="${fcrepo.log.camel.audit:-INFO}">
+  <logger name="edu.amherst.acdc.idiomatic" additivity="false" level="INFO">
     <appender-ref ref="STDOUT"/>
   </logger>
-  <logger name="org.fcrepo.camel" additivity="false" level="${fcrepo.log.camel:-INFO}">
+  <logger name="org.apache.camel" additivity="false" level="DEBUG">
     <appender-ref ref="STDOUT"/>
   </logger>
-  <logger name="org.fcrepo" additivity="false" level="${fcrepo.log:-INFO}">
+  <logger name="org.fcrepo.camel" additivity="false" level="INFO">
     <appender-ref ref="STDOUT"/>
   </logger>
   <root additivity="false" level="WARN">

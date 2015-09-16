@@ -27,42 +27,13 @@
     </parent>
 
     <artifactId>acrepo-idiomatic-pgsql</artifactId>
-    <packaging>bundle</packaging>
+    <packaging>pom</packaging>
 
-    <name>Postgresql Dataservice Bundle</name>
-    <description>OSGi dataservice connector for Postgres.</description>
-
-    <properties>
-      <osgi.export.packages>edu.amherst.acdc.pgsql*;version=${project.version}</osgi.export.packages>
-    </properties>
-
-    <dependencies>
-      <dependency>
-        <groupId>postgresql</groupId>
-        <artifactId>postgresql</artifactId>
-      </dependency>
-    </dependencies>
+    <name>PostgreSQL DataService Connector</name>
+    <description>OSGi dataservice connector for PostgreSQL.</description>
 
     <build>
-
-      <resources>
-        <resource>
-          <directory>src/main/resources</directory>
-          <filtering>false</filtering>
-        </resource>
-      </resources>
-
       <plugins>
-        <plugin>
-          <groupId>org.apache.felix</groupId>
-          <artifactId>maven-bundle-plugin</artifactId>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-checkstyle-plugin</artifactId>
-        </plugin>
-
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>build-helper-maven-plugin</artifactId>
@@ -75,7 +46,7 @@
               <configuration>
                 <artifacts>
                   <artifact>
-                    <file>src/main/cfg/edu.amherst.acdc.pgsql.cfg</file>
+                    <file>src/main/cfg/edu.amherst.acdc.idiomatic.pgsql.cfg</file>
                     <type>cfg</type>
                     <classifier>configuration</classifier>
                   </artifact>
@@ -84,7 +55,6 @@
             </execution>
           </executions>
         </plugin>
-
       </plugins>
     </build>
 
