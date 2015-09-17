@@ -50,8 +50,8 @@ The password for connecting to the database
 
     password=
 
-By editing this file, any currently running routes will be immediately redeployed
-with the new values.
+By editing this file, this service will be immediately redeployed with the new values.
 
 For more help see the [Apache Camel](http://camel.apache.org/) documentation
+
 
