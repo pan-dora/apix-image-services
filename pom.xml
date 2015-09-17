@@ -22,6 +22,7 @@
     <camel.version>2.15.2</camel.version>
     <commons-lang.version>3.4</commons-lang.version>
     <commons-io.version>2.4</commons-io.version>
+    <derby.version>10.11.1.1</derby.version>
     <fcrepo-camel.version>4.3.0</fcrepo-camel.version>
     <fcrepo.version>4.3.1-SNAPSHOT</fcrepo.version>
     <jsonld.version>0.6.0</jsonld.version>
@@ -118,6 +119,11 @@
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
         <version>${commons-lang.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.derby</groupId>
+        <artifactId>derby</artifactId>
+        <version>${derby.version}</version>
       </dependency>
 
       <!-- logging -->

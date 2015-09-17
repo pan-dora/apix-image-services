@@ -20,13 +20,13 @@
      </cm:default-properties>
    </cm:property-placeholder>
 
-  <reference id="databaseSource" interface="javax.sql.DataSource" availability="optional" filter="(osgi.jndi.service.name=idiomaticds)"/>
+  <reference id="dataSource" interface="javax.sql.DataSource" availability="optional" filter="(osgi.jndi.service.name=idiomaticds)"/>
 
-  <reference id="minterService" interface="org.fcrepo.kernel.api.services.functions.UniqueValueSupplier" />
+  <reference id="minterService" interface="org.fcrepo.kernel.api.services.functions.UniqueValueSupplier" filter="(osgi.jndi.service.name=minter)" />
 
   <!-- component-wide configuration of jdbc -->
   <bean id="sql" class="org.apache.camel.component.sql.SqlComponent">
-    <property name="dataSource" ref="databaseSource"/>
+    <property name="dataSource" ref="dataSource"/>
   </bean>
 
   <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">

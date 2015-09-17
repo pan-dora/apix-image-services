@@ -31,6 +31,7 @@ import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
 import org.apache.camel.util.KeyValueHolder;
 import org.apache.camel.util.ObjectHelper;
 import org.apache.commons.io.IOUtils;
+import org.apache.derby.jdbc.EmbeddedDataSource;
 import org.fcrepo.camel.JmsHeaders;
 import org.junit.Test;
 
@@ -69,11 +70,13 @@ public class RouteTest extends CamelBlueprintTestSupport {
     protected Properties useOverridePropertiesWithPropertiesComponent() {
          final Properties props = new Properties();
          props.put("input.stream", "seda:foo");
+         props.put("rest.port", "9999");
          return props;
     }
 
     @Override
     protected void addServicesOnStartup(final Map<String, KeyValueHolder<Object, Dictionary>> services) {
+        services.put("dataService", asService(new EmbeddedDataSource(), "name", "idiomaticds"));
         services.put("minterService", asService(new MinterService(MINT_LENGTH), "name", "minter"));
     }
 
