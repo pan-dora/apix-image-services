@@ -37,8 +37,8 @@ Set the length of the newly minted ID field
 
     minter.length=7
 
-By editing this file, any currently running routes will be immediately redeployed
-with the new values.
+By editing this file, this service will be immediately redeployed
+with the new configuration.
 
 For more help see the [Apache Camel](http://camel.apache.org/) documentation
 
