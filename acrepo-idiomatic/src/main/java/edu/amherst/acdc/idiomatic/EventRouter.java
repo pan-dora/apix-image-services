@@ -13,6 +13,9 @@
  */
 package edu.amherst.acdc.idiomatic;
 
+import static org.apache.camel.builder.PredicateBuilder.not;
+
+import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.PropertyInject;
 import org.apache.camel.RuntimeCamelException;
@@ -89,18 +92,22 @@ public class EventRouter extends RouteBuilder {
         from("direct:update")
             .routeId("IdMappingUpdateRouter")
             .to("sql:UPDATE uris SET fedora=:#fedora WHERE public=:#public")
+            .setHeader(Exchange.HTTP_RESPONSE_CODE).constant(204)
             .filter(simple("${body} == 0"))
               .to("sql:INSERT INTO uris (fedora, public) VALUES (:#fedora, :#public)");
 
         from("direct:get")
             .routeId("IdMappingFetchRouter")
-            .log("${headers}")
-            .to("sql:SELECT fedora FROM uris WHERE public=:#public");
+            .to("sql:SELECT fedora FROM uris WHERE public=:#id?outputType=SelectOne")
+            .removeHeader("id")
+            .filter(not(header("CamelSqlRowCount").isEqualTo(1)))
+                .setHeader(Exchange.HTTP_RESPONSE_CODE).constant(404);
 
         from("direct:delete")
             .routeId("IdMappingDeleteRouter")
-            .log("${headers}")
-            .to("sql:DELETE FROM uris WHERE public=:#public");
+            .to("sql:DELETE FROM uris WHERE public=:#id")
+            .removeHeader("id")
+            .setHeader(Exchange.HTTP_RESPONSE_CODE).constant(204);
 
     }
 }

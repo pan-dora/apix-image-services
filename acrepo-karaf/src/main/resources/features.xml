@@ -13,8 +13,6 @@
 
     <feature version="${camel.version}">camel</feature>
     <feature version="${camel.version}">camel-blueprint</feature>
-    <feature version="${camel.version}">camel-jetty</feature>
-    <feature version="${camel.version}">camel-jdbc</feature>
     <feature version="${camel.version}">camel-restlet</feature>
     <feature version="${camel.version}">camel-jackson</feature>
     <feature version="${camel.version}">camel-sql</feature>
