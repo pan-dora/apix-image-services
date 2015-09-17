@@ -66,7 +66,7 @@ public class EventRouter extends RouteBuilder {
 
         from("direct:event")
             .routeId("IdMappingEventRouter")
-            .log(LoggingLevel.INFO, "edu.amherst.acdc.idmapper",
+            .log(LoggingLevel.INFO, "edu.amherst.acdc.idiomatic",
                     "IdMapping Event: ${headers[org.fcrepo.jms.identifier]}")
             .to("fcrepo:localhost:8080/rest?preferOmit=PreferContainment")
             .split().xtokenize("//{{id.property}}", 'i', ns)
@@ -88,19 +88,19 @@ public class EventRouter extends RouteBuilder {
          */
         from("direct:update")
             .routeId("IdMappingUpdateRouter")
-            .to("sql:UPDATE idmapper SET fedora=:#fedora WHERE public=:#public")
+            .to("sql:UPDATE uris SET fedora=:#fedora WHERE public=:#public")
             .filter(simple("${body} == 0"))
-              .to("sql:INSERT INTO idmapper (fedora, public) VALUES (:#fedora, :#public)");
+              .to("sql:INSERT INTO uris (fedora, public) VALUES (:#fedora, :#public)");
 
         from("direct:get")
             .routeId("IdMappingFetchRouter")
             .log("${headers}")
-            .to("sql:SELECT fedora FROM idmapper WHERE public=:#public");
+            .to("sql:SELECT fedora FROM uris WHERE public=:#public");
 
         from("direct:delete")
             .routeId("IdMappingDeleteRouter")
             .log("${headers}")
-            .to("sql:DELETE FROM idmapper WHERE public=:#public");
+            .to("sql:DELETE FROM uris WHERE public=:#public");
 
     }
 }
