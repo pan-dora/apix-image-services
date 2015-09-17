@@ -53,7 +53,5 @@ The password for connecting to the database
 By editing this file, any currently running routes will be immediately redeployed
 with the new values.
 
-For more help see the Apache Camel documentation
-
-    http://camel.apache.org/
+For more help see the [Apache Camel](http://camel.apache.org/) documentation
 
