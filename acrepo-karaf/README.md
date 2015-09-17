@@ -1,10 +1,11 @@
 Karaf Provisioning Feature
---------------------------
+==========================
 
 A karaf provisioning feature for the modules contained in this repository.
 
+
 Deploying in OSGi
-=================
+-----------------
 
 Each of these projects can be deployed in an OSGi container. For example using
 [Apache ServiceMix](http://servicemix.apache.org/) or

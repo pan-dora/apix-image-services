@@ -1,20 +1,17 @@
-#Amherst College ID Mapping Service
+Amherst College ID Mapping Service
+==================================
 
 This service implements a way to map external IDs to internal fedora URIs.
 
-##Building
+Building
+--------
 
 To build this project use
 
     mvn install
 
-##Running from the command line
-
-To run the project you can execute the following Maven goal
-
-    mvn camel:run
-
-##Deploying in OSGi
+Deploying in OSGi
+-----------------
 
 This project can be deployed in an OSGi container. For example using
 [Apache ServiceMix](http://servicemix.apache.org/) or
@@ -26,7 +23,8 @@ command from its shell:
 
 Or by copying the compiled bundle into `$KARAF_HOME/deploy`.
 
-##Configuration
+Configuration
+-------------
 
 The application can be configured by creating the following configuration
 file `$KARAF_HOME/etc/edu.amherst.acdc.idmapper.cfg`. The following values

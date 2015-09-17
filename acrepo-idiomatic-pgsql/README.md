@@ -1,14 +1,17 @@
-#Amherst College ID Mapping Service (PostgreSQL)
+Amherst College ID Mapping Service (PostgreSQL)
+===============================================
 
 This service implements a database backend for the ID Mapping Service
 
-##Building
+Building
+--------
 
 To build this project use
 
     mvn install
 
-##Deploying in OSGi
+Deploying in OSGi
+-----------------
 
 This project can be deployed in an OSGi container. For example using
 [Apache ServiceMix](http://servicemix.apache.org/) or
@@ -20,7 +23,8 @@ command from its shell:
 
 Or by copying the compiled bundle into `$KARAF_HOME/deploy`.
 
-##Configuration
+Configuration
+-------------
 
 The application can be configured by creating or editing the following configuration
 file `$KARAF_HOME/etc/org.ops4j.datasource-idiomatic.cfg`. The following values
