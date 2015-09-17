@@ -71,7 +71,7 @@ public class EventRouter extends RouteBuilder {
             .routeId("IdMappingEventRouter")
             .log(LoggingLevel.INFO, "edu.amherst.acdc.idiomatic",
                     "IdMapping Event: ${headers[org.fcrepo.jms.identifier]}")
-            .to("fcrepo:localhost:8080/rest?preferOmit=PreferContainment")
+            .to("fcrepo:{{fcrepo.baseUrl}}?preferOmit=PreferContainment")
             .split().xtokenize("//{{id.property}}", 'i', ns)
               .transform().xpath("/{{id.property}}/@rdf:resource | /{{id.property}}/text()", String.class, ns)
               .process(new IdProcessor())

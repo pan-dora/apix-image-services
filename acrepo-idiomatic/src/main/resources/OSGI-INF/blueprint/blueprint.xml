@@ -17,6 +17,7 @@
        <cm:property name="rest.port" value="9080"/>
        <cm:property name="id.property" value="dc:identifier"/>
        <cm:property name="id.namespace" value="http://purl.org/dc/elements/1.1/"/>
+       <cm:property name="fcrepo.baseUrl" value="localhost:8080/fcrepo/rest"/>
      </cm:default-properties>
    </cm:property-placeholder>
 
