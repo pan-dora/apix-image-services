@@ -13,6 +13,7 @@
  */
 package edu.amherst.acdc.idiomatic;
 
+import static edu.amherst.acdc.idiomatic.IdiomaticHeaders.ID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -71,6 +72,7 @@ public class RouteTest extends CamelBlueprintTestSupport {
          final Properties props = new Properties();
          props.put("input.stream", "seda:foo");
          props.put("rest.port", "9999");
+         props.put("id.prefix", "http://example.org/object/");
          return props;
     }
 
@@ -125,6 +127,7 @@ public class RouteTest extends CamelBlueprintTestSupport {
             @Override
             public void configure() throws Exception {
                 mockEndpointsAndSkip("fcrepo*");
+                mockEndpoints("direct:update");
             }
         });
 
@@ -140,6 +143,8 @@ public class RouteTest extends CamelBlueprintTestSupport {
         context.start();
 
         resultEndpoint.expectedMessageCount(2);
+        getMockEndpoint("mock:direct:update").expectedBodiesReceived("/foo/bar", "/foo/bar");
+        getMockEndpoint("mock:direct:update").expectedHeaderValuesReceivedInAnyOrder(ID, "1", "2");
         final Map<String, Object> headers = new HashMap<>();
         headers.put(JmsHeaders.IDENTIFIER, "/foo/bar");
         template.sendBodyAndHeaders(

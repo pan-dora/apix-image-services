@@ -3,6 +3,16 @@ Amherst College ID Mapping Service
 
 This service implements a way to map external IDs to internal fedora URIs.
 
+Database Structure
+------------------
+
+The backing database is assumed to be accessed via SQL. It follows a very simple
+format, using a single table (`uris`) with two columns (`public` and `fedora`):
+
+    CREATE TABLE uris (
+        public VARCHAR(1024) CONSTRAINT publicid PRIMARY KEY,
+        fedora VARCHAR(1024) CONSTRAINT fedoraid NOT NULL);
+
 Building
 --------
 

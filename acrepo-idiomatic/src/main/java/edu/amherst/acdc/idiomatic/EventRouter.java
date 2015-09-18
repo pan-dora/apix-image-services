@@ -14,9 +14,12 @@
 package edu.amherst.acdc.idiomatic;
 
 import static org.apache.camel.builder.PredicateBuilder.not;
+import static edu.amherst.acdc.idiomatic.IdiomaticHeaders.FEDORA;
+import static edu.amherst.acdc.idiomatic.IdiomaticHeaders.ID;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
+import org.apache.camel.Processor;
 import org.apache.camel.PropertyInject;
 import org.apache.camel.RuntimeCamelException;
 import org.apache.camel.builder.RouteBuilder;
@@ -29,10 +32,6 @@ import org.apache.camel.builder.xml.Namespaces;
  */
 public class EventRouter extends RouteBuilder {
 
-    private static final String CQL_INSERT = "insert into uris(fedora, public) values (?, ?)";
-    private static final String CQL_GET = "";
-    private static final String CQL_DELETE = "";
-
     @PropertyInject(value = "rest.port", defaultValue = "9081")
     private String port;
 
@@ -41,9 +40,11 @@ public class EventRouter extends RouteBuilder {
      */
     public void configure() throws Exception {
 
+        final String idPrefix;
         final Namespaces ns = new Namespaces("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
 
         try {
+            idPrefix = getContext().resolvePropertyPlaceholders("{{id.prefix}}");
             final String property = getContext().resolvePropertyPlaceholders("{{id.property}}");
             final String namespace = getContext().resolvePropertyPlaceholders("{{id.namespace}}");
             final String prefix = property.substring(0, property.indexOf(":"));
@@ -69,44 +70,55 @@ public class EventRouter extends RouteBuilder {
 
         from("direct:event")
             .routeId("IdMappingEventRouter")
-            .log(LoggingLevel.INFO, "edu.amherst.acdc.idiomatic",
-                    "IdMapping Event: ${headers[org.fcrepo.jms.identifier]}")
+            .log(LoggingLevel.INFO, "IdMapping Event: ${headers[org.fcrepo.jms.identifier]}")
             .to("fcrepo:{{fcrepo.baseUrl}}?preferOmit=PreferContainment")
             .split().xtokenize("//{{id.property}}", 'i', ns)
-              .transform().xpath("/{{id.property}}/@rdf:resource | /{{id.property}}/text()", String.class, ns)
-              .process(new IdProcessor())
+              .setHeader(ID).xpath("/{{id.property}}/@rdf:resource | /{{id.property}}/text()", String.class, ns)
+              .process(new Processor() {
+                  public void process(final Exchange ex) throws Exception {
+                      ex.getIn().setHeader(ID, ex.getIn().getHeader(ID, String.class).replaceAll("^" + idPrefix, ""));
+                  }})
+              .transform().simple("${header[org.fcrepo.jms.identifier]}")
               .to("direct:update");
 
         /**
          * REST routing
          */
         rest("{{rest.prefix}}")
-            .get("/{id}").to("direct:get")
+            .get("/{" + ID + "}").to("direct:get")
             .post("/").to("direct:minter")
-            .put("/{id}").to("direct:update")
-            .delete("/{id}").to("direct:delete");
+            .put("/{" + ID + "}").to("direct:update")
+            .delete("/{" + ID + "}").to("direct:delete");
 
         /**
          * Handle CRUD operations
          */
         from("direct:update")
             .routeId("IdMappingUpdateRouter")
-            .to("sql:UPDATE uris SET fedora=:#fedora WHERE public=:#public")
-            .setHeader(Exchange.HTTP_RESPONSE_CODE).constant(204)
-            .filter(simple("${body} == 0"))
-              .to("sql:INSERT INTO uris (fedora, public) VALUES (:#fedora, :#public)");
+            .setHeader(FEDORA).simple("${body}")
+            .setHeader(Exchange.HTTP_RESPONSE_CODE).constant(400)
+            .filter(header(FEDORA))
+              .log(LoggingLevel.INFO, "Updating ${headers[" + ID + "]} with ${headers[" + FEDORA + "]}")
+              .to("sql:UPDATE uris SET fedora=:#" + FEDORA + " WHERE public=:#" + ID)
+              .setHeader(Exchange.HTTP_RESPONSE_CODE).constant(204)
+              .choice()
+                .when(header("CamelSqlUpdateCount").isEqualTo("0"))
+                  .to("sql:INSERT INTO uris (fedora, public) VALUES (:#" + FEDORA + ", :#" + ID + ")").end()
+            .removeHeader(ID)
+            .removeHeader(FEDORA);
 
         from("direct:get")
             .routeId("IdMappingFetchRouter")
-            .to("sql:SELECT fedora FROM uris WHERE public=:#id?outputType=SelectOne")
-            .removeHeader("id")
+            .to("sql:SELECT fedora FROM uris WHERE public=:#" + ID + "?outputType=SelectOne")
+            .removeHeader(ID)
             .filter(not(header("CamelSqlRowCount").isEqualTo(1)))
                 .setHeader(Exchange.HTTP_RESPONSE_CODE).constant(404);
 
         from("direct:delete")
             .routeId("IdMappingDeleteRouter")
-            .to("sql:DELETE FROM uris WHERE public=:#id")
-            .removeHeader("id")
+            .log(LoggingLevel.INFO, "Deleting ${headers[" + ID + "]}")
+            .to("sql:DELETE FROM uris WHERE public=:#" + ID)
+            .removeHeader(ID)
             .setHeader(Exchange.HTTP_RESPONSE_CODE).constant(204);
 
     }
