@@ -39,8 +39,8 @@
   <modules>
     <module>acrepo-idiomatic-pgsql</module>
     <module>acrepo-idiomatic</module>
-    <module>acrepo-mint-service</module>
     <module>acrepo-karaf</module>
+    <module>acrepo-mint-service</module>
     <module>acrepo-mods-xml-service</module>
   </modules>
 
