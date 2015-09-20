@@ -39,7 +39,7 @@
 
     <package>edu.amherst.acdc.idiomatic</package>
 
-    <restConfiguration component="restlet" port="{{rest.port}}"/>
+    <restConfiguration component="jetty" host="localhost" port="{{rest.port}}"/>
 
     <route id="MinterRoute">
       <description>Create a freshly minted ID</description>

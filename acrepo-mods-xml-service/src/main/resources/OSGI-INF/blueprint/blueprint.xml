@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+       xsi:schemaLocation="
+       http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+       http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd
+       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
+
+   <!-- OSGI blueprint property placeholder -->
+   <cm:property-placeholder persistent-id="edu.amherst.acdc.mods" update-strategy="reload">
+     <cm:default-properties>
+       <cm:property name="error.maxRedeliveries" value="10"/>
+       <cm:property name="rest.prefix" value="/mods"/>
+       <cm:property name="rest.port" value="10080"/>
+       <cm:property name="mods.xslt" value="edu/amherst/acdc/mods/rdf2mods.xsl"/>
+       <cm:property name="fcrepo.baseUrl" value="localhost:8080/fcrepo/rest"/>
+     </cm:default-properties>
+   </cm:property-placeholder>
+
+  <camelContext xmlns="http://camel.apache.org/schema/blueprint" streamCache="false">
+
+    <route id="ModsTransformationRoute">
+      <from uri="jetty:http://0.0.0.0:{{rest.port}}{{rest.prefix}}?matchOnUriPrefix=true&amp;httpMethodRestrict=GET"/>
+      <setHeader headerName="CamelFcrepoIdentifier">
+        <simple>${headers[CamelHttpPath]}</simple>
+      </setHeader>
+      <log message="Fcrepo: ${headers[CamelFcrepoIdentifier]}"/>
+      <to uri="fcrepo:{{fcrepo.baseUrl}}?accept=application/rdf+xml"/>
+      <convertBodyTo type="org.w3c.dom.Document"/>
+      <!--<convertBodyTo type="java.lang.String"/>-->
+      <log message="Response: ${headers[CamelHttpResponseCode]}"/>
+      <log message="Body: ${body}"/>
+      <filter>
+        <simple>${headers[CamelHttpResponseCode]} == 200</simple>
+        <to uri="xslt:{{mods.xslt}}"/>
+      </filter>
+    </route>
+  </camelContext>
+
+</blueprint>

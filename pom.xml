@@ -41,6 +41,7 @@
     <module>acrepo-idiomatic</module>
     <module>acrepo-mint-service</module>
     <module>acrepo-karaf</module>
+    <module>acrepo-mods-xml-service</module>
   </modules>
 
   <dependencyManagement>
@@ -57,7 +58,7 @@
       </dependency>
       <dependency>
         <groupId>org.apache.camel</groupId>
-        <artifactId>camel-restlet</artifactId>
+        <artifactId>camel-jetty9</artifactId>
         <version>${camel.version}</version>
       </dependency>
       <dependency>
