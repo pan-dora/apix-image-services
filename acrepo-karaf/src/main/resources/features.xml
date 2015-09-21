@@ -54,7 +54,7 @@
     <configfile finalname="/etc/edu.amherst.acdc.mint.cfg">mvn:edu.amherst.acdc/acrepo-mint-service/${project.version}/cfg/configuration</configfile>
   </feature>
 
-  <feature name="acrepo-mods-xml-service" version="${project.version}" resolver="(orb)" start-level="50">
+  <feature name="acrepo-xml-metadata" version="${project.version}" resolver="(orb)" start-level="50">
     <details>Installs the MODS/XML translation service</details>
 
     <feature version="${camel.version}">camel</feature>
@@ -63,9 +63,9 @@
     <feature version="${camel.version}">camel-saxon</feature>
     <feature version="${fcrepo-camel.version}">fcrepo-camel</feature>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-mods-xml-service/${project.version}</bundle>
+    <bundle>mvn:edu.amherst.acdc/acrepo-xml-metadata/${project.version}</bundle>
 
-    <configfile finalname="/etc/edu.amherst.acdc.mods.cfg">mvn:edu.amherst.acdc/acrepo-mods-xml-service/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/edu.amherst.acdc.xml.metadata.cfg">mvn:edu.amherst.acdc/acrepo-xml-metadata/${project.version}/cfg/configuration</configfile>
   </feature>
 
 </features>

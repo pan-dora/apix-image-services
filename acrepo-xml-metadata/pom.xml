@@ -9,13 +9,13 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>acrepo-mods-xml-service</artifactId>
+  <artifactId>acrepo-xml-metadata</artifactId>
   <packaging>bundle</packaging>
 
-  <name>RDF to MODS/XML transformation service</name>
+  <name>RDF to XML (MODS and DC) transformation service</name>
 
   <properties>
-    <osgi.private.packages>edu.amherst.acdc.mods</osgi.private.packages>
+    <osgi.private.packages>edu.amherst.acdc.xml.metadata</osgi.private.packages>
   </properties>
 
   <dependencies>
@@ -101,7 +101,7 @@
             <configuration>
               <artifacts>
                 <artifact>
-                  <file>src/main/cfg/edu.amherst.acdc.mods.cfg</file>
+                  <file>src/main/cfg/edu.amherst.acdc.xml.metadata.cfg</file>
                   <type>cfg</type>
                   <classifier>configuration</classifier>
                 </artifact>

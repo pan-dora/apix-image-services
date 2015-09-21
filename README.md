@@ -9,7 +9,7 @@ Services
 * `acrepo-idiomatic`: Id Mapping Service: This maps a public ID to a (internal and typically much longer) fedora URI
 * `acrepo-idiomatic-pgsql`: Id Mapping Service Database: This exposes a Postgres datastore for use with the Id Mapping service
 * `acrepo-mint-service`: This mints random (public) URIs for use with fedora resources
-* `acrepo-mods-xml-service`: This service translates Fedora RDF documents into MODS/XML
+* `acrepo-xml-metadata`: This service translates Fedora RDF documents into MODS/XML or DC/XML
 
 Building
 --------
