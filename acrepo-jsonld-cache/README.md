@@ -23,3 +23,33 @@ command from its shell:
 
 Or by copying any of the compiled bundles into `$KARAF_HOME/deploy`.
 
+Configuration
+-------------
+
+The application can be configured by creating the following configuration
+file `$KARAF_HOME/etc/edu.amherst.acdc.jsonld.cache.cfg`. The following values
+are available for configuration:
+
+In the event of failure, the maximum number of times a redelivery will be attempted.
+
+    error.maxRedeliveries=10
+
+The base url of the fedora repository
+
+    fcrepo.baseUrl=localhost:8080/fcrepo/rest
+
+The location of the JSON-LD context document
+
+    jsonld.context=https://acdc.amherst.edu/jsonld/context.json
+
+The port on which the service is made availalbe
+
+    rest.port=13431
+
+By editing this file, any currently running routes will be immediately redeployed
+with the new values.
+
+For more help see the [Apache Camel](http://camel.apache.org) documentation
+
+
+
