@@ -34,6 +34,12 @@
     <spring.version>4.1.7.RELEASE</spring.version>
     <pax-jdbc.version>0.7.0</pax-jdbc.version>
     <woodstox.version>4.4.1</woodstox.version>
+
+    <!-- transitive dependencies for karaf -->
+    <httpclient.version>4.2.6</httpclient.version>
+    <httpcore.version>4.2.5</httpcore.version>
+    <commons-codec.version>1.10</commons-codec.version>
+
     <!-- OSGi -->
     <osgi.import.packages>*</osgi.import.packages>
   </properties>
@@ -44,6 +50,8 @@
     <module>acrepo-karaf</module>
     <module>acrepo-mint-service</module>
     <module>acrepo-xml-metadata</module>
+    <module>acrepo-jsonld-service</module>
+    <module>acrepo-jsonld-cache</module>
   </modules>
 
   <dependencyManagement>
@@ -82,6 +90,11 @@
         <groupId>org.apache.activemq</groupId>
         <artifactId>activemq-camel</artifactId>
         <version>${activemq.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.jsonld-java</groupId>
+        <artifactId>jsonld-java</artifactId>
+        <version>${jsonld.version}</version>
       </dependency>
       <dependency>
         <groupId>org.fcrepo</groupId>

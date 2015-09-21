@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+       xsi:schemaLocation="
+       http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+       http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd
+       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
+
+   <!-- OSGI blueprint property placeholder -->
+   <cm:property-placeholder persistent-id="edu.amherst.acdc.jsonld.cache" update-strategy="reload">
+     <cm:default-properties>
+       <cm:property name="error.maxRedeliveries" value="10"/>
+       <cm:property name="rest.port" value="13431"/>
+       <cm:property name="jsonld.context" value="https://acdc.amherst.edu/jsonld/context.json"/>
+       <cm:property name="fcrepo.baseUrl" value="localhost:8080/fcrepo/rest"/>
+     </cm:default-properties>
+   </cm:property-placeholder>
+
+  <reference id="jsonldService" interface="edu.amherst.acdc.jsonld.JsonLdService" filter="(osgi.jndi.service.name=jsonld)" />
+
+  <camelContext xmlns="http://camel.apache.org/schema/blueprint">
+    <route id="JsonLdCompactHttp">
+      <from uri="jetty:http://0.0.0.0:{{rest.port}}/compact?matchOnUriPrefix=true&amp;httpMethodRestrict=GET&amp;sendServerVersion=false"/>
+      <to uri="direct:getResource"/>
+      <filter>
+        <simple>${header[CamelHttpResponseCode]} == 200</simple>
+        <log message="Converting resource ${headers[CamelFcrepoIdentifier]}"/>
+        <to uri="direct:compact"/>
+      </filter>
+    </route>
+
+    <route id="JsonLdResource">
+      <from uri="direct:getResource"/>
+      <removeHeaders pattern="breadcrumbId"/>
+      <removeHeaders pattern="Accept"/>
+      <removeHeaders pattern="User-Agent"/>
+      <setHeader headerName="CamelFcrepoIdentifier">
+        <simple>${headers[CamelHttpPath]}</simple>
+      </setHeader>
+      <setHeader headerName="CamelFcrepoBaseUrl">
+        <simple>{{fcrepo.baseUrl}}</simple>
+      </setHeader>
+      <to uri="fcrepo:{{fcrepo.baseUrl}}?accept=application/ld+json&amp;throwExceptionOnFailure=false"/>
+    </route>
+
+    <route id="JsonLdCompaction">
+      <from uri="direct:compact"/>
+      <setHeader headerName="JsonLdContext">
+        <simple>{{jsonld.context}}</simple>
+      </setHeader>
+      <setBody>
+        <method ref="jsonldService" method="compact(${body}, ${header[JsonLdContext]})"/>
+      </setBody>
+    </route>
+
+  </camelContext>
+
+</blueprint>
