@@ -10,7 +10,6 @@
    <!-- OSGI blueprint property placeholder -->
    <cm:property-placeholder persistent-id="edu.amherst.acdc.mods" update-strategy="reload">
      <cm:default-properties>
-       <cm:property name="error.maxRedeliveries" value="10"/>
        <cm:property name="rest.prefix" value="/mods"/>
        <cm:property name="rest.port" value="9070"/>
        <cm:property name="mods.xslt" value="edu/amherst/acdc/mods/rdf2mods.xsl"/>
@@ -22,23 +21,29 @@
 
     <route id="ModsTransformationRoute">
       <from uri="jetty:http://0.0.0.0:{{rest.port}}{{rest.prefix}}?matchOnUriPrefix=true&amp;httpMethodRestrict=GET&amp;sendServerVersion=false"/>
+      <!-- clean up headers -->
       <removeHeaders pattern="breadcrumbId"/>
+      <removeHeaders pattern="Accept"/>
+      <removeHeaders pattern="User-Agent"/>
+
+      <!-- set fcrepo headers -->
       <setHeader headerName="CamelFcrepoIdentifier">
         <simple>${headers[CamelHttpPath]}</simple>
       </setHeader>
       <setHeader headerName="CamelFcrepoBaseUrl">
         <simple>{{fcrepo.baseUrl}}</simple>
       </setHeader>
-      <log message="Converting: ${headers[CamelFcrepoIdentifier]}"/>
-      <to uri="fcrepo:{{fcrepo.baseUrl}}?accept=application/rdf+xml&amp;throwExceptionOnFailure=false"/>
-      <removeHeaders pattern="Accept"/>
-      <removeHeaders pattern="User-Agent"/>
+
+      <!-- get the resource from the repository -->
+      <to uri="fcrepo:{{fcrepo.baseUrl}}?throwExceptionOnFailure=false"/>
       <filter>
         <simple>${headers[CamelHttpResponseCode]} == 200</simple>
+        <!-- if successful, translate it using the provided XSLT -->
         <setHeader headerName="Content-Type">
           <constant>application/xml</constant>
         </setHeader>
         <convertBodyTo type="org.w3c.dom.Document"/>
+        <log message="Converting resource to MODS/XML: ${headers[CamelFcrepoIdentifier]}"/>
         <to uri="xslt:{{mods.xslt}}?saxon=true"/>
       </filter>
     </route>

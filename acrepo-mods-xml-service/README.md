@@ -2,7 +2,7 @@ Amherst College MODS/XML transformation service
 ===============================================
 
 This service implements a translation service from Fedora RDF-based metadata
-to a MODS/XML serialization. This translation relies on a pluggable XSLT
+to a MODS/XML serialization. This translation relies on a pluggable XSLT 2.0
 document.
 
 Building
@@ -35,10 +35,6 @@ Configuration
 The application can be configured by creating the following configuration
 file `$KARAF_HOME/etc/edu.amherst.acdc.mods.cfg`. The following values
 are available for configuration:
-
-In the event of failure, the maximum number of times a redelivery will be attempted.
-
-    error.maxRedeliveries=10
 
 The location of the XSLT document. This can be a file path (using the `file:` prefix)
 or an external URL (e.g. using a `http:` scheme). Without a prefix, the XSL file will
