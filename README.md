@@ -1,7 +1,7 @@
 Amherst College Repository Services
 ===================================
 
-This is a collection of services that extend the functionality of a Fedora4 repository.
+This is a collection of OSGi services that extend the functionality of a Fedora4 repository.
 
 Services
 --------
