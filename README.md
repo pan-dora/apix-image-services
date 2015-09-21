@@ -30,7 +30,7 @@ command from its shell:
     feature:install acrepo-idiomatic
     feature:install acrepo-idiomatic-pgsql
     feature:install acrepo-mint-service
-    feature:install acrepo-mods-xml-service
+    feature:install acrepo-xml-metadata
 
 Or by copying any of the compiled bundles into `$KARAF_HOME/deploy`.
 
