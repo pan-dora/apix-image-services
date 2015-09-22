@@ -15,8 +15,7 @@
   <name>JSON-LD AppCache Workflow</name>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <osgi.export.packages>edu.amherst.acdc.jsonld.cache</osgi.export.packages>
   </properties>
 
   <dependencies>
@@ -31,6 +30,14 @@
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-jetty9</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-http4</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-camel</artifactId>
     </dependency>
     <dependency>
       <groupId>org.fcrepo.camel</groupId>
