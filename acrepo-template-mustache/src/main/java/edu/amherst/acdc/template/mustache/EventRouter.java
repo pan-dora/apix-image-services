@@ -13,11 +13,15 @@
  */
 package edu.amherst.acdc.template.mustache;
 
+import static org.apache.camel.Exchange.CONTENT_TYPE;
 import static org.apache.camel.Exchange.HTTP_RESPONSE_CODE;
-import static org.apache.camel.Exchange.HTTP_URL;
 import static org.apache.camel.Exchange.HTTP_URI;
+import static org.apache.camel.Exchange.HTTP_URL;
 import static org.fcrepo.camel.FcrepoHeaders.FCREPO_IDENTIFIER;
 
+import java.util.Map;
+
+import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.builder.RouteBuilder;
 import edu.amherst.acdc.jsonld.cache.RiakKeyBuilder;
 
@@ -67,8 +71,9 @@ public class EventRouter extends RouteBuilder {
 
         from("direct:template")
             .routeId("TemplateRoute")
+            .setHeader(CONTENT_TYPE).simple("{{mustache.contentType}}")
+            .unmarshal().json(JsonLibrary.Jackson, Map.class)
             .to("mustache:{{mustache.template}}");
-
     }
 }
 
