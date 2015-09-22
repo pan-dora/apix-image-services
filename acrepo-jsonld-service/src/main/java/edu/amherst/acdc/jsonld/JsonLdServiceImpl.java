@@ -134,7 +134,8 @@ public class JsonLdServiceImpl implements JsonLdService {
     }
 
     private Predicate<Map<String, Object>> filterExport = x -> {
-        return x.containsKey("@id") && !x.get("@id").toString().endsWith("/fcr:export?format=jcr/xml");
+        return x.containsKey("@id") && !(x.get("@id").toString().endsWith("/fcr:export?format=jcr/xml")
+                || x.get("@id").toString().equals("http://fedora.info/definitions/v4/repository#jcr/xml"));
     };
 
     private Function<Object, String> stringify = x -> {

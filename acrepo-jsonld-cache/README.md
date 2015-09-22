@@ -3,6 +3,8 @@ Repository JSON-LD compaction service
 
 This collection of camel routes exposes an HTTP endpoint for
 generating compact JSON-LD serializations of Fedora resources.
+It also automatically replicates these compact resources in
+an external key-value system (this example uses Riak).
 
 Building
 --------
@@ -34,6 +36,14 @@ In the event of failure, the maximum number of times a redelivery will be attemp
 
     error.maxRedeliveries=10
 
+The JMS broker URL
+
+    jms.brokerUrl=tcp://localhost:61616
+
+The message broker event stream
+
+    activemq:topic:fedora
+
 The base url of the fedora repository
 
     fcrepo.baseUrl=localhost:8080/fcrepo/rest
@@ -45,6 +55,14 @@ The location of the JSON-LD context document
 The port on which the service is made availalbe
 
     rest.port=13431
+
+The riak hostname
+
+    riak.host=localhost:8098
+
+The riak path prefix
+
+    riak.prefix=/buckets/fcrepo/keys
 
 By editing this file, any currently running routes will be immediately redeployed
 with the new values.

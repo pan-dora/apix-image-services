@@ -11,38 +11,24 @@
    <cm:property-placeholder persistent-id="edu.amherst.acdc.jsonld.cache" update-strategy="reload">
      <cm:default-properties>
        <cm:property name="error.maxRedeliveries" value="10"/>
+       <cm:property name="jms.brokerUrl" value="tcp://localhost:61616"/>
+       <cm:property name="input.stream" value="activemq:topic:fedora"/>
        <cm:property name="rest.port" value="13431"/>
        <cm:property name="jsonld.context" value="https://acdc.amherst.edu/jsonld/context.json"/>
        <cm:property name="fcrepo.baseUrl" value="localhost:8080/fcrepo/rest"/>
+       <cm:property name="riak.host" value="localhost:8098"/>
+       <cm:property name="riak.prefix" value="/buckets/fcrepo/keys"/>
      </cm:default-properties>
    </cm:property-placeholder>
 
   <reference id="jsonldService" interface="edu.amherst.acdc.jsonld.JsonLdService" filter="(osgi.jndi.service.name=jsonld)" />
 
-  <camelContext xmlns="http://camel.apache.org/schema/blueprint">
-    <route id="JsonLdCompactHttp">
-      <from uri="jetty:http://0.0.0.0:{{rest.port}}/compact?matchOnUriPrefix=true&amp;httpMethodRestrict=GET&amp;sendServerVersion=false"/>
-      <to uri="direct:getResource"/>
-      <filter>
-        <simple>${header[CamelHttpResponseCode]} == 200</simple>
-        <log message="Converting resource ${headers[CamelFcrepoIdentifier]}"/>
-        <to uri="direct:compact"/>
-      </filter>
-    </route>
+  <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
+    <property name="brokerURL" value="${jms.brokerUrl}"/>
+  </bean>
 
-    <route id="JsonLdResource">
-      <from uri="direct:getResource"/>
-      <removeHeaders pattern="breadcrumbId"/>
-      <removeHeaders pattern="Accept"/>
-      <removeHeaders pattern="User-Agent"/>
-      <setHeader headerName="CamelFcrepoIdentifier">
-        <simple>${headers[CamelHttpPath]}</simple>
-      </setHeader>
-      <setHeader headerName="CamelFcrepoBaseUrl">
-        <simple>{{fcrepo.baseUrl}}</simple>
-      </setHeader>
-      <to uri="fcrepo:{{fcrepo.baseUrl}}?accept=application/ld+json&amp;throwExceptionOnFailure=false"/>
-    </route>
+  <camelContext xmlns="http://camel.apache.org/schema/blueprint">
+    <package>edu.amherst.acdc.jsonld.cache</package>
 
     <route id="JsonLdCompaction">
       <from uri="direct:compact"/>
