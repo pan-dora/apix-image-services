@@ -52,6 +52,7 @@
     <module>acrepo-xml-metadata</module>
     <module>acrepo-jsonld-service</module>
     <module>acrepo-jsonld-cache</module>
+    <module>acrepo-template-mustache</module>
   </modules>
 
   <dependencyManagement>
@@ -64,6 +65,11 @@
       <dependency>
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-blueprint</artifactId>
+        <version>${camel.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-mustache</artifactId>
         <version>${camel.version}</version>
       </dependency>
       <dependency>

@@ -23,20 +23,19 @@ public class RiakKeyBuilder implements Processor {
         final Message in = exchange.getIn();
         final CamelContext ctx = exchange.getContext();
 
-        final StringBuilder key = new StringBuilder();
+        final StringBuilder key = new StringBuilder("/buckets/");
 
         try {
-            final String prefix = ctx.resolvePropertyPlaceholders("{{riak.prefix}}");
+            final String prefix = ctx.resolvePropertyPlaceholders("{{riak.bucket}}");
             key.append(prefix);
-            if (!prefix.endsWith("/")) {
-                key.append("/");
-            }
         } catch (final Exception ex) {
             throw new RuntimeCamelException("Could not resolve properties", ex);
         }
 
+        key.append("/keys/");
         key.append(URLEncoder.encode(
                 in.getHeader(FcrepoHeaders.FCREPO_IDENTIFIER, String.class), "UTF-8"));
+        in.removeHeader(Exchange.HTTP_URL);
         in.setHeader(Exchange.HTTP_PATH, key.toString());
     }
 }
