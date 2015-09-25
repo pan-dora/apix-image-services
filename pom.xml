@@ -17,7 +17,13 @@
   <name>Repository Services for use with Fedora</name>
   <description>A collection of repository services for use with Fedora</description>
 
+  <organization>
+    <name>Amherst College</name>
+    <url>https://www.amherst.edu/</url>
+  </organization>
+
   <properties>
+    <project.copyrightYear>2015</project.copyrightYear>
     <activemq.version>5.11.1</activemq.version>
     <camel.version>2.15.2</camel.version>
     <commons-lang.version>3.4</commons-lang.version>
@@ -206,6 +212,11 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>com.mycila</groupId>
+        <artifactId>license-maven-plugin</artifactId>
       </plugin>
 
       <plugin>
