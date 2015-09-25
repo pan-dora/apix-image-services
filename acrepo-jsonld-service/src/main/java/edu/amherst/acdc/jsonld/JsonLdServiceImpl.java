@@ -67,22 +67,15 @@ public class JsonLdServiceImpl implements JsonLdService {
         LOGGER.info("using context from: {}", contextUrl);
 
         try {
-            final List<Map<String, Object>> document = ((List<Map<String, Object>>)fromInputStream(input)).stream()
-                                .filter(filterExport::test)
-                                .collect(Collectors.toList());
-
-            return JsonUtils.toString(
-                    JsonLdProcessor.compact(document, fromURL(new URL(contextUrl)), options));
+            return doCompact(input, fromURL(new URL(contextUrl)));
         } catch (final MalformedURLException ex) {
-            throw new RuntimeException("Invalid URL: " + ex.getMessage());
+            throw new RuntimeException("Invalid URL", ex);
         } catch (final JsonParseException ex) {
-            throw new RuntimeException("Error parsing JSON: " + ex.getMessage());
+            throw new RuntimeException("Error parsing JSON", ex);
         } catch (final JsonGenerationException ex) {
-            throw new RuntimeException("Error generating JSON: " + ex.getMessage());
-        } catch (final JsonLdError ex) {
-            throw new RuntimeException("Error converting JsonLd: " + ex.getMessage());
+            throw new RuntimeException("Error generating JSON", ex);
         } catch (final IOException ex) {
-            throw new RuntimeException("Error reading/writing JSON document: " + ex.getMessage());
+            throw new RuntimeException("Error reading/writing JSON document", ex);
         }
     }
 
@@ -95,18 +88,11 @@ public class JsonLdServiceImpl implements JsonLdService {
      */
     public String compact(final InputStream input, final InputStream context) {
         try {
-            final List<Map<String, Object>> document = ((List<Map<String, Object>>)fromInputStream(input)).stream()
-                                .filter(filterExport::test)
-                                .collect(Collectors.toList());
-
-            return JsonUtils.toString(
-                    JsonLdProcessor.compact(document, fromInputStream(context), options));
+            return doCompact(input, fromInputStream(context));
         } catch (final JsonParseException ex) {
             throw new RuntimeException("Error parsing JSON", ex);
         } catch (final JsonGenerationException ex) {
             throw new RuntimeException("Error generating JSON", ex);
-        } catch (final JsonLdError ex) {
-            throw new RuntimeException("Error converting JsonLd: " + ex.getMessage());
         } catch (final IOException ex) {
             throw new RuntimeException("Error reading/writing JSON document", ex);
         }
@@ -127,9 +113,23 @@ public class JsonLdServiceImpl implements JsonLdService {
         } catch (final JsonGenerationException ex) {
             throw new RuntimeException("Error generating JSON", ex);
         } catch (final JsonLdError ex) {
-            throw new RuntimeException("Error converting JsonLd: " + ex.getMessage());
+            throw new RuntimeException("Error converting JsonLd", ex);
         } catch (final IOException ex) {
             throw new RuntimeException("Error reading/writing JSON document", ex);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private String doCompact(final InputStream input, final Object context) throws IOException {
+        try {
+            final List<Map<String, Object>> document = ((List<Map<String, Object>>)fromInputStream(input)).stream()
+                                .filter(filterExport::test)
+                                .collect(Collectors.toList());
+
+            return JsonUtils.toString(
+                    JsonLdProcessor.compact(document, context, options));
+        } catch (final JsonLdError ex) {
+            throw new RuntimeException("Error converting JsonLd", ex);
         }
     }
 
