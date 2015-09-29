@@ -50,6 +50,13 @@
     <osgi.import.packages>*</osgi.import.packages>
   </properties>
 
+  <scm>
+    <connection>scm:git:git://gitlab.amherst.edu/acdc/repository-extension-services.git</connection>
+    <developerConnection>scm:git:git@gitlab.amherst.edu:acdc/repository-extension-services.git</developerConnection>
+    <url>https://gitlab.amherst.edu/acdc/repository-extension-services</url>
+    <tag>HEAD</tag>
+  </scm>
+
   <modules>
     <module>acrepo-idiomatic-pgsql</module>
     <module>acrepo-idiomatic</module>
