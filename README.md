@@ -1,6 +1,8 @@
 Amherst College Repository Services
 ===================================
 
+[![Build Status](https://travis-ci.org/acoburn/repository-extension-services.png?branch=master)](https://travis-ci.org/acoburn/repository-extension-services)
+
 This is a collection of OSGi services that extend the functionality of a Fedora4 repository.
 
 Services
