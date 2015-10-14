@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.fcrepo</groupId>
     <artifactId>fcrepo-parent</artifactId>
-    <version>4.3.1-SNAPSHOT</version>
+    <version>4.4.0</version>
   </parent>
 
   <groupId>edu.amherst.acdc</groupId>
@@ -39,8 +39,8 @@
     <commons-lang.version>3.4</commons-lang.version>
     <commons-io.version>2.4</commons-io.version>
     <derby.version>10.11.1.1</derby.version>
-    <fcrepo-camel.version>4.3.0</fcrepo-camel.version>
-    <fcrepo.version>4.3.1-SNAPSHOT</fcrepo.version>
+    <fcrepo-camel.version>4.4.0</fcrepo-camel.version>
+    <fcrepo.version>4.4.0</fcrepo.version>
     <junit.version>4.11</junit.version>
     <jsonld.version>0.6.0</jsonld.version>
     <logback.version>1.1.2</logback.version>

@@ -15,7 +15,6 @@
  */
 package edu.amherst.acdc.idiomatic;
 
-import static edu.amherst.acdc.idiomatic.IdiomaticHeaders.ID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -146,7 +145,7 @@ public class RouteTest extends CamelBlueprintTestSupport {
 
         resultEndpoint.expectedMessageCount(2);
         getMockEndpoint("mock:direct:update").expectedBodiesReceived("/foo/bar", "/foo/bar");
-        getMockEndpoint("mock:direct:update").expectedHeaderValuesReceivedInAnyOrder(ID, "1", "2");
+        getMockEndpoint("mock:direct:update").expectedHeaderValuesReceivedInAnyOrder(IdiomaticHeaders.ID, "1", "2");
         final Map<String, Object> headers = new HashMap<>();
         headers.put(JmsHeaders.IDENTIFIER, "/foo/bar");
         template.sendBodyAndHeaders(
