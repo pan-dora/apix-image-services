@@ -15,7 +15,7 @@
   <name>A template rendering service, based on JSON-LD documents</name>
 
   <properties>
-    <osgi.private.packages>edu.amherst.acdc.template.mustache</osgi.private.packages>
+    <osgi.export.packages>edu.amherst.acdc.template.mustache;version=${project.version}</osgi.export.packages>
   </properties>
 
   <dependencies>

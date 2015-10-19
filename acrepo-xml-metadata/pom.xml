@@ -15,7 +15,7 @@
   <name>RDF to XML (MODS and DC) transformation service</name>
 
   <properties>
-    <osgi.private.packages>edu.amherst.acdc.xml.metadata</osgi.private.packages>
+    <osgi.export.packages>edu.amherst.acdc.xml.metadata;version=${project.version}</osgi.export.packages>
   </properties>
 
   <dependencies>

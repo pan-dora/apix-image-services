@@ -15,7 +15,7 @@
   <name>JSON-LD AppCache Workflow</name>
 
   <properties>
-    <osgi.export.packages>edu.amherst.acdc.jsonld.cache</osgi.export.packages>
+    <osgi.export.packages>edu.amherst.acdc.jsonld.cache;version=${project.version}</osgi.export.packages>
   </properties>
 
   <dependencies>
