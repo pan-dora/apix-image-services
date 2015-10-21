@@ -15,7 +15,14 @@
  */
 package edu.amherst.acdc.jsonld.cache;
 
+import java.util.Dictionary;
+import java.util.Map;
+
+import edu.amherst.acdc.jsonld.JsonLdService;
+import edu.amherst.acdc.jsonld.JsonLdServiceImpl;
+
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
+import org.apache.camel.util.KeyValueHolder;
 
 import org.junit.Test;
 
@@ -28,6 +35,11 @@ public class RouteTest extends CamelBlueprintTestSupport {
     @Override
     protected String getBlueprintDescriptor() {
         return "/OSGI-INF/blueprint/blueprint.xml";
+    }
+
+    @Override
+    protected void addServicesOnStartup(final Map<String, KeyValueHolder<Object, Dictionary>> services) {
+        services.put(JsonLdService.class.getName(), asService(new JsonLdServiceImpl(), "name", "jsonld"));
     }
 
     @Test

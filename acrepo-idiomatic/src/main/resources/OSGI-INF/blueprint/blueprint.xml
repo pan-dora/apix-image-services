@@ -22,7 +22,7 @@
      </cm:default-properties>
    </cm:property-placeholder>
 
-  <reference id="dataSource" interface="javax.sql.DataSource" availability="optional" filter="(osgi.jndi.service.name=idiomaticds)"/>
+  <reference id="dataSource" interface="javax.sql.DataSource" filter="(osgi.jndi.service.name=idiomaticds)"/>
 
   <reference id="minterService" interface="org.fcrepo.kernel.api.services.functions.UniqueValueSupplier" filter="(osgi.jndi.service.name=minter)" />
 

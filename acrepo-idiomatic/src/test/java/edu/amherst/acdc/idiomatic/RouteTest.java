@@ -23,7 +23,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.sql.DataSource;
+
 import edu.amherst.acdc.mint.MinterService;
+import org.fcrepo.kernel.api.services.functions.UniqueValueSupplier;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
@@ -79,8 +82,10 @@ public class RouteTest extends CamelBlueprintTestSupport {
 
     @Override
     protected void addServicesOnStartup(final Map<String, KeyValueHolder<Object, Dictionary>> services) {
-        services.put("dataService", asService(new EmbeddedDataSource(), "name", "idiomaticds"));
-        services.put("minterService", asService(new MinterService(MINT_LENGTH), "name", "minter"));
+        services.put(DataSource.class.getName(),
+                asService(new EmbeddedDataSource(), "osgi.jndi.service.name", "idiomaticds"));
+        services.put(UniqueValueSupplier.class.getName(),
+                asService(new MinterService(MINT_LENGTH), "osgi.jndi.service.name", "minter"));
     }
 
     @Test
