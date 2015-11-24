@@ -15,6 +15,7 @@
  */
 package edu.amherst.acdc.xml.metadata;
 
+import static org.apache.camel.Exchange.HTTP_PATH;
 import static org.apache.camel.Exchange.HTTP_RESPONSE_CODE;
 import static org.apache.camel.Exchange.CONTENT_TYPE;
 import static org.fcrepo.camel.FcrepoHeaders.FCREPO_IDENTIFIER;
@@ -65,7 +66,7 @@ public class EventRouter extends RouteBuilder {
             .removeHeader("breadcrumbId")
             .removeHeader("Accept")
             .removeHeader("User-Agent")
-            .setHeader(FCREPO_IDENTIFIER).simple("${headers[CamelHttpPath]}")
+            .setHeader(FCREPO_IDENTIFIER).header(HTTP_PATH)
             .setHeader(FCREPO_BASE_URL).simple("{{fcrepo.baseUrl}}")
             .to("fcrepo:{{fcrepo.baseUrl}}?throwExceptionOnFailure=false");
 

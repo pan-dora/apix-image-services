@@ -15,9 +15,10 @@
  */
 package edu.amherst.acdc.idiomatic;
 
-import static org.apache.camel.builder.PredicateBuilder.not;
 import static edu.amherst.acdc.idiomatic.IdiomaticHeaders.FEDORA;
 import static edu.amherst.acdc.idiomatic.IdiomaticHeaders.ID;
+import static org.apache.camel.builder.PredicateBuilder.not;
+import static org.fcrepo.camel.JmsHeaders.IDENTIFIER;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
@@ -80,7 +81,7 @@ public class EventRouter extends RouteBuilder {
                   public void process(final Exchange ex) throws Exception {
                       ex.getIn().setHeader(ID, ex.getIn().getHeader(ID, String.class).replaceAll("^" + idPrefix, ""));
                   }})
-              .transform().simple("${header[org.fcrepo.jms.identifier]}")
+              .transform().header(IDENTIFIER)
               .to("direct:update");
 
         /**
@@ -97,7 +98,7 @@ public class EventRouter extends RouteBuilder {
          */
         from("direct:update")
             .routeId("IdMappingUpdateRouter")
-            .setHeader(FEDORA).simple("${body}")
+            .setHeader(FEDORA).body()
             .setHeader(Exchange.HTTP_RESPONSE_CODE).constant(400)
             .filter(header(FEDORA))
               .log(LoggingLevel.INFO, "Updating ${headers[" + ID + "]} with ${headers[" + FEDORA + "]}")

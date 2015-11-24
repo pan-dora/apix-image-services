@@ -47,7 +47,7 @@ public class EventRouter extends RouteBuilder {
             .log("Event Routing Error: ${routeId}");
 
         from("{{input.stream}}")
-            .setHeader(FCREPO_IDENTIFIER).simple("${headers[" + IDENTIFIER + "]}")
+            .setHeader(FCREPO_IDENTIFIER).header(IDENTIFIER)
             .choice()
                 .when(header(EVENT_TYPE).isEqualTo(REPOSITORY + "NODE_REMOVED"))
                     .to("direct:delete")
@@ -57,7 +57,7 @@ public class EventRouter extends RouteBuilder {
         from("jetty:http://0.0.0.0:{{rest.port}}/jsonld?" +
               "matchOnUriPrefix=true&sendServerVersion=false&httpMethodRestrict=GET,PUT,DELETE")
           .routeId("JsonLdRouter")
-          .setHeader(FCREPO_IDENTIFIER).simple("${headers[" + HTTP_PATH + "]}")
+          .setHeader(FCREPO_IDENTIFIER).header(HTTP_PATH)
           .choice()
             .when(header(HTTP_METHOD).isEqualTo("GET")).to("direct:get")
             .when(header(HTTP_METHOD).isEqualTo("PUT")).to("direct:update")

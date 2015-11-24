@@ -16,6 +16,7 @@
 package edu.amherst.acdc.template.mustache;
 
 import static org.apache.camel.Exchange.CONTENT_TYPE;
+import static org.apache.camel.Exchange.HTTP_PATH;
 import static org.apache.camel.Exchange.HTTP_RESPONSE_CODE;
 import static org.apache.camel.Exchange.HTTP_URI;
 import static org.apache.camel.Exchange.HTTP_URL;
@@ -48,7 +49,7 @@ public class EventRouter extends RouteBuilder {
                 "matchOnUriPrefix=true&httpMethodRestrict=GET&sendServerVersion=false")
             .routeId("TemplateTransformation")
             .log("PATH: ${headers[CamelHttpPath]}")
-            .setHeader(FCREPO_IDENTIFIER).simple("${headers[CamelHttpPath]}")
+            .setHeader(FCREPO_IDENTIFIER).header(HTTP_PATH)
             .removeHeader("breadcrumbId")
             .removeHeader("Accept")
             .removeHeader("User-Agent")
