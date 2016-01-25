@@ -33,6 +33,9 @@ Each of these projects can be deployed in an OSGi container. For example using
 command from its shell:
 
     feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
+    feature:install acrepo-apix
+    feature:isntall acrepo-registry-api
+    feature:install acrepo-registry-memory
     feature:install acrepo-idiomatic
     feature:install acrepo-idiomatic-pgsql
     feature:install acrepo-jsonld-cache
