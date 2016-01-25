@@ -8,6 +8,9 @@ This is a collection of OSGi services that extend the functionality of a Fedora4
 Services
 --------
 
+* `acrepo-apix`: An implementation of the API-X framework
+* `acrepo-registry-api`: An API for an API-X service registry
+* `acrepo-registry-memory`: An in-memory implementation of the API-X service registry
 * `acrepo-idiomatic`: Id Mapping Service: This maps a public ID to a (internal and typically much longer) fedora URI
 * `acrepo-idiomatic-pgsql`: Id Mapping Service Database: This exposes a Postgres datastore for use with the Id Mapping service
 * `acrepo-jsonld-cache`: This service exposes an HTTP endpoint for creating compact JSON-LD documents from a fedora repository using a pluggable context document
