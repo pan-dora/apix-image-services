@@ -20,6 +20,7 @@
    </cm:property-placeholder>
 
   <reference id="registryService" interface="edu.amherst.acdc.registry.api.RegistryService" filter="(osgi.jndi.service.name=registry)" />
+  <reference id="bindingService" interface="edu.amherst.acdc.binding.api.BindingService" filter="(osgi.jndi.service.name=binding)" />
 
   <camelContext xmlns="http://camel.apache.org/schema/blueprint">
 
