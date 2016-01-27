@@ -40,20 +40,26 @@ public class ApixRouter extends RouteBuilder {
         /**
          * REST routing
          */
-        rest("{{rest.prefix}}/registry")
+        rest("{{rest.registry}}")
             .get("/").to("direct:list")
             .get("/{service}").to("direct:describe")
             .put("/{service}").to("direct:register")
             .delete("/{service}").to("direct:unregister");
 
-        rest("{{rest.prefix}}/bind")
-            .get("/").to("direct:bind");
+        rest("{{rest.binding}}")
+            .get("/").to("direct:bindings")
+            .get("/{service}").to("direct:list-bindings")
+            .post("/{service}").to("direct:bind")
+            .delete("/{service}/{identifier}").to("direct:unbind");
 
-        from("direct:bind")
-            .routeId("ApixBind")
-            .setBody().constant("Here are the binders...");
+        from("direct:bindings")
+            .routeId("ApixBindings")
+            .setBody().constant("FIXME: Here is some information about the binding endpoint...");
 
-        from("jetty:http://localhost:{{rest.port}}{{rest.prefix}}/rest?matchOnUriPrefix=true")
+
+
+
+        from("jetty:http://{{rest.host}}:{{rest.port}}{{rest.proxy}}?matchOnUriPrefix=true")
             .routeId("ApixRest")
             .routeDescription("The main API-X client REST interface")
             .process(new ServiceProcessor())
@@ -64,8 +70,10 @@ public class ApixRouter extends RouteBuilder {
                 .when(header(SERVICE_NAME).isNotNull())
                     .to("direct:route-service")
                 .otherwise()
-                    .to("http4://{{fcrepo.baseUrl}}?authUsername={{fcrepo.authUsername}}" +
-                            "&authPassword={{fcrepo.authPassword}}&bridgeEndpoint=true")
+                    .log("Headers: ${headers}")
+                    .to("http4://localhost:8983/fedora/rest?authUsername={{fcrepo.authUsername}}" +
+                            "&authPassword={{fcrepo.authPassword}}&bridgeEndpoint=true" +
+                            "&throwExceptionOnFailure=false&disableStreamCache=true")
                     .setHeader("Link")
                         .simple("<${headers.CamelHttpUri}/{{apix.prefix}}list>; rel=\"service\"");
 

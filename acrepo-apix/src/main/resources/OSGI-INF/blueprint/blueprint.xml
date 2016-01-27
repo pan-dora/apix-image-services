@@ -10,8 +10,11 @@
    <!-- OSGI blueprint property placeholder -->
    <cm:property-placeholder persistent-id="edu.amherst.acdc.apix" update-strategy="reload">
      <cm:default-properties>
-       <cm:property name="rest.prefix" value="/apix"/>
+       <cm:property name="rest.proxy" value="/fcrepo/rest"/>
+       <cm:property name="rest.binding" value="/apix/bind"/>
+       <cm:property name="rest.registry" value="/apix/registry"/>
        <cm:property name="rest.port" value="13431"/>
+       <cm:property name="rest.host" value="localhost"/>
        <cm:property name="fcrepo.baseUrl" value="localhost:8080/fcrepo/rest"/>
        <cm:property name="fcrepo.authUsername" value=""/>
        <cm:property name="fcrepo.authPassword" value=""/>
@@ -26,7 +29,52 @@
 
     <package>edu.amherst.acdc.apix</package>
 
-    <restConfiguration component="jetty" host="localhost" port="{{rest.port}}"/>
+    <restConfiguration component="jetty" host="{{rest.host}}" port="{{rest.port}}"/>
+
+    <route id="ApixInstanceList">
+      <from uri="direct:list-bindings"/>
+      <setHeader headerName="instances">
+        <method ref="bindingService" method="list(${header.service})"/>
+      </setHeader>
+      <setBody>
+        <simple>These are the instances for the ${header.service} service: ${headers.instances}</simple>
+      </setBody>
+    </route>
+
+    <route id="ApixBind">
+      <from uri="direct:bind"/>
+      <convertBodyTo type="java.lang.String"/>
+      <choice>
+        <when>
+          <method ref="bindingService" method="bind(${header.service}, ${body})"/>
+          <setBody>
+            <constant>OK</constant>
+          </setBody>
+        </when>
+        <otherwise>
+          <setBody>
+            <constant>Not OK</constant>
+          </setBody>
+        </otherwise>
+      </choice>
+    </route>
+
+    <route id="ApixUnbind">
+      <from uri="direct:unbind"/>
+      <choice>
+        <when>
+          <method ref="bindingService" method="unbind(${header.service}, ${header.identifier})"/>
+          <setBody>
+            <constant>OK</constant>
+          </setBody>
+        </when>
+        <otherwise>
+          <setBody>
+            <constant>Not OK</constant>
+          </setBody>
+        </otherwise>
+      </choice>
+    </route>
 
     <route id="ApixUnregister">
       <from uri="direct:unregister"/>
@@ -75,10 +123,10 @@
       <filter>
         <method ref="registryService" method="exists(${header.CamelApixService})"/>
         <setHeader headerName="CamelApixRegistration">
-          <simple>{{rest.prefix}}/registry/${header.CamelApixService}</simple>
+          <simple>{{rest.registry}}/${header.CamelApixService}</simple>
         </setHeader>
         <setHeader headerName="CamelApixEndpoint">
-          <constant>http://localhost:8282/jsonld</constant>
+          <method ref="bindingService" method="findAny(${header.CamelApixService})"/>
         </setHeader>
       </filter>
     </route>
@@ -89,7 +137,7 @@
         <method ref="registryService" method="list()"/>
       </setHeader>
       <setBody>
-        <constant>These are the services...</constant>
+        <simple>These are the services: ${headers.Link}</simple>
       </setBody>
     </route>
 

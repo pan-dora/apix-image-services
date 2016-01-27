@@ -41,10 +41,8 @@ public class ServiceProcessor implements Processor {
     public void process(final Exchange exchange) throws Exception {
         final Message in = exchange.getIn();
         final String svcPrefix;
-        final String restPrefix;
         try {
             svcPrefix = exchange.getContext().resolvePropertyPlaceholders("{{apix.prefix}}");
-            restPrefix = exchange.getContext().resolvePropertyPlaceholders("{{rest.prefix}}");
         } catch (final Exception ex) {
             throw new RuntimeCamelException("Could not resolve property placeholders", ex);
         }
@@ -60,7 +58,7 @@ public class ServiceProcessor implements Processor {
     private Optional<String> getServiceName(final String path, final String prefix) {
         final int idx1 = path.lastIndexOf("/" + prefix);
         final int idx2 = path.lastIndexOf("/");
-        if (idx1 == idx2) {
+        if (idx1 >= 0 && idx1 == idx2) {
             final String svcName = path.substring(path.lastIndexOf("/") + prefix.length() + 1);
             return Optional.of(svcName);
         }

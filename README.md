@@ -11,6 +11,8 @@ Services
 * `acrepo-apix`: An implementation of the API-X framework
 * `acrepo-registry-api`: An API for an API-X service registry
 * `acrepo-registry-memory`: An in-memory implementation of the API-X service registry
+* `acrepo-binding-api`: An API for an API-X service binding
+* `acrepo-binding-memory`: An in-memory implementation of the API-X service binding mechanism
 * `acrepo-idiomatic`: Id Mapping Service: This maps a public ID to a (internal and typically much longer) fedora URI
 * `acrepo-idiomatic-pgsql`: Id Mapping Service Database: This exposes a Postgres datastore for use with the Id Mapping service
 * `acrepo-jsonld-cache`: This service exposes an HTTP endpoint for creating compact JSON-LD documents from a fedora repository using a pluggable context document
@@ -34,8 +36,10 @@ command from its shell:
 
     feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
     feature:install acrepo-apix
-    feature:isntall acrepo-registry-api
+    feature:install acrepo-registry-api
     feature:install acrepo-registry-memory
+    feature:install acrepo-binding-api
+    feature:install acrepo-binding-memory
     feature:install acrepo-idiomatic
     feature:install acrepo-idiomatic-pgsql
     feature:install acrepo-jsonld-cache
