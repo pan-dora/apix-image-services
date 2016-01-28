@@ -20,6 +20,8 @@ package edu.amherst.acdc.apix;
  */
 public final class ApixHeaders {
 
+    public static final String SERVICE_LIST = "CamelApixServiceList";
+
     public static final String SERVICE_NAME = "CamelApixService";
 
     public static final String SERVICE_REGISTRATION = "CamelApixRegistration";

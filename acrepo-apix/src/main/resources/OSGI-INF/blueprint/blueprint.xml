@@ -25,6 +25,8 @@
   <reference id="registryService" interface="edu.amherst.acdc.registry.api.RegistryService" filter="(osgi.jndi.service.name=registry)" />
   <reference id="bindingService" interface="edu.amherst.acdc.binding.api.BindingService" filter="(osgi.jndi.service.name=binding)" />
 
+  <bean id="linkProcessor" class="edu.amherst.acdc.apix.LinkProcessor"/>
+
   <camelContext xmlns="http://camel.apache.org/schema/blueprint">
 
     <package>edu.amherst.acdc.apix</package>
@@ -33,11 +35,12 @@
 
     <route id="ApixInstanceList">
       <from uri="direct:list-bindings"/>
-      <setHeader headerName="instances">
+      <setHeader headerName="CamelApixServiceList">
         <method ref="bindingService" method="list(${header.service})"/>
       </setHeader>
+      <process ref="linkProcessor"/>
       <setBody>
-        <simple>These are the instances for the ${header.service} service: ${headers.instances}</simple>
+        <simple>These are the instances for the ${header.service} service: ${headers.CamelApixServiceList}</simple>
       </setBody>
     </route>
 
@@ -133,11 +136,12 @@
 
     <route id="ApixServiceList">
       <from uri="direct:list"/>
-      <setHeader headerName="Link">
+      <setHeader headerName="CamelApixServiceList">
         <method ref="registryService" method="list()"/>
       </setHeader>
+      <process ref="linkProcessor"/>
       <setBody>
-        <simple>These are the services: ${headers.Link}</simple>
+        <simple>These are the services: ${headers.CamelApixServiceList}</simple>
       </setBody>
     </route>
 
