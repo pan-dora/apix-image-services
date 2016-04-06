@@ -56,9 +56,6 @@ public class ApixRouter extends RouteBuilder {
             .routeId("ApixBindings")
             .setBody().constant("FIXME: Here is some information about the binding endpoint...");
 
-
-
-
         from("jetty:http://{{rest.host}}:{{rest.port}}{{rest.proxy}}?matchOnUriPrefix=true")
             .routeId("ApixRest")
             .routeDescription("The main API-X client REST interface")
@@ -71,7 +68,7 @@ public class ApixRouter extends RouteBuilder {
                     .to("direct:route-service")
                 .otherwise()
                     .log("Headers: ${headers}")
-                    .to("http4://localhost:8983/fedora/rest?authUsername={{fcrepo.authUsername}}" +
+                    .to("http4://{{fcrepo.baseUrl}}?authUsername={{fcrepo.authUsername}}" +
                             "&authPassword={{fcrepo.authPassword}}&bridgeEndpoint=true" +
                             "&throwExceptionOnFailure=false&disableStreamCache=true")
                     .setHeader("Link")
