@@ -93,6 +93,7 @@
     <feature version="${camel.version}">camel-http4</feature>
     <feature version="${activemq.version}">activemq-camel</feature>
     <feature version="${fcrepo-camel.version}">fcrepo-camel</feature>
+    <feature version="${project.version}">acrepo-jsonld-service</feature>
 
     <bundle>mvn:edu.amherst.acdc/acrepo-jsonld-cache/${project.version}</bundle>
 
