@@ -68,11 +68,6 @@
   </scm>
 
   <modules>
-    <module>acrepo-registry-api</module>
-    <module>acrepo-registry-memory</module>
-    <module>acrepo-binding-api</module>
-    <module>acrepo-binding-memory</module>
-    <module>acrepo-apix</module>
     <module>acrepo-idiomatic-pgsql</module>
     <module>acrepo-idiomatic</module>
     <module>acrepo-karaf</module>

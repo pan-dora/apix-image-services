@@ -117,42 +117,4 @@
     <configfile finalname="/etc/edu.amherst.acdc.template.mustache.cfg">mvn:edu.amherst.acdc/acrepo-template-mustache/${project.version}/cfg/configuration</configfile>
   </feature>
 
-  <feature name="acrepo-registry-api" version="${project.version}" resolver="(orb)" start-level="50">
-    <details>Installs the registry API</details>
-
-    <bundle>mvn:edu.amherst.acdc/acrepo-registry-api/${project.version}</bundle>
-  </feature>
-
-  <feature name="acrepo-registry-memory" version="${project.version}" resolver="(orb)" start-level="50">
-    <details>Installs an in-memory implementation of the API-X registry API</details>
-
-    <feature version="${project.version}">acrepo-registry-api</feature>
-
-    <bundle>mvn:edu.amherst.acdc/acrepo-registry-memory/${project.version}</bundle>
-  </feature>
-
-  <feature name="acrepo-binding-api" version="${project.version}" resolver="(orb)" start-level="50">
-    <details>Installs the binding API</details>
-
-    <bundle>mvn:edu.amherst.acdc/acrepo-binding-api/${project.version}</bundle>
-  </feature>
-
-  <feature name="acrepo-binding-memory" version="${project.version}" resolver="(orb)" start-level="50">
-    <details>Installs an in-memory implementation of the API-X binding API</details>
-
-    <feature version="${project.version}">acrepo-binding-api</feature>
-
-    <bundle>mvn:edu.amherst.acdc/acrepo-binding-memory/${project.version}</bundle>
-  </feature>
-
-
-  <feature name="acrepo-apix" version="${project.version}" resolver="(orb)" start-level="50">
-    <details>Installs the API-X Framework</details>
-
-    <feature version="${project.version}">acrepo-registry-api</feature>
-    <feature version="${project.version}">acrepo-binding-api</feature>
-
-    <bundle>mvn:edu.amherst.acdc/acrepo-apix/${project.version}</bundle>
-  </feature>
-
 </features>
