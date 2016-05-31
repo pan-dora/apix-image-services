@@ -38,13 +38,13 @@
     <camel.version>2.17.1</camel.version>
     <commons-lang.version>3.4</commons-lang.version>
     <commons-io.version>2.5</commons-io.version>
-    <derby.version>10.11.1.1</derby.version>
+    <derby.version>10.12.1.1</derby.version>
     <fcrepo-camel.version>4.4.2</fcrepo-camel.version>
     <fcrepo.version>4.5.1</fcrepo.version>
     <junit.version>4.12</junit.version>
     <jsonld.version>0.8.3</jsonld.version>
     <logback.version>1.1.7</logback.version>
-    <postgresql.version>9.4-1201-jdbc41</postgresql.version>
+    <postgresql.version>9.4.1208</postgresql.version>
     <saxon.version>9.6.0-7</saxon.version>
     <slf4j.version>1.7.21</slf4j.version>
     <spring.version>4.1.7.RELEASE</spring.version>
