@@ -17,13 +17,13 @@ package edu.amherst.acdc.mint;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 
-import org.fcrepo.kernel.api.services.functions.UniqueValueSupplier;
+import java.util.function.Supplier;
 
 /**
  * @author acoburn
  * @since 9/14/15
  */
-public class MinterService implements UniqueValueSupplier {
+public class MinterService implements Supplier {
 
     private int length;
 
