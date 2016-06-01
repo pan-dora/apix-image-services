@@ -31,6 +31,46 @@
 
   <name>Karaf Provisioning Features for repository services</name>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.ops4j.pax.exam</groupId>
+      <artifactId>pax-exam-container-karaf</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.ops4j.pax.exam</groupId>
+      <artifactId>pax-exam-junit4</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>edu.amherst.acdc</groupId>
+      <artifactId>acrepo-idiomatic</artifactId>
+      <scope>test</scope>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>edu.amherst.acdc</groupId>
+      <artifactId>acrepo-jsonld-cache</artifactId>
+      <scope>test</scope>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>edu.amherst.acdc</groupId>
+      <artifactId>acrepo-jsonld-service</artifactId>
+      <scope>test</scope>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>edu.amherst.acdc</groupId>
+      <artifactId>acrepo-mint-service</artifactId>
+      <scope>test</scope>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+
   <build>
     <defaultGoal>install</defaultGoal>
 
@@ -63,6 +103,21 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+
+      <!-- pax exam -->
+      <plugin>
+       <groupId>org.ops4j.pax.exam</groupId>
+       <artifactId>maven-paxexam-plugin</artifactId>
+       <version>${paxexam.plugin.version}</version>
+       <executions>
+         <execution>
+           <id>generate-config</id>
+           <goals>
+             <goal>generate-depends-file</goal>
+           </goals>
+         </execution>
+       </executions>
       </plugin>
 
       <plugin>

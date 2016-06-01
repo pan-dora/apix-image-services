@@ -47,8 +47,12 @@
     <saxon.version>9.6.0-7</saxon.version>
     <slf4j.version>1.7.21</slf4j.version>
     <spring.version>4.1.7.RELEASE</spring.version>
+    <pax-exam.version>4.8.0</pax-exam.version>
     <pax-jdbc.version>0.7.0</pax-jdbc.version>
     <woodstox.version>4.4.1</woodstox.version>
+
+    <!-- plugins -->
+    <paxexam.plugin.version>1.2.4</paxexam.plugin.version>
 
     <!-- transitive dependencies for karaf -->
     <httpclient.version>4.2.6</httpclient.version>
@@ -201,6 +205,18 @@
         <version>${camel.version}</version>
         <scope>test</scope>
       </dependency>
+      <dependency>
+        <groupId>org.ops4j.pax.exam</groupId>
+        <artifactId>pax-exam-container-karaf</artifactId>
+        <version>${pax-exam.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.ops4j.pax.exam</groupId>
+        <artifactId>pax-exam-junit4</artifactId>
+        <version>${pax-exam.version}</version>
+        <scope>test</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -216,6 +232,11 @@
             <useBlueprint>true</useBlueprint>
           </configuration>
         </plugin>
+        <plugin>
+         <groupId>org.ops4j.pax.exam</groupId>
+         <artifactId>maven-paxexam-plugin</artifactId>
+         <version>${paxexam.plugin.version}</version>
+       </plugin>
       </plugins>
     </pluginManagement>
 
