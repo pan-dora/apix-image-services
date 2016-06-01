@@ -26,7 +26,7 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import edu.amherst.acdc.mint.MinterService;
-import org.fcrepo.kernel.api.services.functions.UniqueValueSupplier;
+import java.util.function.Supplier;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
@@ -84,7 +84,7 @@ public class RouteTest extends CamelBlueprintTestSupport {
     protected void addServicesOnStartup(final Map<String, KeyValueHolder<Object, Dictionary>> services) {
         services.put(DataSource.class.getName(),
                 asService(new EmbeddedDataSource(), "osgi.jndi.service.name", "idiomaticds"));
-        services.put(UniqueValueSupplier.class.getName(),
+        services.put(Supplier.class.getName(),
                 asService(new MinterService(MINT_LENGTH), "osgi.jndi.service.name", "minter"));
     }
 

@@ -59,10 +59,6 @@
       <artifactId>activemq-camel</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.fcrepo</groupId>
-      <artifactId>fcrepo-kernel-api</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.fcrepo.camel</groupId>
       <artifactId>fcrepo-camel</artifactId>
     </dependency>

@@ -35,7 +35,7 @@
     <argument value="${minter.length}"/>
   </bean>
 
-  <service ref="minterServiceBean" interface="org.fcrepo.kernel.api.services.functions.UniqueValueSupplier">
+  <service ref="minterServiceBean" interface="java.util.function.Supplier">
     <service-properties>
       <entry key="osgi.jndi.service.name" value="minter"/>
     </service-properties>

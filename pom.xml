@@ -40,7 +40,6 @@
     <commons-io.version>2.5</commons-io.version>
     <derby.version>10.12.1.1</derby.version>
     <fcrepo-camel.version>4.4.2</fcrepo-camel.version>
-    <fcrepo.version>4.5.1</fcrepo.version>
     <junit.version>4.12</junit.version>
     <jsonld.version>0.8.3</jsonld.version>
     <logback.version>1.1.7</logback.version>
@@ -129,11 +128,6 @@
         <groupId>com.github.jsonld-java</groupId>
         <artifactId>jsonld-java</artifactId>
         <version>${jsonld.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.fcrepo</groupId>
-        <artifactId>fcrepo-kernel-api</artifactId>
-        <version>${fcrepo.version}</version>
       </dependency>
       <dependency>
         <groupId>org.fcrepo.camel</groupId>
