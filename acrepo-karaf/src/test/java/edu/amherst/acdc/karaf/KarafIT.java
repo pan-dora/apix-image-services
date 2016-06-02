@@ -95,14 +95,20 @@ public class KarafIT {
             features(maven().groupId("org.apache.camel.karaf").artifactId("apache-camel")
                         .type("xml").classifier("features").versionAsInProject(), "camel-mustache",
                         "camel-blueprint", "camel-http4", "camel-spring", "camel-exec", "camel-jetty9",
-                        "camel-jacksonxml"),
+                        "camel-sql", "camel-jacksonxml"),
             features(maven().groupId("org.apache.activemq").artifactId("activemq-karaf")
                         .type("xml").classifier("features").versionAsInProject(), "activemq-camel"),
             features(maven().groupId("org.fcrepo.camel").artifactId("fcrepo-camel")
                         .type("xml").classifier("features").versionAsInProject(), "fcrepo-camel"),
             mavenBundle().groupId("org.codehaus.woodstox").artifactId("woodstox-core-asl").versionAsInProject(),
+            mavenBundle().groupId("org.apache.commons").artifactId("commons-lang3").versionAsInProject(),
+            mavenBundle().groupId("com.github.jsonld-java").artifactId("jsonld-java").versionAsInProject(),
+            mavenBundle().groupId("org.apache.httpcomponents").artifactId("httpclient-osgi").versionAsInProject(),
+            mavenBundle().groupId("org.apache.httpcomponents").artifactId("httpcore-osgi").versionAsInProject(),
+            mavenBundle().groupId("commons-io").artifactId("commons-io").versionAsInProject(),
+            mavenBundle().groupId("commons-codec").artifactId("commons-codec").versionAsInProject(),
 
-            CoreOptions.systemProperty("acdc.idiomatic-bundle").value(acrepoIdeiomatic),
+            CoreOptions.systemProperty("acdc.idiomatic-bundle").value(acrepoIdiomatic),
             CoreOptions.systemProperty("acdc.jsonld-bundle").value(acrepoJsonLd),
             CoreOptions.systemProperty("acdc.jsonld-svc-bundle").value(acrepoJsonLdSvc),
             CoreOptions.systemProperty("acdc.mint-bundle").value(acrepoMint),
