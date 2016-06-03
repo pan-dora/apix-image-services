@@ -50,7 +50,6 @@
     <saxon.version>9.6.0-7</saxon.version>
     <slf4j.version>1.7.21</slf4j.version>
     <spring.version>4.1.7.RELEASE</spring.version>
-    <pax-exam.version>4.8.0</pax-exam.version>
     <pax-jdbc.version>0.7.0</pax-jdbc.version>
     <woodstox.version>4.4.1</woodstox.version>
 
@@ -160,6 +159,11 @@
         </exclusions>
       </dependency>
       <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+        <version>${jackson2.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.codehaus.woodstox</groupId>
         <artifactId>woodstox-core-asl</artifactId>
         <version>${woodstox.version}</version>
@@ -214,6 +218,18 @@
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-test-blueprint</artifactId>
         <version>${camel.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.ops4j.pax.exam</groupId>
+        <artifactId>pax-exam</artifactId>
+        <version>${pax-exam.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.ops4j.pax.exam</groupId>
+        <artifactId>pax-exam-spi</artifactId>
+        <version>${pax-exam.version}</version>
         <scope>test</scope>
       </dependency>
       <dependency>
