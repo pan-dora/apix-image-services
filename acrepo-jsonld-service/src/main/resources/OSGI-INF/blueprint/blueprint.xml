@@ -8,19 +8,21 @@
        http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
 
    <!-- OSGI blueprint property placeholder -->
-   <cm:property-placeholder persistent-id="edu.amherst.acdc.jsonld.cache" update-strategy="reload">
+   <cm:property-placeholder persistent-id="edu.amherst.acdc.jsonld.service" update-strategy="reload">
      <cm:default-properties>
        <cm:property name="error.maxRedeliveries" value="10"/>
        <cm:property name="rest.port" value="13431"/>
-       <cm:property name="jsonld.context" value="https://acdc.amherst.edu/jsonld/context.json"/>
+       <cm:property name="rest.prefix" value="/jsonld"/>
+       <cm:property name="rest.host" value="localhost"/>
+       <cm:property name="jsonld.context" value="https://acdc.amherst.edu/jsonld/models.json"/>
        <cm:property name="fcrepo.baseUrl" value="localhost:8080/fcrepo/rest"/>
      </cm:default-properties>
    </cm:property-placeholder>
 
   <reference id="jsonldService" interface="edu.amherst.acdc.jsonld.JsonLdService" filter="(osgi.jndi.service.name=jsonld)" />
 
-  <camelContext xmlns="http://camel.apache.org/schema/blueprint">
-    <package>edu.amherst.acdc.jsonld.cache</package>
+  <camelContext id="AcrepoJsonLdService" xmlns="http://camel.apache.org/schema/blueprint">
+    <package>edu.amherst.acdc.jsonld.service</package>
 
     <route id="JsonLdCompaction">
       <from uri="direct:compact"/>

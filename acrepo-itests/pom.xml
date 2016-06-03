@@ -84,6 +84,20 @@
     </dependency>
 
     <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>${jackson2.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson2.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.ops4j.pax.exam</groupId>
       <artifactId>pax-exam-container-karaf</artifactId>
       <version>${pax-exam.version}</version>
@@ -94,13 +108,6 @@
       <groupId>org.ops4j.pax.exam</groupId>
       <artifactId>pax-exam-junit4</artifactId>
       <version>${pax-exam.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-      <version>${jackson2.version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -171,7 +178,7 @@
             <portName>fcrepo.dynamic.test.port</portName>
             <portName>fcrepo.dynamic.jms.port</portName>
             <portName>fcrepo.dynamic.stomp.port</portName>
-            <portName>fcrepo.dynamic.reindexing.port</portName>
+            <portName>karaf.jsonld.port</portName>
             <portName>karaf.rmiRegistry.port</portName>
             <portName>karaf.rmiServer.port</portName>
             <portName>karaf.ssh.port</portName>
@@ -198,10 +205,10 @@
           <reuseForks>true</reuseForks>
           <argLine>-Xmx1024m</argLine>
           <systemPropertyVariables>
-            <fcrepo.dynamic.reindexing.port>${fcrepo.dynamic.reindexing.port}</fcrepo.dynamic.reindexing.port>
             <fcrepo.dynamic.test.port>${fcrepo.dynamic.test.port}</fcrepo.dynamic.test.port>
             <fcrepo.dynamic.jms.port>${fcrepo.dynamic.jms.port}</fcrepo.dynamic.jms.port>
             <project.build.outputDirectory>${project.build.outputDirectory}</project.build.outputDirectory>
+            <karaf.jsonld.port>${karaf.jsonld.port}</karaf.jsonld.port>
             <karaf.ssh.port>${karaf.ssh.port}</karaf.ssh.port>
             <karaf.rmiRegistry.port>${karaf.rmiRegistry.port}</karaf.rmiRegistry.port>
             <karaf.rmiServer.port>${karaf.rmiServer.port}</karaf.rmiServer.port>
