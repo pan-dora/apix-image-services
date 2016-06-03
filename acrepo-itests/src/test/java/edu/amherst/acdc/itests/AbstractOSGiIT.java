@@ -16,6 +16,7 @@
 package edu.amherst.acdc.itests;
 
 import static org.apache.http.HttpStatus.SC_CREATED;
+import static org.apache.http.HttpStatus.SC_OK;
 import static org.apache.http.impl.client.HttpClients.createDefault;
 import static org.junit.Assert.assertEquals;
 import static org.osgi.framework.Constants.OBJECTCLASS;
@@ -27,6 +28,7 @@ import java.io.IOException;
 import javax.inject.Inject;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
@@ -56,12 +58,25 @@ public abstract class AbstractOSGiIT {
     protected String post(final String url) {
         final CloseableHttpClient httpclient = createDefault();
         try {
-            final HttpPost httppost = new HttpPost(url);
-            final HttpResponse response = httpclient.execute(httppost);
+            final HttpPost req = new HttpPost(url);
+            final HttpResponse response = httpclient.execute(req);
             assertEquals(SC_CREATED, response.getStatusLine().getStatusCode());
             return EntityUtils.toString(response.getEntity(), "UTF-8");
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             LOGGER.debug("Unable to extract HttpEntity response into an InputStream: ", ex);
+            return "";
+        }
+    }
+
+    protected String get(final String url) {
+        final CloseableHttpClient httpclient = createDefault();
+        try {
+            final HttpGet req = new HttpGet(url);
+            final HttpResponse response = httpclient.execute(req);
+            assertEquals(SC_OK, response.getStatusLine().getStatusCode());
+            return EntityUtils.toString(response.getEntity(), "UTF-8");
+        } catch (final IOException ex) {
+            LOGGER.warn("Unable to extract HttpEntity response into an InputStream: ", ex);
             return "";
         }
     }

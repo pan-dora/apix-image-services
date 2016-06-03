@@ -15,8 +15,13 @@
  */
 package edu.amherst.acdc.itests;
 
+import static java.util.stream.IntStream.rangeClosed;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.ops4j.pax.exam.CoreOptions.maven;
+import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
+import static org.ops4j.pax.exam.CoreOptions.systemProperty;
 import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.configureConsole;
 import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.editConfigurationFilePut;
 import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.features;
@@ -27,6 +32,10 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 import java.io.File;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.apache.camel.CamelContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.Configuration;
@@ -44,15 +53,18 @@ import org.slf4j.Logger;
  */
 @RunWith(PaxExam.class)
 @ExamReactorStrategy(PerClass.class)
-public class AcrepoServicesIT extends AbstractOSGiIT {
+public class AcrepoJsonLDIT extends AbstractOSGiIT {
 
-    private static Logger LOGGER = getLogger(AcrepoServicesIT.class);
+    private static Logger LOGGER = getLogger(AcrepoJsonLDIT.class);
 
     @Configuration
     public Option[] config() {
         final ConfigurationManager cm = new ConfigurationManager();
+        final String fcrepoPort = cm.getProperty("fcrepo.dynamic.test.port");
+        final String jsonldServicePort = cm.getProperty("karaf.jsonld.port");
         final String rmiRegistryPort = cm.getProperty("karaf.rmiRegistry.port");
         final String rmiServerPort = cm.getProperty("karaf.rmiServer.port");
+        final String fcrepoBaseUrl = "localhost:" + fcrepoPort + "/fcrepo/rest";
         final String sshPort = cm.getProperty("karaf.ssh.port");
 
         return new Option[] {
@@ -66,18 +78,21 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
             configureConsole().ignoreLocalConsole(),
             features(maven().groupId("org.apache.karaf.features").artifactId("standard")
                         .versionAsInProject().classifier("features").type("xml"), "scr"),
-            features(maven().groupId("org.apache.camel.karaf").artifactId("apache-camel")
-                        .type("xml").classifier("features").versionAsInProject(), "camel-blueprint"),
-            features(maven().groupId("org.apache.activemq").artifactId("activemq-karaf")
-                        .type("xml").classifier("features").versionAsInProject(), "activemq-camel"),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
-                        .type("xml").classifier("features").versionAsInProject(), "acrepo-idiomatic",
-                    "acrepo-idiomatic-pgsql", "acrepo-mint-service", "acrepo-xml-metadata",
-                    "acrepo-jsonld-service", "acrepo-jsonld-osgi", "acrepo-template-mustache"),
+                        .type("xml").classifier("features").versionAsInProject(),
+                    "acrepo-jsonld-service", "acrepo-jsonld-osgi"),
+
+            mavenBundle().groupId("com.fasterxml.jackson.core").artifactId("jackson-core").versionAsInProject(),
+            mavenBundle().groupId("com.fasterxml.jackson.core").artifactId("jackson-databind").versionAsInProject(),
+
+            systemProperty("karaf.jsonld.port").value(jsonldServicePort),
+            systemProperty("fcrepo.port").value(fcrepoPort),
 
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", rmiRegistryPort),
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", rmiServerPort),
-            editConfigurationFilePut("etc/org.apache.karaf.shell.cfg", "sshPort", sshPort)
+            editConfigurationFilePut("etc/org.apache.karaf.shell.cfg", "sshPort", sshPort),
+            editConfigurationFilePut("etc/edu.amherst.acdc.jsonld.service.cfg", "fcrepo.baseUrl", fcrepoBaseUrl),
+            editConfigurationFilePut("etc/edu.amherst.acdc.jsonld.service.cfg", "rest.port", jsonldServicePort)
        };
     }
 
@@ -85,12 +100,37 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
     public void testInstallation() throws Exception {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("camel-core")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("fcrepo-camel")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-idiomatic")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-idiomatic-pgsql")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-mint-service")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-xml-metadata")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-jsonld-service")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-jsonld-osgi")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-template-mustache")));
+    }
+
+    @Test
+    public void testJsonLdService() throws Exception {
+        // make sure that the camel context has started up.
+        final CamelContext ctx = getOsgiService(CamelContext.class, "(camel.context.name=AcrepoJsonLdService)",
+                10000);
+        assertNotNull(ctx);
+
+        final String baseUrl = "http://localhost:" + System.getProperty("fcrepo.port") + "/fcrepo/rest";
+        final String baseSvcUrl = "http://localhost:" + System.getProperty("karaf.jsonld.port") + "/jsonld";
+
+        rangeClosed(1, 3).mapToObj(x -> post(baseUrl).replace(baseUrl, "")).forEach(id -> {
+            final ObjectMapper mapper = new ObjectMapper();
+            try {
+                final JsonNode obj = mapper.readTree(get(baseSvcUrl + id));
+                assertNotNull(obj.get("id"));
+                assertEquals(obj.get("id").asText(), baseUrl + id);
+                assertNotNull(obj.get("type"));
+                assertNotNull(obj.get("created"));
+                assertNotNull(obj.get("createdBy"));
+                assertNotNull(obj.get("hasParent"));
+                assertNotNull(obj.get("lastModified"));
+                assertNotNull(obj.get("lastModifiedBy"));
+                assertNotNull(obj.get("numberOfChildren"));
+                assertNotNull(obj.get("writable"));
+            } catch (final Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
     }
 }

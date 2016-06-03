@@ -41,9 +41,10 @@ public class EventRouter extends RouteBuilder {
             .maximumRedeliveries("{{error.maxRedeliveries}}")
             .log("Event Routing Error: ${routeId}");
 
-        from("jetty:http://0.0.0.0:{{rest.port}}/jsonld?" +
+        from("jetty:http://{{rest.host}}:{{rest.port}}{{rest.prefix}}?" +
               "matchOnUriPrefix=true&sendServerVersion=false&httpMethodRestrict=GET")
           .routeId("JsonLdRouter")
+          .log("JSONLD Processing ${headers[CamelHttpPath]}")
           .setHeader(FCREPO_IDENTIFIER).header(HTTP_PATH)
           .to("direct:get");
 

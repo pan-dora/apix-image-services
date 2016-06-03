@@ -68,6 +68,7 @@
     <karaf.version>4.0.5</karaf.version>
     <pax-exam.version>4.8.0</pax-exam.version>
     <jena.fuseki.version>2.3.1</jena.fuseki.version>
+    <jackson2.version>2.7.4</jackson2.version>
 
     <!-- OSGi -->
     <osgi.import.packages>*</osgi.import.packages>
