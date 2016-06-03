@@ -25,6 +25,7 @@ import static org.osgi.framework.FrameworkUtil.createFilter;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.inject.Inject;
 
@@ -33,9 +34,11 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpOptions;
 import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
+
 import org.apache.karaf.features.FeaturesService;
 import org.ops4j.pax.exam.Option;
 import org.osgi.framework.BundleContext;
@@ -60,9 +63,17 @@ public abstract class AbstractOSGiIT {
     public abstract Option[] config();
 
     protected String post(final String url) {
+        return post(url, null, null);
+    }
+
+    protected String post(final String url, final InputStream stream, final String contentType) {
         final CloseableHttpClient httpclient = createDefault();
         try {
             final HttpPost req = new HttpPost(url);
+            if (stream != null) {
+              req.setHeader("Content-Type", contentType);
+              req.setEntity(new InputStreamEntity(stream));
+            }
             final HttpResponse response = httpclient.execute(req);
             assertEquals(SC_CREATED, response.getStatusLine().getStatusCode());
             return EntityUtils.toString(response.getEntity(), "UTF-8");
