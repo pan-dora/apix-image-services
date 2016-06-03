@@ -1,7 +1,7 @@
-Repository JSON-LD handling service
-===================================
+Repository JSON-LD OSGi handling service
+========================================
 
-This service transforms JSON-LD documents, either expanding or compacting them.
+This OSGi service transforms JSON-LD documents, either expanding or compacting them.
 The service can be used with any camel route in an OSGi container.
 
 Building
@@ -19,7 +19,7 @@ Each of these projects can be deployed in an OSGi container. For example using
 command from its shell:
 
     feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
-    feature:install acrepo-jsonld-service
+    feature:install acrepo-jsonld-osgi
 
 Or by copying any of the compiled bundles into `$KARAF_HOME/deploy`.
 
