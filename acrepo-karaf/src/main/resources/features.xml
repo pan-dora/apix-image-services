@@ -102,7 +102,7 @@
     <feature version="${camel.version}">camel-jackson</feature>
     <feature version="${camel.version}">camel-http4</feature>
     <feature version="${fcrepo-camel.version}">fcrepo-camel</feature>
-    <feature version="${project.version}">acrepo-jsonld-service</feature>
+    <feature version="${project.version}">acrepo-jsonld-osgi</feature>
 
     <bundle>mvn:edu.amherst.acdc/acrepo-template-mustache/${project.version}</bundle>
 
