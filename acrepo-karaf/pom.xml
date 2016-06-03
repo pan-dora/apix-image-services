@@ -71,6 +71,21 @@
 
     <!-- Testing & Camel Plugin -->
     <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.ops4j.pax.exam</groupId>
+      <artifactId>pax-exam-spi</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>org.glassfish.hk2.external</groupId>
       <artifactId>javax.inject</artifactId>
       <version>${hk2.version}</version>
@@ -95,6 +110,12 @@
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
       <version>${commons-codec.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.ops4j.pax.exam</groupId>
+      <artifactId>pax-exam</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -133,6 +154,13 @@
       <version>${activemq.version}</version>
       <type>xml</type>
       <classifier>features</classifier>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.karaf.features</groupId>
+      <artifactId>org.apache.karaf.features.core</artifactId>
+      <version>${karaf.version}</version>
       <scope>test</scope>
     </dependency>
 
