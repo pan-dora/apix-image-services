@@ -16,6 +16,7 @@
 package edu.amherst.acdc.itests;
 
 import static org.apache.http.HttpStatus.SC_CREATED;
+import static org.apache.http.HttpStatus.SC_NO_CONTENT;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.apache.http.impl.client.HttpClients.createDefault;
 import static org.junit.Assert.assertEquals;
@@ -29,7 +30,9 @@ import javax.inject.Inject;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.karaf.features.FeaturesService;
@@ -66,6 +69,21 @@ public abstract class AbstractOSGiIT {
             LOGGER.debug("Unable to extract HttpEntity response into an InputStream: ", ex);
             return "";
         }
+    }
+
+    protected boolean patch(final String url, final String sparql) {
+        final CloseableHttpClient httpclient = createDefault();
+        try {
+            final HttpPatch req = new HttpPatch(url);
+            req.addHeader("Content-Type", "application/sparql-update");
+            req.setEntity(new StringEntity(sparql));
+            final HttpResponse response = httpclient.execute(req);
+            assertEquals(SC_NO_CONTENT, response.getStatusLine().getStatusCode());
+            return true;
+        } catch (final IOException ex) {
+            LOGGER.warn("Error patching to {}: {}", url, ex.getMessage());
+        }
+        return false;
     }
 
     protected String get(final String url) {
