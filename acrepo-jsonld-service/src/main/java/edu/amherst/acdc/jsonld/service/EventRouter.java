@@ -13,18 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.amherst.acdc.jsonld.cache;
+package edu.amherst.acdc.jsonld.service;
 
 import static org.apache.camel.Exchange.HTTP_RESPONSE_CODE;
 import static org.apache.camel.Exchange.HTTP_PATH;
-import static org.apache.camel.Exchange.HTTP_METHOD;
 import static org.fcrepo.camel.FcrepoHeaders.FCREPO_IDENTIFIER;
 import static org.fcrepo.camel.FcrepoHeaders.FCREPO_BASE_URL;
-import static org.fcrepo.camel.JmsHeaders.EVENT_TYPE;
-import static org.fcrepo.camel.JmsHeaders.IDENTIFIER;
-import static org.fcrepo.camel.RdfNamespaces.REPOSITORY;
 
-//import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 
 /**
@@ -46,38 +41,11 @@ public class EventRouter extends RouteBuilder {
             .maximumRedeliveries("{{error.maxRedeliveries}}")
             .log("Event Routing Error: ${routeId}");
 
-        from("{{input.stream}}")
-            .setHeader(FCREPO_IDENTIFIER).header(IDENTIFIER)
-            .choice()
-                .when(header(EVENT_TYPE).isEqualTo(REPOSITORY + "NODE_REMOVED"))
-                    .to("direct:delete")
-                .otherwise()
-                    .to("direct:update");
-
         from("jetty:http://0.0.0.0:{{rest.port}}/jsonld?" +
-              "matchOnUriPrefix=true&sendServerVersion=false&httpMethodRestrict=GET,PUT,DELETE")
+              "matchOnUriPrefix=true&sendServerVersion=false&httpMethodRestrict=GET")
           .routeId("JsonLdRouter")
           .setHeader(FCREPO_IDENTIFIER).header(HTTP_PATH)
-          .choice()
-            .when(header(HTTP_METHOD).isEqualTo("GET")).to("direct:get")
-            .when(header(HTTP_METHOD).isEqualTo("PUT")).to("direct:update")
-            .when(header(HTTP_METHOD).isEqualTo("DELETE")).to("direct:delete");
-
-        from("direct:update")
-          .routeId("JsonLdUpdate")
-          .to("direct:get")
-          .filter(header(HTTP_RESPONSE_CODE).isEqualTo(200))
-            .setHeader(HTTP_METHOD).constant("PUT")
-            .process(new RiakKeyBuilder())
-            .log("Updating cache entry for: ${headers[CamelFcrepoIdentifier]}")
-            .to("http4://{{riak.host}}");
-
-        from("direct:delete")
-          .routeId("JsonLdDelete")
-          .setHeader(HTTP_METHOD).constant("DELETE")
-          .process(new RiakKeyBuilder())
-          .log("Deleting cache entry for: ${headers[CamelFcrepoIdentifier]}")
-          .to("http4://{{riak.host}}");
+          .to("direct:get");
 
         from("direct:get")
           .routeId("JsonLdGet")

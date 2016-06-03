@@ -16,8 +16,6 @@
        <cm:property name="mustache.contentType" value="text/html"/>
        <cm:property name="jsonld.context" value="https://acdc.amherst.edu/jsonld/context.json"/>
        <cm:property name="fcrepo.baseUrl" value="localhost:8080/fcrepo/rest"/>
-       <cm:property name="riak.host" value="localhost:8098"/>
-       <cm:property name="riak.bucket" value="fcrepo"/>
      </cm:default-properties>
    </cm:property-placeholder>
 

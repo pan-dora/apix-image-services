@@ -87,7 +87,7 @@
     <module>acrepo-mint-service</module>
     <module>acrepo-xml-metadata</module>
     <module>acrepo-jsonld-service</module>
-    <module>acrepo-jsonld-cache</module>
+    <module>acrepo-jsonld-osgi</module>
     <module>acrepo-template-mustache</module>
   </modules>
 

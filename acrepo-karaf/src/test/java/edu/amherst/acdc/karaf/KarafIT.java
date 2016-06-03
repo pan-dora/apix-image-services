@@ -77,7 +77,7 @@ public class KarafIT {
 
         final String version = cm.getProperty("project.version");
         final String acrepoIdiomatic = getBundleUri("acrepo-idiomatic", version);
-        final String acrepoJsonLd = getBundleUri("acrepo-jsonld-cache", version);
+        final String acrepoJsonLd = getBundleUri("acrepo-jsonld-osgi", version);
         final String acrepoJsonLdSvc = getBundleUri("acrepo-jsonld-service", version);
         final String acrepoMint = getBundleUri("acrepo-mint-service", version);
 
@@ -132,7 +132,6 @@ public class KarafIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("fcrepo-camel")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("activemq-camel")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("camel-blueprint")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("camel-http4")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("camel-jetty9")));
         assertNotNull(bundleContext);
 
