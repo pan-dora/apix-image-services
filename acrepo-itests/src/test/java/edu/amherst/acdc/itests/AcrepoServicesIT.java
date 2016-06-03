@@ -81,25 +81,14 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(), "acrepo-idiomatic",
                     "acrepo-idiomatic-pgsql", "acrepo-mint-service", "acrepo-xml-metadata",
-                    "acrepo-jsonld-service", "acrepo-jsonld-cache", "acrepo-template-mustache"),
+                    "acrepo-jsonld-service", "acrepo-jsonld-osgi", "acrepo-template-mustache"),
 
             systemProperty("karaf.reindexing.port").value(reindexingPort),
             systemProperty("fcrepo.port").value(fcrepoPort),
 
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", rmiRegistryPort),
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", rmiServerPort),
-            editConfigurationFilePut("etc/org.apache.karaf.shell.cfg", "sshPort", sshPort),
-            editConfigurationFilePut("etc/org.fcrepo.camel.indexing.triplestore.cfg", "fcrepo.baseUrl", fcrepoBaseUrl),
-            editConfigurationFilePut("etc/org.fcrepo.camel.indexing.triplestore.cfg", "triplestore.baseUrl",
-                    triplestoreBaseUrl),
-            editConfigurationFilePut("etc/org.fcrepo.camel.indexing.solr.cfg", "fcrepo.baseUrl", fcrepoBaseUrl),
-            editConfigurationFilePut("etc/org.fcrepo.camel.indexing.solr.cfg", "input.stream", emptyTopic),
-            editConfigurationFilePut("etc/org.fcrepo.camel.reindexing.cfg", "fcrepo.baseUrl", fcrepoBaseUrl),
-            editConfigurationFilePut("etc/org.fcrepo.camel.reindexing.cfg", "rest.port", reindexingPort),
-            editConfigurationFilePut("etc/org.fcrepo.camel.serialization.cfg", "fcrepo.baseUrl", fcrepoBaseUrl),
-            editConfigurationFilePut("etc/org.fcrepo.camel.serialization.cfg", "serialization.descriptions",
-                    "data/tmp/descriptions"),
-            editConfigurationFilePut("etc/org.fcrepo.camel.service.activemq.cfg", "jms.brokerUrl", brokerUrl)
+            editConfigurationFilePut("etc/org.apache.karaf.shell.cfg", "sshPort", sshPort)
        };
     }
 
@@ -112,7 +101,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-mint-service")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-xml-metadata")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-jsonld-service")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-jsonld-cache")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-jsonld-osgi")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-template-mustache")));
     }
 }

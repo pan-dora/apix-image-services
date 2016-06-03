@@ -11,21 +11,13 @@
    <cm:property-placeholder persistent-id="edu.amherst.acdc.jsonld.cache" update-strategy="reload">
      <cm:default-properties>
        <cm:property name="error.maxRedeliveries" value="10"/>
-       <cm:property name="jms.brokerUrl" value="tcp://localhost:61616"/>
-       <cm:property name="input.stream" value="activemq:topic:fedora"/>
        <cm:property name="rest.port" value="13431"/>
        <cm:property name="jsonld.context" value="https://acdc.amherst.edu/jsonld/context.json"/>
        <cm:property name="fcrepo.baseUrl" value="localhost:8080/fcrepo/rest"/>
-       <cm:property name="riak.host" value="localhost:8098"/>
-       <cm:property name="riak.bucket" value="fcrepo"/>
      </cm:default-properties>
    </cm:property-placeholder>
 
   <reference id="jsonldService" interface="edu.amherst.acdc.jsonld.JsonLdService" filter="(osgi.jndi.service.name=jsonld)" />
-
-  <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
-    <property name="brokerURL" value="${jms.brokerUrl}"/>
-  </bean>
 
   <camelContext xmlns="http://camel.apache.org/schema/blueprint">
     <package>edu.amherst.acdc.jsonld.cache</package>

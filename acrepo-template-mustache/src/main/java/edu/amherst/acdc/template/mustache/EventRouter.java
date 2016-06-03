@@ -18,15 +18,12 @@ package edu.amherst.acdc.template.mustache;
 import static org.apache.camel.Exchange.CONTENT_TYPE;
 import static org.apache.camel.Exchange.HTTP_PATH;
 import static org.apache.camel.Exchange.HTTP_RESPONSE_CODE;
-import static org.apache.camel.Exchange.HTTP_URI;
-import static org.apache.camel.Exchange.HTTP_URL;
 import static org.fcrepo.camel.FcrepoHeaders.FCREPO_IDENTIFIER;
 
 import java.util.Map;
 
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.builder.RouteBuilder;
-import edu.amherst.acdc.jsonld.cache.RiakKeyBuilder;
 
 /**
  * @author Aaron Coburn
@@ -53,17 +50,7 @@ public class EventRouter extends RouteBuilder {
             .removeHeader("breadcrumbId")
             .removeHeader("Accept")
             .removeHeader("User-Agent")
-            .to("direct:getFromCache")
-            .choice()
-                .when(header(HTTP_RESPONSE_CODE).isEqualTo(200)).to("direct:template")
-                .otherwise().to("direct:getFromFedora");
-
-        from("direct:getFromCache")
-            .routeId("FetchFromCache")
-            .removeHeader(HTTP_URL)
-            .removeHeader(HTTP_URI)
-            .process(new RiakKeyBuilder())
-            .to("http4:{{riak.host}}?throwExceptionOnFailure=false");
+            .to("direct:getFromFedora");
 
         from("direct:getFromFedora")
             .routeId("FetchFromRepository")
