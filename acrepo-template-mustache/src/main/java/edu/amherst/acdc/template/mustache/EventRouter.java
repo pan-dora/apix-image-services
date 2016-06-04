@@ -55,6 +55,8 @@ public class EventRouter extends RouteBuilder {
                     .removeHeader("User-Agent")
                     .to("direct:getFromFedora")
                 .when(header(HTTP_METHOD).isEqualTo("OPTIONS"))
+                    .setHeader(CONTENT_TYPE).constant("text/turtle")
+                    .setHeader("Allow").constant("GET,OPTIONS")
                     .to("language:simple:resource:classpath:options.ttl");
 
         from("direct:getFromFedora")

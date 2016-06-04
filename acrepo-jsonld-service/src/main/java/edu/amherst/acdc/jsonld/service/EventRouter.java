@@ -15,6 +15,7 @@
  */
 package edu.amherst.acdc.jsonld.service;
 
+import static org.apache.camel.Exchange.CONTENT_TYPE;
 import static org.apache.camel.Exchange.HTTP_METHOD;
 import static org.apache.camel.Exchange.HTTP_PATH;
 import static org.apache.camel.Exchange.HTTP_RESPONSE_CODE;
@@ -51,6 +52,8 @@ public class EventRouter extends RouteBuilder {
               .setHeader(FCREPO_IDENTIFIER).header(HTTP_PATH)
               .to("direct:get")
             .when(header(HTTP_METHOD).isEqualTo("OPTIONS"))
+              .setHeader(CONTENT_TYPE).constant("text/turtle")
+              .setHeader("Allow").constant("GET,OPTIONS")
               .to("language:simple:resource:classpath:options.ttl");
 
         from("direct:get")
