@@ -106,6 +106,8 @@ public class AcrepoTemplateIT extends AbstractOSGiIT {
         final String baseUrl = "http://localhost:" + System.getProperty("fcrepo.port") + "/fcrepo/rest";
         final String baseSvcUrl = "http://localhost:" + System.getProperty("karaf.template.port") + "/template";
 
+        assertTrue(options(baseSvcUrl).contains("owl:equivalentClass fedora:Resource"));
+
         range(1, 2).mapToObj(x -> post(baseUrl)).forEach(url -> {
             patch(url, "PREFIX dcterms: <http://purl.org/dc/terms/>\n" +
                 "INSERT { <> dcterms:title \"Title\" ; dcterms:description \"A description: " + url + "\" } " +

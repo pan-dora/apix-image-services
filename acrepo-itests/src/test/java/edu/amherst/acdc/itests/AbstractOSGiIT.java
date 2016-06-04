@@ -30,6 +30,7 @@ import javax.inject.Inject;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpOptions;
 import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -90,6 +91,19 @@ public abstract class AbstractOSGiIT {
         final CloseableHttpClient httpclient = createDefault();
         try {
             final HttpGet req = new HttpGet(url);
+            final HttpResponse response = httpclient.execute(req);
+            assertEquals(SC_OK, response.getStatusLine().getStatusCode());
+            return EntityUtils.toString(response.getEntity(), "UTF-8");
+        } catch (final IOException ex) {
+            LOGGER.warn("Unable to extract HttpEntity response into an InputStream: ", ex);
+            return "";
+        }
+    }
+
+    protected String options(final String url) {
+        final CloseableHttpClient httpclient = createDefault();
+        try {
+            final HttpOptions req = new HttpOptions(url);
             final HttpResponse response = httpclient.execute(req);
             assertEquals(SC_OK, response.getStatusLine().getStatusCode());
             return EntityUtils.toString(response.getEntity(), "UTF-8");
