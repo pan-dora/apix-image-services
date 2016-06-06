@@ -15,8 +15,10 @@
  */
 package edu.amherst.acdc.jsonld.service;
 
-import static org.apache.camel.Exchange.HTTP_RESPONSE_CODE;
+import static org.apache.camel.Exchange.CONTENT_TYPE;
+import static org.apache.camel.Exchange.HTTP_METHOD;
 import static org.apache.camel.Exchange.HTTP_PATH;
+import static org.apache.camel.Exchange.HTTP_RESPONSE_CODE;
 import static org.fcrepo.camel.FcrepoHeaders.FCREPO_IDENTIFIER;
 import static org.fcrepo.camel.FcrepoHeaders.FCREPO_BASE_URL;
 
@@ -42,11 +44,17 @@ public class EventRouter extends RouteBuilder {
             .log("Event Routing Error: ${routeId}");
 
         from("jetty:http://{{rest.host}}:{{rest.port}}{{rest.prefix}}?" +
-              "matchOnUriPrefix=true&sendServerVersion=false&httpMethodRestrict=GET")
+              "matchOnUriPrefix=true&sendServerVersion=false&httpMethodRestrict=GET,OPTIONS")
           .routeId("JsonLdRouter")
-          .log("JSONLD Processing ${headers[CamelHttpPath]}")
-          .setHeader(FCREPO_IDENTIFIER).header(HTTP_PATH)
-          .to("direct:get");
+          .choice()
+            .when(header(HTTP_METHOD).isEqualTo("GET"))
+              .log("JSONLD Processing ${headers[CamelHttpPath]}")
+              .setHeader(FCREPO_IDENTIFIER).header(HTTP_PATH)
+              .to("direct:get")
+            .when(header(HTTP_METHOD).isEqualTo("OPTIONS"))
+              .setHeader(CONTENT_TYPE).constant("text/turtle")
+              .setHeader("Allow").constant("GET,OPTIONS")
+              .to("language:simple:resource:classpath:options.ttl");
 
         from("direct:get")
           .routeId("JsonLdGet")

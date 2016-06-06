@@ -16,6 +16,7 @@
 package edu.amherst.acdc.template.mustache;
 
 import static org.apache.camel.Exchange.CONTENT_TYPE;
+import static org.apache.camel.Exchange.HTTP_METHOD;
 import static org.apache.camel.Exchange.HTTP_PATH;
 import static org.apache.camel.Exchange.HTTP_RESPONSE_CODE;
 import static org.fcrepo.camel.FcrepoHeaders.FCREPO_IDENTIFIER;
@@ -43,14 +44,20 @@ public class EventRouter extends RouteBuilder {
             .log("Event Routing Error: ${routeId}");
 
         from("jetty:http://0.0.0.0:{{rest.port}}/template?" +
-                "matchOnUriPrefix=true&httpMethodRestrict=GET&sendServerVersion=false")
+                "matchOnUriPrefix=true&httpMethodRestrict=GET,OPTIONS&sendServerVersion=false")
             .routeId("TemplateTransformation")
-            .log("PATH: ${headers[CamelHttpPath]}")
-            .setHeader(FCREPO_IDENTIFIER).header(HTTP_PATH)
-            .removeHeader("breadcrumbId")
-            .removeHeader("Accept")
-            .removeHeader("User-Agent")
-            .to("direct:getFromFedora");
+            .choice()
+                .when(header(HTTP_METHOD).isEqualTo("GET"))
+                    .log("PATH: ${headers[CamelHttpPath]}")
+                    .setHeader(FCREPO_IDENTIFIER).header(HTTP_PATH)
+                    .removeHeader("breadcrumbId")
+                    .removeHeader("Accept")
+                    .removeHeader("User-Agent")
+                    .to("direct:getFromFedora")
+                .when(header(HTTP_METHOD).isEqualTo("OPTIONS"))
+                    .setHeader(CONTENT_TYPE).constant("text/turtle")
+                    .setHeader("Allow").constant("GET,OPTIONS")
+                    .to("language:simple:resource:classpath:options.ttl");
 
         from("direct:getFromFedora")
             .routeId("FetchFromRepository")
