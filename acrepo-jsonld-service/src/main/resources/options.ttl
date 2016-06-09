@@ -1,4 +1,4 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix fedora: <http://fedora.info/definitions/v4/repository#> .
 
-[ owl:equivalentClass fedora:Binary ] .
+[ owl:equivalentClass fedora:Resource ] .
