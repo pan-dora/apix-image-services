@@ -83,6 +83,7 @@
   <modules>
     <module>acrepo-idiomatic-pgsql</module>
     <module>acrepo-idiomatic</module>
+    <module>acrepo-image-service</module>
     <module>acrepo-karaf</module>
     <module>acrepo-mint-service</module>
     <module>acrepo-xml-metadata</module>
@@ -116,6 +117,11 @@
       <dependency>
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-jetty9</artifactId>
+        <version>${camel.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-exec</artifactId>
         <version>${camel.version}</version>
       </dependency>
       <dependency>
