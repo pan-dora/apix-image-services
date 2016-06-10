@@ -73,7 +73,8 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(), "acrepo-idiomatic",
                     "acrepo-idiomatic-pgsql", "acrepo-mint-service", "acrepo-xml-metadata",
-                    "acrepo-jsonld-service", "acrepo-jsonld-osgi", "acrepo-template-mustache"),
+                    "acrepo-jsonld-service", "acrepo-jsonld-osgi", "acrepo-template-mustache",
+                    "acrepo-image-service"),
 
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", rmiRegistryPort),
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", rmiServerPort),
@@ -92,5 +93,6 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-jsonld-service")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-jsonld-osgi")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-template-mustache")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-image-service")));
     }
 }

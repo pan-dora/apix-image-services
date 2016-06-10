@@ -1,0 +1,8 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix ebucore: <http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#> .
+
+[ owl:unionOf (
+    [ a owl:Restriction ; owl:onProperty ebucore:mimeType ; owl:hasValue "image/tiff" ]
+    [ a owl:Restriction ; owl:onProperty ebucore:mimeType ; owl:hasValue "image/jpeg" ]
+    [ a owl:Restriction ; owl:onProperty ebucore:mimeType ; owl:hasValue "image/jp2" ] ) ] .
+
