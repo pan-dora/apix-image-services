@@ -7,7 +7,14 @@ This service assumes that ImageMagick is installed somewhere.
 The endpoint location is configurable. Any path appended to that endpoint root will be used
 as a path to a Fedora Resource. The `options` parameter can be used to add output parameters
 to ImageMagick. The `Accept` header is used to change the format of the image. By default,
-the output is JPEG.
+the output is JPEG, but any format listed in the configuration under `valid.formats` can be used.
+By default, the valid output formats are `image/tiff`, `image/jp2` and `image/jpeg`.
+
+An example:
+
+    curl http://localhost:9081/image/path/to/binary?options=-resize%20400x400 -H"Accept: image/jpeg"
+
+The service is defined to operate on any `fedora:Binary` resources with a MIMEType of `image/*`.
 
 Building
 --------
@@ -25,8 +32,6 @@ command from its shell:
 
     feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
     feature:install acrepo-image-service
-
-Or by copying any of the compiled bundles into `$KARAF_HOME/deploy`.
 
 Configuration
 -------------

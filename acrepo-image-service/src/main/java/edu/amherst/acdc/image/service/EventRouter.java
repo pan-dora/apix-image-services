@@ -42,6 +42,9 @@ public class EventRouter extends RouteBuilder {
 
     private final String IMAGE_OUTPUT = "CamelImageOutput";
     private final String IMAGE_INPUT = "CamelImageInput";
+    private final String HTTP_ACCEPT = "Accept";
+    private final String DEFAULT_OUTPUT_FORMAT = "jpeg";
+    private final String HTTP_QUERY_OPTIONS = "options";
 
     private static final Logger LOGGER = getLogger(EventRouter.class);
 
@@ -54,15 +57,15 @@ public class EventRouter extends RouteBuilder {
               "matchOnUriPrefix=true&sendServerVersion=false&httpMethodRestrict=GET,OPTIONS")
           .routeId("ImageRouter")
           .setHeader(FCREPO_IDENTIFIER).header(HTTP_PATH)
-          .setHeader(IMAGE_OUTPUT).header("Accept")
-          .removeHeaders("Accept")
+          .setHeader(IMAGE_OUTPUT).header(HTTP_ACCEPT)
+          .removeHeaders(HTTP_ACCEPT)
           .choice()
             .when(header(HTTP_METHOD).isEqualTo("GET"))
               .setHeader(FCREPO_IDENTIFIER).header(HTTP_PATH)
               .to("direct:get")
             .when(header(HTTP_METHOD).isEqualTo("OPTIONS"))
               .setHeader(CONTENT_TYPE).constant("text/turtle")
-              .setHeader("Allow").constant("GET,OPTIONS")
+              .setHeader(HTTP_ACCEPT).constant("GET,OPTIONS")
               .to("language:simple:resource:classpath:options.ttl");
 
         from("direct:get")
@@ -76,23 +79,28 @@ public class EventRouter extends RouteBuilder {
                         header("Link").contains("<http://www.w3.org/ns/ldp#NonRDFSource>;rel=\"type\"")))
               .log(INFO, LOGGER, "Image Processing ${headers[CamelHttpPath]}")
               .to("direct:convert")
+            .when(header("Link").contains("<http://www.w3.org/ns/ldp#NonRDFSource>;rel=\"type\""))
+              .setBody(constant("Error: this resource is not an image"))
+              .to("direct:invalidFormat")
             .when(header(HTTP_RESPONSE_CODE).isEqualTo(200))
-              .to("direct:notBinary")
+              .setBody(constant("Error: this resource is not a fedora:Binary"))
+              .to("direct:invalidFormat")
             .otherwise()
               .to("direct:error");
 
-         from("direct:notBinary")
-             .routeId("ImageNotBinary")
+         from("direct:invalidFormat")
+             .routeId("ImageInvalidFormat")
              .removeHeaders("*")
-             .setBody(constant("Error: this resource is not a fedora:Binary"))
              .setHeader(CONTENT_TYPE).constant("text/plain")
              .setHeader(HTTP_RESPONSE_CODE).constant(400);
 
          from("direct:error")
              .routeId("ImageError")
-             .setBody(constant("Error: this resource is not accessible"));
+             .setBody(constant("Error: this resource is not accessible"))
+             .setHeader(CONTENT_TYPE).constant("text/plain");
 
         from("direct:convert")
+          .routeId("ImageConvert")
           .setHeader(HTTP_METHOD).constant("GET")
           .setHeader(HTTP_PATH).header(FCREPO_IDENTIFIER)
           .to("http4://{{fcrepo.baseUrl}}?authUsername={{fcrepo.authUsername}}" +
@@ -100,7 +108,7 @@ public class EventRouter extends RouteBuilder {
           .setHeader(IMAGE_INPUT).header(CONTENT_TYPE)
           .process(exchange -> {
               final String accept = exchange.getIn().getHeader(IMAGE_OUTPUT, "", String.class);
-              final String fmt = accept.matches("^image/\\w+$") ? accept.replace("image/", "") : "jpeg";
+              final String fmt = accept.matches("^image/\\w+$") ? accept.replace("image/", "") : DEFAULT_OUTPUT_FORMAT;
               final boolean valid;
               try {
                   valid = stream(getContext().resolvePropertyPlaceholders("{{valid.formats}}").split(","))
@@ -112,7 +120,7 @@ public class EventRouter extends RouteBuilder {
               if (valid) {
                   exchange.getIn().setHeader(IMAGE_OUTPUT, "image/" + fmt);
                   exchange.getIn().setHeader(EXEC_COMMAND_ARGS,
-                      " - " + exchange.getIn().getHeader("options", "", String.class) + " " + fmt + ":-");
+                      " - " + exchange.getIn().getHeader(HTTP_QUERY_OPTIONS, "", String.class) + " " + fmt + ":-");
               } else {
                   throw new RuntimeCamelException("Invalid format: " + fmt);
               }
