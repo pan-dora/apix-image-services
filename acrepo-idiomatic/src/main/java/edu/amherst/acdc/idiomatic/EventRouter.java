@@ -23,7 +23,6 @@ import static org.fcrepo.camel.JmsHeaders.IDENTIFIER;
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.Processor;
-import org.apache.camel.PropertyInject;
 import org.apache.camel.RuntimeCamelException;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.xml.Namespaces;
@@ -34,9 +33,6 @@ import org.apache.camel.builder.xml.Namespaces;
  * @author Aaron Coburn
  */
 public class EventRouter extends RouteBuilder {
-
-    @PropertyInject(value = "rest.port", defaultValue = "9081")
-    private String port;
 
     /**
      * Configure the message route workflow.

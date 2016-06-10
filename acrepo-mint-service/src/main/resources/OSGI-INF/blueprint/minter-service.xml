@@ -26,8 +26,6 @@
   <cm:property-placeholder persistent-id="edu.amherst.acdc.mint" update-strategy="reload" >
     <cm:default-properties>
       <cm:property name="minter.length" value="7"/>
-      <cm:property name="rest.prefix" value="/mint"/>
-      <cm:property name="rest.port" value="9030"/>
     </cm:default-properties>
   </cm:property-placeholder>
 

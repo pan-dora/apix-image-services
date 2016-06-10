@@ -8,11 +8,11 @@ pluggable XSLT 2.0 documents.
 The service becomes available over HTTP on the configured port. For example,
 in order to retrieve a MODS version of the resource `a/b/c`:
 
-    curl localhost:9070/mods/a/b/c
+    curl localhost:9104/mods/a/b/c
 
 And the DC version:
 
-    curl localhost:9070/dc/a/b/c
+    curl localhost:9104/dc/a/b/c
 
 Building
 --------
@@ -20,10 +20,6 @@ Building
 To build this project use
 
     mvn install
-
-To run the project you can execute the following Maven goal
-
-    mvn camel:run
 
 Deploying in OSGi
 -----------------
@@ -34,8 +30,6 @@ command from its shell:
 
     feature:repo-add mvn:edu.amherst.acdc/repository-services/LATEST/xml/features
     feature:install acrepo-xml-metadata
-
-Or by copying the compiled bundle into `$KARAF_HOME/deploy`.
 
 Configuration
 -------------
@@ -62,7 +56,11 @@ be loaded from the classpath.
 
 The port on which the service is available
 
-    rest.port=9070
+    rest.port=9104
+
+The hostname for the service
+
+    rest.host=localhost
 
 The fedora baseUrl value
 
