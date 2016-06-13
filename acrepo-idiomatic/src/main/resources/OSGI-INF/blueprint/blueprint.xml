@@ -13,8 +13,9 @@
        <cm:property name="error.maxRedeliveries" value="10"/>
        <cm:property name="jms.brokerUrl" value="tcp://localhost:61616"/>
        <cm:property name="input.stream" value="activemq:topic:fedora"/>
-       <cm:property name="rest.prefix" value="idiomatic"/>
-       <cm:property name="rest.port" value="9080"/>
+       <cm:property name="rest.host" value="localhost"/>
+       <cm:property name="rest.prefix" value="/idiomatic"/>
+       <cm:property name="rest.port" value="9101"/>
        <cm:property name="id.property" value="dc:identifier"/>
        <cm:property name="id.namespace" value="http://purl.org/dc/elements/1.1/"/>
        <cm:property name="id.prefix" value=""/>
@@ -39,7 +40,7 @@
 
     <package>edu.amherst.acdc.idiomatic</package>
 
-    <restConfiguration component="jetty" host="localhost" port="{{rest.port}}"/>
+    <restConfiguration component="jetty" host="{{rest.host}}" port="{{rest.port}}"/>
 
     <route id="MinterRoute">
       <description>Create a freshly minted ID</description>

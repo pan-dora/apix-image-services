@@ -44,7 +44,15 @@ The location of the JSON-LD context document
 
 The port on which the service is made availalbe
 
-    rest.port=13431
+    rest.port=9102
+
+The hostname for the service
+
+    rest.host=localhost
+
+The REST prefix
+
+    rest.prefix=/jsonld
 
 By editing this file, any currently running routes will be immediately redeployed
 with the new values.

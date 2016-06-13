@@ -114,7 +114,7 @@ public class AcrepoJsonLDIT extends AbstractOSGiIT {
         final String baseUrl = "http://localhost:" + System.getProperty("fcrepo.port") + "/fcrepo/rest";
         final String baseSvcUrl = "http://localhost:" + System.getProperty("karaf.jsonld.port") + "/jsonld";
 
-        assertTrue(options(baseSvcUrl).contains("owl:equivalentClass fedora:Binary"));
+        assertTrue(options(baseSvcUrl).contains("owl:equivalentClass fedora:Resource"));
 
         rangeClosed(1, 3).mapToObj(x -> post(baseUrl).replace(baseUrl, "")).forEach(id -> {
             final ObjectMapper mapper = new ObjectMapper();

@@ -41,7 +41,7 @@ public class EventRouter extends RouteBuilder {
             .maximumRedeliveries("{{error.maxRedeliveries}}")
             .log("Event Routing Error: ${routeId}");
 
-        from("jetty:http://0.0.0.0:{{rest.port}}/dc?" +
+        from("jetty:http://{{rest.host}}:{{rest.port}}/dc?" +
                 "matchOnUriPrefix=true&httpMethodRestrict=GET&sendServerVersion=false")
             .routeId("DcTransformation")
             .to("direct:getResource")
@@ -51,7 +51,7 @@ public class EventRouter extends RouteBuilder {
               .log(LoggingLevel.INFO, "Converting resource to DC/XML: ${headers[CamelFcrepoIdentifier]}")
               .to("xslt:{{dc.xslt}}?saxon=true");
 
-        from("jetty:http://0.0.0.0:{{rest.port}}/mods?" +
+        from("jetty:http://{{rest.host}}:{{rest.port}}/mods?" +
                 "matchOnUriPrefix=true&httpMethodRestrict=GET&sendServerVersion=false")
             .routeId("ModsTransformation")
             .to("direct:getResource")

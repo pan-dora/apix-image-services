@@ -54,6 +54,11 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
         final String rmiRegistryPort = cm.getProperty("karaf.rmiRegistry.port");
         final String rmiServerPort = cm.getProperty("karaf.rmiServer.port");
         final String sshPort = cm.getProperty("karaf.ssh.port");
+        final String idiomaticPort = cm.getProperty("karaf.idiomatic.port");
+        final String metadataPort = cm.getProperty("karaf.metadata.port");
+        final String templatePort = cm.getProperty("karaf.template.port");
+        final String jsonldPort = cm.getProperty("karaf.jsonld.port");
+        final String imagePort = cm.getProperty("karaf.image.port");
 
         return new Option[] {
             karafDistributionConfiguration()
@@ -75,6 +80,12 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
                     "acrepo-idiomatic-pgsql", "acrepo-mint-service", "acrepo-xml-metadata",
                     "acrepo-jsonld-service", "acrepo-jsonld-osgi", "acrepo-template-mustache",
                     "acrepo-image-service"),
+
+            editConfigurationFilePut("etc/edu.amherst.acdc.jsonld.service.cfg", "rest.port", jsonldPort),
+            editConfigurationFilePut("etc/edu.amherst.acdc.template.mustache.cfg", "rest.port", templatePort),
+            editConfigurationFilePut("etc/edu.amherst.acdc.xml.metadata.cfg", "rest.port", metadataPort),
+            editConfigurationFilePut("etc/edu.amherst.acdc.idiomatic.cfg", "rest.port", idiomaticPort),
+            editConfigurationFilePut("etc/edu.amherst.acdc.image.service.cfg", "rest.port", imagePort),
 
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", rmiRegistryPort),
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", rmiServerPort),

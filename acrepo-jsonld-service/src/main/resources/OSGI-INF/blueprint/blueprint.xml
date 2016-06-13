@@ -11,7 +11,7 @@
    <cm:property-placeholder persistent-id="edu.amherst.acdc.jsonld.service" update-strategy="reload">
      <cm:default-properties>
        <cm:property name="error.maxRedeliveries" value="10"/>
-       <cm:property name="rest.port" value="13431"/>
+       <cm:property name="rest.port" value="9102"/>
        <cm:property name="rest.prefix" value="/jsonld"/>
        <cm:property name="rest.host" value="localhost"/>
        <cm:property name="jsonld.context" value="https://acdc.amherst.edu/jsonld/models.json"/>

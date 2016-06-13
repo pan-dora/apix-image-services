@@ -180,6 +180,9 @@
             <portName>fcrepo.dynamic.stomp.port</portName>
             <portName>karaf.jsonld.port</portName>
             <portName>karaf.template.port</portName>
+            <portName>karaf.metadata.port</portName>
+            <portName>karaf.image.port</portName>
+            <portName>karaf.idiomatic.port</portName>
             <portName>karaf.rmiRegistry.port</portName>
             <portName>karaf.rmiServer.port</portName>
             <portName>karaf.ssh.port</portName>
@@ -211,6 +214,9 @@
             <project.build.outputDirectory>${project.build.outputDirectory}</project.build.outputDirectory>
             <karaf.jsonld.port>${karaf.jsonld.port}</karaf.jsonld.port>
             <karaf.template.port>${karaf.template.port}</karaf.template.port>
+            <karaf.idiomatic.port>${karaf.idiomatic.port}</karaf.idiomatic.port>
+            <karaf.metadata.port>${karaf.metadata.port}</karaf.metadata.port>
+            <karaf.image.port>${karaf.image.port}</karaf.image.port>
             <karaf.ssh.port>${karaf.ssh.port}</karaf.ssh.port>
             <karaf.rmiRegistry.port>${karaf.rmiRegistry.port}</karaf.rmiRegistry.port>
             <karaf.rmiServer.port>${karaf.rmiServer.port}</karaf.rmiServer.port>

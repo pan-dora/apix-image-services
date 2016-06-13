@@ -56,7 +56,7 @@ The path to the `convert` utility
 
 The port on which the service is made availalbe
 
-    rest.port=9081
+    rest.port=9105
 
 The hostname on which the service is available
 

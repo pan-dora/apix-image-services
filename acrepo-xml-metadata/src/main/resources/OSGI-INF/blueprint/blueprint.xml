@@ -11,7 +11,8 @@
    <cm:property-placeholder persistent-id="edu.amherst.acdc.xml.metadata" update-strategy="reload">
      <cm:default-properties>
        <cm:property name="error.maxRedeliveries" value="10"/>
-       <cm:property name="rest.port" value="9070"/>
+       <cm:property name="rest.port" value="9104"/>
+       <cm:property name="rest.host" value="localhost"/>
        <cm:property name="mods.xslt" value="edu/amherst/acdc/xml/metadata/rdf2mods.xsl"/>
        <cm:property name="dc.xslt" value="edu/amherst/acdc/xml/metadata/rdf2dc.xsl"/>
        <cm:property name="fcrepo.baseUrl" value="localhost:8080/fcrepo/rest"/>

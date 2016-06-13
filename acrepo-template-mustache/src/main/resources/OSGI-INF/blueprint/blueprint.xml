@@ -12,7 +12,7 @@
      <cm:default-properties>
        <cm:property name="error.maxRedeliveries" value="10"/>
        <cm:property name="rest.host" value="localhost"/>
-       <cm:property name="rest.port" value="13433"/>
+       <cm:property name="rest.port" value="9103"/>
        <cm:property name="rest.prefix" value="/template"/>
        <cm:property name="mustache.template" value="edu/amherst/acdc/template/mustache/template.mustache"/>
        <cm:property name="mustache.contentType" value="text/html"/>

@@ -10,7 +10,7 @@
    <!-- OSGI blueprint property placeholder -->
    <cm:property-placeholder persistent-id="edu.amherst.acdc.image.service" update-strategy="reload">
      <cm:default-properties>
-       <cm:property name="rest.port" value="9081"/>
+       <cm:property name="rest.port" value="9105"/>
        <cm:property name="rest.prefix" value="/image"/>
        <cm:property name="rest.host" value="localhost"/>
        <cm:property name="fcrepo.baseUrl" value="localhost:8080/fcrepo/rest"/>

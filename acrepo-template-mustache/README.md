@@ -6,7 +6,7 @@ This service renders fedora resources using a Mustache template.
 The service becomes available over HTTP on the configured port. For example,
 in order to retrieve a MODS version of the resource `a/b/c`:
 
-    curl localhost:9070/template/a/b/c
+    curl localhost:9103/template/a/b/c
 
 Building
 --------
@@ -40,7 +40,15 @@ In the event of failure, the maximum number of times a redelivery will be attemp
 
 The port on which the service is available
 
-    rest.port=13433
+    rest.port=9103
+
+The hostname for the service
+
+    rest.host=localhost
+
+The prefix for the service
+
+    rest.prefix=/template
 
 The fedora baseUrl value
 
@@ -57,14 +65,6 @@ The content-type of the rendered template
 The json+ld context file
 
     jsonld.context=https://acdc.amherst.edu/jsonld/context.json
-
-The riak caching datastore host
-
-    riak.host=localhost:8098
-
-The riak caching datastore bucket name
-
-    riak.bucket=fcrepo
 
 By editing this file, any currently running routes will be immediately redeployed
 with the new values.
