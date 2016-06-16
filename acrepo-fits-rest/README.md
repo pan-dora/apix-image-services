@@ -1,8 +1,8 @@
 Repository FITS Service
 ===================================
 
-This service will return the FITS information associated with Fedora NonRdfResource, in
-XML format.  The service can be used with any camel route in an OSGi container.
+This service will return the FITS information associated with a Fedora Binary, in
+XML format.  The service can be used with any Camel route in an OSGi container.
 
 Building
 --------
@@ -19,7 +19,5 @@ Each of these projects can be deployed in an OSGi container. For example using
 command from its shell:
 
     feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
-    feature:install acrepo-fits-service
-
-Or by copying any of the compiled bundles into `$KARAF_HOME/deploy`.
+    feature:install acrepo-fits-rest
 

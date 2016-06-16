@@ -8,6 +8,7 @@ This is a collection of OSGi services that extend the functionality of a Fedora4
 Services
 --------
 
+* `acrepo-fits-rest`: This service will return FITS information associated with a Fedora Binary, in XML format
 * `acrepo-idiomatic`: Id Mapping Service: This maps a public ID to a (internal and typically much longer) fedora URI
 * `acrepo-idiomatic-pgsql`: Id Mapping Service Database: This exposes a Postgres datastore for use with the Id Mapping service
 * `acrepo-image-service`: An image manipulation service
@@ -31,6 +32,7 @@ Each of these projects can be deployed in an OSGi container. For example using
 command from its shell:
 
     feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
+    feature:install acrepo-fits-rest
     feature:install acrepo-idiomatic
     feature:install acrepo-idiomatic-pgsql
     feature:install acrepo-image-service

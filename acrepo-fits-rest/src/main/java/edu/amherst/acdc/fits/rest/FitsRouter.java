@@ -22,13 +22,13 @@ import static org.apache.camel.Exchange.HTTP_URI;
 import static org.apache.camel.Exchange.HTTP_PATH;
 import static org.apache.camel.LoggingLevel.INFO;
 import static org.apache.http.entity.mime.MultipartEntityBuilder.create;
+import static org.slf4j.LoggerFactory.getLogger;
 
 import java.io.InputStream;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.http.entity.mime.content.InputStreamBody;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A content router for handling JMS events.
@@ -39,18 +39,12 @@ public class FitsRouter extends RouteBuilder {
 
     private static final String FEDORA_PATH = "CamelFedoraPath";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FitsRouter.class);
+    private static final Logger LOGGER = getLogger(FitsRouter.class);
 
     /**
      * Configure the message route workflow.
      */
     public void configure() throws Exception {
-        /**
-         * A generic error handler (specific to this RouteBuilder)
-         */
-        onException(Exception.class)
-            .maximumRedeliveries("{{error.maxRedeliveries}}")
-            .log("Fits Routing Error: ${routeId}");
 
         from("jetty:http://{{rest.host}}:{{rest.port}}{{rest.prefix}}?" +
             "matchOnUriPrefix=true&httpMethodRestrict=GET,OPTIONS&sendServerVersion=false")
