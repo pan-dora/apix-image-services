@@ -63,6 +63,17 @@
     <configfile finalname="/etc/edu.amherst.acdc.mint.cfg">mvn:edu.amherst.acdc/acrepo-mint-service/${project.version}/cfg/configuration</configfile>
   </feature>
 
+  <feature name="acrepo-services-validation" version="${project.version}" resolver="(orb)" start-level="50">
+    <details>Installs the validation service</details>
+
+    <bundle>mvn:org.apache.jena/jena-osgi/${jena.version}</bundle>
+    <bundle>mvn:com.github.andrewoma.dexx/collection/${dexx.version}</bundle>
+
+    <bundle>mvn:edu.amherst.acdc/acrepo-services-validation/${project.version}</bundle>
+
+    <configfile finalname="/etc/edu.amherst.acdc.services.validation.cfg">mvn:edu.amherst.acdc/acrepo-services-validation/${project.version}/cfg/configuration</configfile>
+  </feature>
+
   <feature name="acrepo-xml-metadata" version="${project.version}" resolver="(orb)" start-level="50">
     <details>Installs the MODS/XML translation service</details>
 
