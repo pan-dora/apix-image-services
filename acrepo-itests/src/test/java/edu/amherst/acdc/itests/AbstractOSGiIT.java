@@ -74,6 +74,7 @@ public abstract class AbstractOSGiIT {
               req.setHeader("Content-Type", contentType);
               req.setEntity(new InputStreamEntity(stream));
             }
+
             final HttpResponse response = httpclient.execute(req);
             assertEquals(SC_CREATED, response.getStatusLine().getStatusCode());
             return EntityUtils.toString(response.getEntity(), "UTF-8");

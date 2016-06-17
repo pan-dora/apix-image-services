@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint
+    xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+    xsi:schemaLocation="
+      http://www.osgi.org/xmlns/blueprint/v1.0.0
+      http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
+
+  <cm:property-placeholder persistent-id="edu.amherst.acdc.connector.broadcast" update-strategy="reload">
+    <cm:default-properties>
+      <cm:property name="jms.brokerUrl" value="tcp://localhost:61616" />
+      <cm:property name="jms.username" value="" />
+      <cm:property name="jms.password" value="" />
+      <cm:property name="jms.input" value="activemq:topic:fedora" />
+      <cm:property name="message.recipients" value="" />
+    </cm:default-properties>
+  </cm:property-placeholder>
+
+  <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
+    <property name="brokerURL" value="${jms.brokerUrl}" />
+    <property name="userName" value="${jms.username}" />
+    <property name="password" value="${jms.password}" />
+  </bean>
+
+  <camelContext id="AcrepoConnectorBroadcast" xmlns="http://camel.apache.org/schema/blueprint">
+
+    <route id="MessageBroadcaster">
+      <description>Broadcast messages from one queue/topic to other specified queues/topics.</description>
+      <from uri="{{jms.input}}" />
+      <log message="Distributing message: ${headers[org.fcrepo.jms.timestamp]}: ${headers[org.fcrepo.jms.identifier]}:${headers[org.fcrepo.jms.eventType]}"/>
+      <recipientList parallelProcessing="true" ignoreInvalidEndpoints="true">
+          <simple>{{message.recipients}}</simple>
+      </recipientList>
+    </route>
+
+  </camelContext>
+</blueprint>

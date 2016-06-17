@@ -83,7 +83,8 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
                     "acrepo-libs-jena", "acrepo-libs-sesame", "acrepo-libs-jsonld",
                     "acrepo-libs-jackson", "acrepo-libs-marmotta",
                     "acrepo-services-jsonld", "acrepo-services-ldcache",
-                    "acrepo-services-mint", "acrepo-services-pcdm", "acrepo-services-validation"),
+                    "acrepo-services-mint", "acrepo-services-pcdm", "acrepo-services-validation",
+                    "acrepo-connector-broadcast"),
 
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.fits.cfg", "rest.port", fitsPort),
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.image.cfg", "rest.port", imagePort),
@@ -101,6 +102,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
     public void testInstallation() throws Exception {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("camel-core")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("fcrepo-camel")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-connector-broadcast")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-idiomatic")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-idiomatic-pgsql")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-fits")));
