@@ -1,4 +1,12 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> .
 @prefix fedora: <http://fedora.info/definitions/v4/repository#> .
+@prefix registry: <http://acdc.amherst.edu/extensions#> .
+@prefix apix: <urn:apix#> .
 
-[ owl:equivalentClass fedora:Resource ] .
+<#Extension> a apix:Extension ;
+    rdfs:label "Fedora Template Service" ;
+    rdfs:comment "A service that transforms RDFSource documents to HTML via a pluggable template" ;
+    apix:exposesService registry:TemplateService ;
+    apix:exposesServiceAtURI "svc:template" ;
+    apix:bindsTo fedora:Resource .
