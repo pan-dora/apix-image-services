@@ -70,7 +70,7 @@
     <!-- testing -->
     <dependency>
       <groupId>edu.amherst.acdc</groupId>
-      <artifactId>acrepo-mint-service</artifactId>
+      <artifactId>acrepo-services-mint</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>

@@ -25,7 +25,7 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import edu.amherst.acdc.mint.MinterService;
+import edu.amherst.acdc.services.mint.MinterService;
 import java.util.function.Supplier;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;

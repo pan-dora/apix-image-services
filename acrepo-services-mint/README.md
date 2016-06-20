@@ -20,15 +20,13 @@ Each of these projects can be deployed in an OSGi container. For example using
 command from its shell:
 
     feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
-    feature:install acrepo-mint-service
-
-Or by copying any of the compiled bundles into `$KARAF_HOME/deploy`.
+    feature:install acrepo-services-mint
 
 Configuration
 -------------
 
 The application can be configured by creating the following configuration
-file `$KARAF_HOME/etc/edu.amherst.acdc.mint.cfg`. The following values
+file `$KARAF_HOME/etc/edu.amherst.acdc.services.mint.cfg`. The following values
 are available for configuration:
 
 Set the length of the newly minted ID field

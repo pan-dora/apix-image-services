@@ -53,14 +53,14 @@
     <configfile finalname="/etc/edu.amherst.acdc.image.service.cfg">mvn:edu.amherst.acdc/acrepo-image-service/${project.version}/cfg/configuration</configfile>
   </feature>
 
-  <feature name="acrepo-mint-service" version="${project.version}" resolver="(obr)" start-level="50">
+  <feature name="acrepo-services-mint" version="${project.version}" resolver="(obr)" start-level="50">
     <details>Installs the id minter</details>
 
     <bundle dependency="true">mvn:org.apache.commons/commons-lang3/${commons-lang.version}</bundle>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-mint-service/${project.version}</bundle>
+    <bundle>mvn:edu.amherst.acdc/acrepo-services-mint/${project.version}</bundle>
 
-    <configfile finalname="/etc/edu.amherst.acdc.mint.cfg">mvn:edu.amherst.acdc/acrepo-mint-service/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/edu.amherst.acdc.services.mint.cfg">mvn:edu.amherst.acdc/acrepo-services-mint/${project.version}/cfg/configuration</configfile>
   </feature>
 
   <feature name="acrepo-services-validation" version="${project.version}" resolver="(orb)" start-level="50">

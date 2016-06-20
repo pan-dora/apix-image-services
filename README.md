@@ -12,9 +12,9 @@ Services
 * `acrepo-idiomatic`: Id Mapping Service: This maps a public ID to a (internal and typically much longer) fedora URI
 * `acrepo-idiomatic-pgsql`: Id Mapping Service Database: This exposes a Postgres datastore for use with the Id Mapping service
 * `acrepo-image-service`: An image manipulation service
-* `acrepo-services-jsonld`: This service creates expanded or compact JSON-LD representations of input documents
 * `acrepo-jsonld-service`: This service exposes an HTTP endpoint for creating compact JSON-LD documents from a fedora repository using a pluggable context document
-* `acrepo-mint-service`: This mints random (public) URIs for use with fedora resources
+* `acrepo-services-jsonld`: This service creates expanded or compact JSON-LD representations of input documents
+* `acrepo-services-mint`: This mints random (public) URIs for use with fedora resources
 * `acrepo-services-validation`: An OSGi-based validation service
 * `acrepo-xml-metadata`: This service translates Fedora RDF documents into MODS/XML or DC/XML
 
@@ -37,9 +37,9 @@ command from its shell:
     feature:install acrepo-idiomatic
     feature:install acrepo-idiomatic-pgsql
     feature:install acrepo-image-service
-    feature:install acrepo-services-jsonld
     feature:install acrepo-jsonld-service
-    feature:install acrepo-mint-service
+    feature:install acrepo-services-mint
+    feature:install acrepo-services-jsonld
     feature:install acrepo-services-validation
     feature:install acrepo-xml-metadata
 

@@ -78,10 +78,9 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
                         .type("xml").classifier("features").versionAsInProject(), "activemq-camel"),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(), "acrepo-idiomatic",
-                    "acrepo-idiomatic-pgsql", "acrepo-mint-service", "acrepo-xml-metadata",
-                    "acrepo-services-validation", "acrepo-services-jsonld",
-                    "acrepo-jsonld-service", "acrepo-template-mustache",
-                    "acrepo-image-service", "acrepo-fits-rest"),
+                    "acrepo-idiomatic-pgsql", "acrepo-xml-metadata", "acrepo-image-service",
+                    "acrepo-services-validation", "acrepo-services-jsonld", "acrepo-services-mint",
+                    "acrepo-jsonld-service", "acrepo-template-mustache", "acrepo-fits-rest"),
 
             editConfigurationFilePut("etc/edu.amherst.acdc.jsonld.service.cfg", "rest.port", jsonldPort),
             editConfigurationFilePut("etc/edu.amherst.acdc.template.mustache.cfg", "rest.port", templatePort),
@@ -101,11 +100,11 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("fcrepo-camel")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-idiomatic")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-idiomatic-pgsql")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-mint-service")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-jsonld")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-mint")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-validation")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-xml-metadata")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-jsonld-service")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-jsonld")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-template-mustache")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-image-service")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-fits-rest")));
