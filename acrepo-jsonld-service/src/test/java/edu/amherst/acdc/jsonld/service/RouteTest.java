@@ -18,8 +18,8 @@ package edu.amherst.acdc.jsonld.service;
 import java.util.Dictionary;
 import java.util.Map;
 
-import edu.amherst.acdc.jsonld.JsonLdService;
-import edu.amherst.acdc.jsonld.JsonLdServiceImpl;
+import edu.amherst.acdc.services.jsonld.JsonLdService;
+import edu.amherst.acdc.services.jsonld.JsonLdServiceImpl;
 
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
 import org.apache.camel.util.KeyValueHolder;

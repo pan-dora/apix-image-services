@@ -69,7 +69,7 @@ public class AcrepoFitsIT extends AbstractOSGiIT {
                         .versionAsInProject().type("zip"))
                 .unpackDirectory(new File("target", "exam"))
                 .useDeployFolder(false),
-            logLevel(LogLevel.INFO),
+            logLevel(LogLevel.WARN),
             keepRuntimeFolder(),
             configureConsole().ignoreLocalConsole(),
             features(maven().groupId("org.apache.karaf.features").artifactId("standard")

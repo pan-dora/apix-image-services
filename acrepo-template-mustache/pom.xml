@@ -49,7 +49,7 @@
     </dependency>
     <dependency>
       <groupId>edu.amherst.acdc</groupId>
-      <artifactId>acrepo-jsonld-osgi</artifactId>
+      <artifactId>acrepo-services-jsonld</artifactId>
       <version>${project.version}</version>
     </dependency>
 
