@@ -78,6 +78,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(), "acrepo-idiomatic",
                     "acrepo-idiomatic-pgsql", "acrepo-mint-service", "acrepo-xml-metadata",
+                    "acrepo-services-validation",
                     "acrepo-jsonld-service", "acrepo-jsonld-osgi", "acrepo-template-mustache",
                     "acrepo-image-service"),
 
@@ -100,6 +101,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-idiomatic")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-idiomatic-pgsql")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-mint-service")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-validation")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-xml-metadata")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-jsonld-service")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-jsonld-osgi")));

@@ -77,6 +77,7 @@ public class KarafIT {
 
         final String version = cm.getProperty("project.version");
         final String acrepoIdiomatic = getBundleUri("acrepo-idiomatic", version);
+        final String acrepoValidationSvc = getBundleUri("acrepo-services-validation", version);
         final String acrepoJsonLd = getBundleUri("acrepo-jsonld-osgi", version);
         final String acrepoJsonLdSvc = getBundleUri("acrepo-jsonld-service", version);
         final String acrepoMint = getBundleUri("acrepo-mint-service", version);
@@ -107,13 +108,17 @@ public class KarafIT {
             mavenBundle().groupId("org.apache.httpcomponents").artifactId("httpcore-osgi").versionAsInProject(),
             mavenBundle().groupId("commons-io").artifactId("commons-io").versionAsInProject(),
             mavenBundle().groupId("commons-codec").artifactId("commons-codec").versionAsInProject(),
+            mavenBundle().groupId("org.apache.jena").artifactId("jena-osgi").versionAsInProject(),
+            mavenBundle().groupId("com.github.andrewoma.dexx").artifactId("collection").versionAsInProject(),
 
             CoreOptions.systemProperty("acdc.idiomatic-bundle").value(acrepoIdiomatic),
+            CoreOptions.systemProperty("acdc.validation-svc-bundle").value(acrepoValidationSvc),
             CoreOptions.systemProperty("acdc.jsonld-bundle").value(acrepoJsonLd),
             CoreOptions.systemProperty("acdc.jsonld-svc-bundle").value(acrepoJsonLdSvc),
             CoreOptions.systemProperty("acdc.mint-bundle").value(acrepoMint),
 
             bundle(acrepoIdiomatic).start(),
+            bundle(acrepoValidationSvc).start(),
             bundle(acrepoJsonLd).start(),
             bundle(acrepoJsonLdSvc).start(),
             bundle(acrepoMint).start(),
@@ -136,6 +141,7 @@ public class KarafIT {
         assertNotNull(bundleContext);
 
         assertEquals(ACTIVE, bundleContext.getBundle(System.getProperty("acdc.idiomatic-bundle")).getState());
+        assertEquals(ACTIVE, bundleContext.getBundle(System.getProperty("acdc.validation-svc-bundle")).getState());
         assertEquals(ACTIVE, bundleContext.getBundle(System.getProperty("acdc.jsonld-bundle")).getState());
         assertEquals(ACTIVE, bundleContext.getBundle(System.getProperty("acdc.jsonld-svc-bundle")).getState());
         assertEquals(ACTIVE, bundleContext.getBundle(System.getProperty("acdc.mint-bundle")).getState());

@@ -52,6 +52,8 @@
     <spring.version>4.1.7.RELEASE</spring.version>
     <pax-jdbc.version>0.7.0</pax-jdbc.version>
     <woodstox.version>4.4.1</woodstox.version>
+    <xerces.version>2.11.0</xerces.version>
+    <jena.version>3.1.0</jena.version>
 
     <!-- plugins -->
     <paxexam.plugin.version>1.2.4</paxexam.plugin.version>
@@ -61,6 +63,7 @@
     <httpclient.version>4.5.2</httpclient.version>
     <httpcore.version>4.4.4</httpcore.version>
     <commons-codec.version>1.10</commons-codec.version>
+    <dexx.version>0.6</dexx.version>
 
     <!-- test gear -->
     <fcrepo.version>4.5.1</fcrepo.version>
@@ -86,6 +89,7 @@
     <module>acrepo-image-service</module>
     <module>acrepo-karaf</module>
     <module>acrepo-mint-service</module>
+    <module>acrepo-services-validation</module>
     <module>acrepo-xml-metadata</module>
     <module>acrepo-jsonld-service</module>
     <module>acrepo-jsonld-osgi</module>
@@ -194,7 +198,11 @@
         <artifactId>derby</artifactId>
         <version>${derby.version}</version>
       </dependency>
-
+      <dependency>
+        <groupId>org.apache.jena</groupId>
+        <artifactId>jena-osgi</artifactId>
+        <version>${jena.version}</version>
+      </dependency>
 
       <!-- logging -->
       <dependency>

@@ -14,6 +14,7 @@ Services
 * `acrepo-jsonld-osgi`: This service creates expanded or compact JSON-LD representations of input documents
 * `acrepo-jsonld-service`: This service exposes an HTTP endpoint for creating compact JSON-LD documents from a fedora repository using a pluggable context document
 * `acrepo-mint-service`: This mints random (public) URIs for use with fedora resources
+* `acrepo-services-validation`: An OSGi-based validation service
 * `acrepo-xml-metadata`: This service translates Fedora RDF documents into MODS/XML or DC/XML
 
 Building
@@ -37,10 +38,8 @@ command from its shell:
     feature:install acrepo-jsonld-osgi
     feature:install acrepo-jsonld-service
     feature:install acrepo-mint-service
+    feature:install acrepo-services-validation
     feature:install acrepo-xml-metadata
-
-Or by copying any of the compiled bundles into `$KARAF_HOME/deploy`.
-
 
 More information
 ----------------
