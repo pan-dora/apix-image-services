@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+    xmlns:premis="http://www.loc.gov/premis/rdf/v1#"
+    xmlns:bf="http://id.loc.gov/ontologies/bibframe/"
+    xmlns:pcdm="http://pcdm.org/models#"
+    xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:webac="http://fedora.info/definitions/v4/webac#"
+    xmlns:acl="http://www.w3.org/ns/auth/acl#"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:hydra="info:fedora/fedora-system:def/model#"
+    xmlns:audit="http://fedora.info/definitions/v4/audit#"
+    xmlns:xml="http://www.w3.org/XML/1998/namespace"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:prov="http://www.w3.org/ns/prov#"
+    xmlns:foaf="http://xmlns.com/foaf/0.1/"
+    xmlns:ore="http://www.openarchives.org/ore/terms/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:fedora="http://fedora.info/definitions/v4/repository#"
+    xmlns:ebucore="http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#"
+    xmlns:ldp="http://www.w3.org/ns/ldp#"
+    xmlns:iana="http://www.iana.org/assignments/relation/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<rdf:Description rdf:about="http://localhost:8080/fcrepo/rest/acdc/manuscript">
+    <rdf:type rdf:resource="http://fedora.info/definitions/v4/repository#Container"/>
+    <rdf:type rdf:resource="http://fedora.info/definitions/v4/repository#Resource"/>
+    <rdf:type rdf:resource="http://pcdm.org/models#Object"/>
+    <dcterms:subject rdf:resource="http://localhost:8080/fcrepo/rest/test"/>
+    <fedora:lastModifiedBy rdf:datatype="http://www.w3.org/2001/XMLSchema#string">bypassAdmin</fedora:lastModifiedBy>
+    <bf:extent rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1 volume (420 pages): photographs</bf:extent>
+    <skos:note rdf:datatype="http://www.w3.org/2001/XMLSchema#string">This is a sample manuscript record</skos:note>
+    <dcterms:tableOfContents rdf:datatype="http://www.w3.org/2001/XMLSchema#string">First this, then that</dcterms:tableOfContents>
+    <fedora:createdBy rdf:datatype="http://www.w3.org/2001/XMLSchema#string">bypassAdmin</fedora:createdBy>
+    <fedora:created rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2016-06-20T19:17:15.823Z</fedora:created>
+    <bf:descriptionLanguage rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng"/>
+    <dcterms:format rdf:resource="http://pcdm.org/file-format-types#Document"/>
+    <dcterms:isPartOf rdf:resource="http://acdc.amherst.edu/repository"/>
+    <dcterms:rights rdf:resource="http://rightsstatements.org/vocab/NKC/1.0/"/>
+    <skos:prefLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Manuscript Title</skos:prefLabel>
+    <dcterms:identifier rdf:resource="doi:123456/12"/>
+    <dcterms:identifier rdf:resource="http://acdc.amherst.edu/id/abcdefg"/>
+    <dcterms:relatedItem rdf:resource="http://localhost:8080/fcrepo/rest/test"/>
+    <fedora:lastModified rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2016-06-20T19:41:58.643Z</fedora:lastModified>
+    <dcterms:created rdf:datatype="http://id.loc.gov/datatypes/edtf/EDTF">2001-02-03</dcterms:created>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng"/>
+    <dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">This is a textual description of the manuscript</dcterms:abstract>
+    <dcterms:medium rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Pen and ink on linen</dcterms:medium>
+    <bf:heldBy rdf:resource="http://acdc.amherst.edu/"/>
+    <dcterms:type rdf:resource="http://id.loc.gov/vocabulary/resourceTypes/txt"/>
+    <dcterms:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dcterms:type rdf:resource="http://vocab.getty.edu/aat/30002491"/>
+    <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Amherst Manuscript # 681</dc:identifier>
+    <rdf:type rdf:resource="http://www.w3.org/ns/ldp#RDFSource"/>
+    <rdf:type rdf:resource="http://www.w3.org/ns/ldp#Container"/>
+    <fedora:writable rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</fedora:writable>
+    <fedora:hasParent rdf:resource="http://localhost:8080/fcrepo/rest/acdc"/>
+    <fedora:numberOfChildren rdf:datatype="http://www.w3.org/2001/XMLSchema#long">0</fedora:numberOfChildren>
+</rdf:Description>
+</rdf:RDF>

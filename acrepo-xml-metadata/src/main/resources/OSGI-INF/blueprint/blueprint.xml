@@ -19,7 +19,7 @@
      </cm:default-properties>
    </cm:property-placeholder>
 
-  <camelContext xmlns="http://camel.apache.org/schema/blueprint" streamCache="false">
+  <camelContext id="AcrepoXmlMetadata" xmlns="http://camel.apache.org/schema/blueprint">
     <package>edu.amherst.acdc.xml.metadata</package>
   </camelContext>
 

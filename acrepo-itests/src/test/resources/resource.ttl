@@ -1,0 +1,27 @@
+@prefix bf: <http://id.loc.gov/ontologies/bibframe/> .
+@prefix pcdm: <http://pcdm.org/models#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix fedora: <http://fedora.info/definitions/v4/repository#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+
+<> a pcdm:Object ;
+  bf:extent "1 volume (420 pages): photographs"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  skos:note "This is a sample manuscript record"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  dcterms:tableOfContents "First this, then that"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  bf:descriptionLanguage <http://id.loc.gov/vocabulary/iso639-2/eng> ;
+  dcterms:format pcdm:Document ;
+  dcterms:isPartOf <http://acdc.amherst.edu/> ;
+  dcterms:rights <http://rightsstatements.org/vocab/NKC/1.0/> ;
+  skos:prefLabel "Manuscript Title"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  dcterms:identifier <doi:123456/12> , <http://acdc.amherst.edu/id/abcdefg> ;
+  dcterms:created "2001-02-03"^^<http://id.loc.gov/datatypes/edtf/EDTF> ;
+  dcterms:language <http://id.loc.gov/vocabulary/iso639-2/eng> ;
+  dcterms:abstract "This is a textual description of the manuscript"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  dcterms:medium "Pen and ink on linen"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  bf:heldBy <http://acdc.amherst.edu/> ;
+  dcterms:type <http://id.loc.gov/vocabulary/resourceTypes/txt> , <http://purl.org/dc/dcmitype/StillImage> , <http://vocab.getty.edu/aat/30002491> ;
+  dc:identifier "Amherst Manuscript # 681"^^<http://www.w3.org/2001/XMLSchema#string> .
+
