@@ -62,7 +62,7 @@
 
     <dependency>
       <groupId>edu.amherst.acdc</groupId>
-      <artifactId>acrepo-mint-service</artifactId>
+      <artifactId>acrepo-services-mint</artifactId>
       <scope>test</scope>
       <version>${project.version}</version>
     </dependency>

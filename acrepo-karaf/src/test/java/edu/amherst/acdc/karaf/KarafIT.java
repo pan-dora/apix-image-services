@@ -80,7 +80,7 @@ public class KarafIT {
         final String acrepoValidationSvc = getBundleUri("acrepo-services-validation", version);
         final String acrepoJsonLdSvc = getBundleUri("acrepo-services-jsonld", version);
         final String acrepoJsonLd = getBundleUri("acrepo-jsonld-service", version);
-        final String acrepoMint = getBundleUri("acrepo-mint-service", version);
+        final String acrepoMintSvc = getBundleUri("acrepo-services-mint", version);
 
         return new Option[] {
             karafDistributionConfiguration()
@@ -115,13 +115,13 @@ public class KarafIT {
             CoreOptions.systemProperty("acdc.validation-svc-bundle").value(acrepoValidationSvc),
             CoreOptions.systemProperty("acdc.jsonld-bundle").value(acrepoJsonLd),
             CoreOptions.systemProperty("acdc.jsonld-svc-bundle").value(acrepoJsonLdSvc),
-            CoreOptions.systemProperty("acdc.mint-bundle").value(acrepoMint),
+            CoreOptions.systemProperty("acdc.mint-svc-bundle").value(acrepoMintSvc),
 
             bundle(acrepoIdiomatic).start(),
             bundle(acrepoValidationSvc).start(),
             bundle(acrepoJsonLd).start(),
             bundle(acrepoJsonLdSvc).start(),
-            bundle(acrepoMint).start(),
+            bundle(acrepoMintSvc).start(),
 
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", rmiRegistryPort),
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", rmiServerPort),
@@ -144,7 +144,7 @@ public class KarafIT {
         assertEquals(ACTIVE, bundleContext.getBundle(System.getProperty("acdc.validation-svc-bundle")).getState());
         assertEquals(ACTIVE, bundleContext.getBundle(System.getProperty("acdc.jsonld-bundle")).getState());
         assertEquals(ACTIVE, bundleContext.getBundle(System.getProperty("acdc.jsonld-svc-bundle")).getState());
-        assertEquals(ACTIVE, bundleContext.getBundle(System.getProperty("acdc.mint-bundle")).getState());
+        assertEquals(ACTIVE, bundleContext.getBundle(System.getProperty("acdc.mint-svc-bundle")).getState());
     }
 
     private <T> T getOsgiService(final Class<T> type, final String filter, final long timeout) {
