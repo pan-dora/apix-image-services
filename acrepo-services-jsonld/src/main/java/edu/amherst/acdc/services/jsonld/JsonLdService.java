@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.amherst.acdc.jsonld;
+package edu.amherst.acdc.services.jsonld;
 
 import java.io.InputStream;
 

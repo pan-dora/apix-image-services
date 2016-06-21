@@ -19,7 +19,5 @@ Each of these projects can be deployed in an OSGi container. For example using
 command from its shell:
 
     feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
-    feature:install acrepo-jsonld-osgi
-
-Or by copying any of the compiled bundles into `$KARAF_HOME/deploy`.
+    feature:install acrepo-services-jsonld
 

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.amherst.acdc.jsonld;
+package edu.amherst.acdc.services.jsonld;
 
 import static com.github.jsonldjava.utils.JsonUtils.fromInputStream;
 import static com.github.jsonldjava.utils.JsonUtils.fromURL;

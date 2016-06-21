@@ -75,7 +75,7 @@ public class AcrepoTemplateIT extends AbstractOSGiIT {
                         .versionAsInProject().classifier("features").type("xml"), "scr"),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(),
-                    "acrepo-template-mustache", "acrepo-jsonld-osgi"),
+                    "acrepo-template-mustache", "acrepo-services-jsonld"),
 
             systemProperty("karaf.template.port").value(templateServicePort),
             systemProperty("fcrepo.port").value(fcrepoPort),
@@ -93,7 +93,7 @@ public class AcrepoTemplateIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("camel-core")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("fcrepo-camel")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-template-mustache")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-jsonld-osgi")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-jsonld")));
     }
 
     @Test
@@ -106,7 +106,7 @@ public class AcrepoTemplateIT extends AbstractOSGiIT {
         final String baseUrl = "http://localhost:" + System.getProperty("fcrepo.port") + "/fcrepo/rest";
         final String baseSvcUrl = "http://localhost:" + System.getProperty("karaf.template.port") + "/template";
 
-        assertTrue(options(baseSvcUrl).contains("owl:equivalentClass fedora:Resource"));
+        assertTrue(options(baseSvcUrl).contains("apix:bindsTo fedora:Resource"));
 
         range(1, 2).mapToObj(x -> post(baseUrl)).forEach(url -> {
             patch(url, "PREFIX dcterms: <http://purl.org/dc/terms/>\n" +

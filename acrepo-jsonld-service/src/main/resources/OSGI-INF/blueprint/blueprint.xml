@@ -19,7 +19,7 @@
      </cm:default-properties>
    </cm:property-placeholder>
 
-  <reference id="jsonldService" interface="edu.amherst.acdc.jsonld.JsonLdService" filter="(osgi.jndi.service.name=jsonld)" />
+  <reference id="jsonldService" interface="edu.amherst.acdc.services.jsonld.JsonLdService" filter="(osgi.jndi.service.name=jsonld)" />
 
   <camelContext id="AcrepoJsonLdService" xmlns="http://camel.apache.org/schema/blueprint">
     <package>edu.amherst.acdc.jsonld.service</package>

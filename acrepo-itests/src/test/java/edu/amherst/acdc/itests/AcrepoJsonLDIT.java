@@ -80,7 +80,7 @@ public class AcrepoJsonLDIT extends AbstractOSGiIT {
                         .versionAsInProject().classifier("features").type("xml"), "scr"),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(),
-                    "acrepo-jsonld-service", "acrepo-jsonld-osgi"),
+                    "acrepo-jsonld-service", "acrepo-services-jsonld"),
 
             mavenBundle().groupId("com.fasterxml.jackson.core").artifactId("jackson-core").versionAsInProject(),
             mavenBundle().groupId("com.fasterxml.jackson.core").artifactId("jackson-databind").versionAsInProject(),
@@ -101,7 +101,7 @@ public class AcrepoJsonLDIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("camel-core")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("fcrepo-camel")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-jsonld-service")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-jsonld-osgi")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-jsonld")));
     }
 
     @Test
@@ -114,7 +114,7 @@ public class AcrepoJsonLDIT extends AbstractOSGiIT {
         final String baseUrl = "http://localhost:" + System.getProperty("fcrepo.port") + "/fcrepo/rest";
         final String baseSvcUrl = "http://localhost:" + System.getProperty("karaf.jsonld.port") + "/jsonld";
 
-        assertTrue(options(baseSvcUrl).contains("owl:equivalentClass fedora:Resource"));
+        assertTrue(options(baseSvcUrl).contains("apix:bindsTo fedora:Resource"));
 
         rangeClosed(1, 3).mapToObj(x -> post(baseUrl).replace(baseUrl, "")).forEach(id -> {
             final ObjectMapper mapper = new ObjectMapper();

@@ -26,14 +26,14 @@
       <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>acrepo-jsonld-osgi</artifactId>
+    <artifactId>acrepo-services-jsonld</artifactId>
     <packaging>bundle</packaging>
 
     <name>JSON-LD expansion and compaction service bundle</name>
     <description>Repository JSON-LD transformation service.</description>
 
     <properties>
-      <osgi.export.packages>edu.amherst.acdc.jsonld;version=${project.version}</osgi.export.packages>
+      <osgi.export.packages>edu.amherst.acdc.services.jsonld;version=${project.version}</osgi.export.packages>
     </properties>
 
     <dependencies>
