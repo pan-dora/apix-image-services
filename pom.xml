@@ -94,6 +94,7 @@
     <module>acrepo-jsonld-service</module>
     <module>acrepo-jsonld-osgi</module>
     <module>acrepo-template-mustache</module>
+    <module>acrepo-fits-rest</module>
   </modules>
 
   <dependencyManagement>

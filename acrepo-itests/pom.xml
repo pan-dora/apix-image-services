@@ -68,7 +68,6 @@
       <scope>test</scope>
     </dependency>
 
-
     <!-- Testing & Camel Plugin -->
     <dependency>
       <groupId>org.glassfish.hk2.external</groupId>
@@ -182,6 +181,7 @@
             <portName>karaf.template.port</portName>
             <portName>karaf.metadata.port</portName>
             <portName>karaf.image.port</portName>
+            <portName>karaf.fits.port</portName>
             <portName>karaf.idiomatic.port</portName>
             <portName>karaf.rmiRegistry.port</portName>
             <portName>karaf.rmiServer.port</portName>
@@ -217,6 +217,7 @@
             <karaf.idiomatic.port>${karaf.idiomatic.port}</karaf.idiomatic.port>
             <karaf.metadata.port>${karaf.metadata.port}</karaf.metadata.port>
             <karaf.image.port>${karaf.image.port}</karaf.image.port>
+            <karaf.fits.port>${karaf.fits.port}</karaf.fits.port>
             <karaf.ssh.port>${karaf.ssh.port}</karaf.ssh.port>
             <karaf.rmiRegistry.port>${karaf.rmiRegistry.port}</karaf.rmiRegistry.port>
             <karaf.rmiServer.port>${karaf.rmiServer.port}</karaf.rmiServer.port>
