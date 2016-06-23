@@ -42,7 +42,7 @@
     <commons-io.version>2.5</commons-io.version>
     <derby.version>10.12.1.1</derby.version>
     <fcrepo-camel.version>4.4.2</fcrepo-camel.version>
-    <hk2.version>2.3.0</hk2.version>
+    <hk2.version>2.4.0</hk2.version>
     <junit.version>4.12</junit.version>
     <jsonld.version>0.8.3</jsonld.version>
     <logback.version>1.1.7</logback.version>
@@ -57,11 +57,11 @@
 
     <!-- plugins -->
     <paxexam.plugin.version>1.2.4</paxexam.plugin.version>
-    <jetty.plugin.version>9.2.6.v20141205</jetty.plugin.version>
+    <jetty.plugin.version>9.3.8.v20160314</jetty.plugin.version>
 
     <!-- transitive dependencies for karaf -->
     <httpclient.version>4.5.2</httpclient.version>
-    <httpcore.version>4.4.4</httpcore.version>
+    <httpcore.version>4.4.5</httpcore.version>
     <commons-codec.version>1.10</commons-codec.version>
     <dexx.version>0.6</dexx.version>
 
@@ -70,7 +70,7 @@
     <karaf.version>4.0.5</karaf.version>
     <pax-exam.version>4.8.0</pax-exam.version>
     <jena.fuseki.version>2.3.1</jena.fuseki.version>
-    <jackson2.version>2.7.4</jackson2.version>
+    <jackson2.version>2.7.5</jackson2.version>
 
     <!-- OSGi -->
     <osgi.import.packages>*</osgi.import.packages>
