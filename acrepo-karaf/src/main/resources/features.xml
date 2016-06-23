@@ -66,8 +66,7 @@
   <feature name="acrepo-services-validation" version="${project.version}" resolver="(orb)" start-level="50">
     <details>Installs the validation service</details>
 
-    <bundle>mvn:org.apache.jena/jena-osgi/${jena.version}</bundle>
-    <bundle>mvn:com.github.andrewoma.dexx/collection/${dexx.version}</bundle>
+    <feature version="${project.version}">acrepo-jena-libs</feature>
 
     <bundle>mvn:edu.amherst.acdc/acrepo-services-validation/${project.version}</bundle>
 
@@ -91,14 +90,7 @@
   <feature name="acrepo-services-jsonld" version="${project.version}" resolver="(orb)" start-level="50">
     <details>Installs the JSON-LD transformation OSGi service</details>
 
-    <feature version="${camel.version}">camel-jackson</feature>
-
-    <bundle dependency="true">mvn:com.github.jsonld-java/jsonld-java/${jsonld.version}</bundle>
-    <bundle dependency="true">mvn:org.apache.httpcomponents/httpclient-osgi/${httpclient.version}</bundle>
-    <bundle dependency="true">mvn:org.apache.httpcomponents/httpcore-osgi/${httpcore.version}</bundle>
-
-    <bundle dependency="true">mvn:commons-io/commons-io/${commons-io.version}</bundle>
-    <bundle dependency="true">mvn:commons-codec/commons-codec/${commons-codec.version}</bundle>
+    <feature version="${project.version}">acrepo-jsonld-libs</feature>
 
     <bundle>mvn:edu.amherst.acdc/acrepo-services-jsonld/${project.version}</bundle>
   </feature>
@@ -147,6 +139,31 @@
     <configfile finalname="/etc/edu.amherst.acdc.fits.rest.cfg">mvn:edu.amherst.acdc/acrepo-fits-rest/${project.version}/cfg/configuration</configfile>
   </feature>
 
+  <feature name="acrepo-jena-libs" version="${project.version}" resolver="(orb)" start-level="50">
+    <details>Installs jena and related dependencies</details>
 
+    <feature version="${project.version}">acrepo-jsonld-libs</feature>
+
+    <bundle>mvn:org.apache.jena/jena-osgi/${jena.version}</bundle>
+
+    <bundle dependency="true">mvn:org.apache.commons/commons-lang3/${commons-lang.version}</bundle>
+    <bundle dependency="true">mvn:org.apache.commons/commons-csv/${commons-csv.version}</bundle>
+    <bundle dependency="true">mvn:org.apache.thrift/libthrift/${thrift.version}</bundle>
+    <bundle dependency="true">mvn:com.github.andrewoma.dexx/collection/${dexx.version}</bundle>
+  </feature>
+
+  <feature name="acrepo-jsonld-libs" version="${project.version}" resolver="(orb)" start-level="50">
+    <details>Installs the JSON-LD related bundles</details>
+
+    <bundle>mvn:com.github.jsonld-java/jsonld-java/${jsonld.version}</bundle>
+
+    <bundle dependency="true">mvn:com.fasterxml.jackson.core/jackson-core/${jackson2.version}</bundle>
+    <bundle dependency="true">mvn:com.fasterxml.jackson.core/jackson-annotations/${jackson2.version}</bundle>
+    <bundle dependency="true">mvn:com.fasterxml.jackson.core/jackson-databind/${jackson2.version}</bundle>
+    <bundle dependency="true">mvn:org.apache.httpcomponents/httpclient-osgi/${httpclient.version}</bundle>
+    <bundle dependency="true">mvn:org.apache.httpcomponents/httpcore-osgi/${httpcore.version}</bundle>
+    <bundle dependency="true">mvn:commons-codec/commons-codec/${commons-codec.version}</bundle>
+    <bundle dependency="true">mvn:commons-io/commons-io/${commons-io.version}</bundle>
+  </feature>
 
 </features>

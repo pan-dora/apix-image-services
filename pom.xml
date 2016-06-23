@@ -64,13 +64,15 @@
     <httpcore.version>4.4.5</httpcore.version>
     <commons-codec.version>1.10</commons-codec.version>
     <dexx.version>0.6</dexx.version>
+    <commons-csv.version>1.0</commons-csv.version>
+    <thrift.version>0.9.2</thrift.version>
+    <jackson2.version>2.7.5</jackson2.version>
 
     <!-- test gear -->
     <fcrepo.version>4.5.1</fcrepo.version>
     <karaf.version>4.0.5</karaf.version>
     <pax-exam.version>4.8.0</pax-exam.version>
     <jena.fuseki.version>2.3.1</jena.fuseki.version>
-    <jackson2.version>2.7.5</jackson2.version>
 
     <!-- OSGi -->
     <osgi.import.packages>*</osgi.import.packages>
