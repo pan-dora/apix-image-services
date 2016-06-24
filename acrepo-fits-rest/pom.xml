@@ -96,12 +96,6 @@
         <artifactId>maven-compiler-plugin</artifactId>
       </plugin>
 
-
-      <plugin>
-        <groupId>org.apache.camel</groupId>
-        <artifactId>camel-maven-plugin</artifactId>
-      </plugin>
-
       <!-- add configuration file to artifact set for OSGi deployment -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
