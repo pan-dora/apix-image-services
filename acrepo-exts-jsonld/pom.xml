@@ -9,13 +9,13 @@
     <version>1.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>acrepo-jsonld-service</artifactId>
+  <artifactId>acrepo-exts-jsonld</artifactId>
   <packaging>bundle</packaging>
 
   <name>JSON-LD AppCache Workflow</name>
 
   <properties>
-    <osgi.export.packages>edu.amherst.acdc.jsonld.service;version=${project.version}</osgi.export.packages>
+    <osgi.export.packages>edu.amherst.acdc.exts.jsonld;version=${project.version}</osgi.export.packages>
   </properties>
 
   <dependencies>
@@ -80,7 +80,7 @@
             <configuration>
               <artifacts>
                 <artifact>
-                  <file>src/main/cfg/edu.amherst.acdc.jsonld.service.cfg</file>
+                  <file>src/main/cfg/edu.amherst.acdc.exts.jsonld.cfg</file>
                   <type>cfg</type>
                   <classifier>configuration</classifier>
                 </artifact>

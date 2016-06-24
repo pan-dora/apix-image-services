@@ -8,7 +8,7 @@
        http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
 
    <!-- OSGI blueprint property placeholder -->
-   <cm:property-placeholder persistent-id="edu.amherst.acdc.jsonld.service" update-strategy="reload">
+   <cm:property-placeholder persistent-id="edu.amherst.acdc.exts.jsonld" update-strategy="reload">
      <cm:default-properties>
        <cm:property name="error.maxRedeliveries" value="10"/>
        <cm:property name="rest.port" value="9102"/>
@@ -22,7 +22,7 @@
   <reference id="jsonldService" interface="edu.amherst.acdc.services.jsonld.JsonLdService" filter="(osgi.jndi.service.name=jsonld)" />
 
   <camelContext id="AcrepoJsonLdService" xmlns="http://camel.apache.org/schema/blueprint">
-    <package>edu.amherst.acdc.jsonld.service</package>
+    <package>edu.amherst.acdc.exts.jsonld</package>
 
     <route id="JsonLdCompaction">
       <from uri="direct:compact"/>

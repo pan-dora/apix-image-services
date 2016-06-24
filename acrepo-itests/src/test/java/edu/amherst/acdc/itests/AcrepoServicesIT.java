@@ -80,9 +80,9 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
                         .type("xml").classifier("features").versionAsInProject(), "acrepo-idiomatic",
                     "acrepo-idiomatic-pgsql", "acrepo-xml-metadata", "acrepo-image-service",
                     "acrepo-services-validation", "acrepo-services-jsonld", "acrepo-services-mint",
-                    "acrepo-jsonld-service", "acrepo-template-mustache", "acrepo-fits-rest"),
+                    "acrepo-exts-jsonld", "acrepo-template-mustache", "acrepo-fits-rest"),
 
-            editConfigurationFilePut("etc/edu.amherst.acdc.jsonld.service.cfg", "rest.port", jsonldPort),
+            editConfigurationFilePut("etc/edu.amherst.acdc.exts.jsonld.cfg", "rest.port", jsonldPort),
             editConfigurationFilePut("etc/edu.amherst.acdc.template.mustache.cfg", "rest.port", templatePort),
             editConfigurationFilePut("etc/edu.amherst.acdc.xml.metadata.cfg", "rest.port", metadataPort),
             editConfigurationFilePut("etc/edu.amherst.acdc.idiomatic.cfg", "rest.port", idiomaticPort),
@@ -104,7 +104,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-mint")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-validation")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-xml-metadata")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-jsonld-service")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-jsonld")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-template-mustache")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-image-service")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-fits-rest")));
