@@ -15,6 +15,7 @@
  */
 package edu.amherst.acdc.xml.metadata;
 
+import static org.apache.camel.Exchange.HTTP_METHOD;
 import static org.apache.camel.Exchange.HTTP_PATH;
 import static org.apache.camel.Exchange.HTTP_RESPONSE_CODE;
 import static org.apache.camel.Exchange.CONTENT_TYPE;
@@ -42,8 +43,25 @@ public class EventRouter extends RouteBuilder {
             .log("Event Routing Error: ${routeId}");
 
         from("jetty:http://{{rest.host}}:{{rest.port}}/dc?" +
-                "matchOnUriPrefix=true&httpMethodRestrict=GET&sendServerVersion=false")
-            .routeId("DcTransformation")
+                "matchOnUriPrefix=true&httpMethodRestrict=GET,OPTIONS&sendServerVersion=false")
+            .routeId("XmlDcTransformation")
+            .choice()
+                .when(header(HTTP_METHOD).isEqualTo("GET"))
+                    .to("direct:dc")
+                .when(header(HTTP_METHOD).isEqualTo("OPTIONS"))
+                    .to("direct:options");
+
+        from("jetty:http://{{rest.host}}:{{rest.port}}/mods?" +
+                "matchOnUriPrefix=true&httpMethodRestrict=GET,OPTIONS&sendServerVersion=false")
+            .routeId("XmlModsTransformation")
+            .choice()
+                .when(header(HTTP_METHOD).isEqualTo("GET"))
+                    .to("direct:mods")
+                .when(header(HTTP_METHOD).isEqualTo("OPTIONS"))
+                    .to("direct:options");
+
+        from("direct:dc")
+            .routeId("XmlDcXslt")
             .to("direct:getResource")
             .filter(header(HTTP_RESPONSE_CODE).isEqualTo(200))
               .setHeader(CONTENT_TYPE).constant("application/xml")
@@ -51,15 +69,20 @@ public class EventRouter extends RouteBuilder {
               .log(LoggingLevel.INFO, "Converting resource to DC/XML: ${headers[CamelFcrepoIdentifier]}")
               .to("xslt:{{dc.xslt}}?saxon=true");
 
-        from("jetty:http://{{rest.host}}:{{rest.port}}/mods?" +
-                "matchOnUriPrefix=true&httpMethodRestrict=GET&sendServerVersion=false")
-            .routeId("ModsTransformation")
+        from("direct:mods")
+            .routeId("XmlModsXslt")
             .to("direct:getResource")
             .filter(header(HTTP_RESPONSE_CODE).isEqualTo(200))
               .setHeader(CONTENT_TYPE).constant("application/xml")
               .convertBodyTo(org.w3c.dom.Document.class)
               .log(LoggingLevel.INFO, "Converting resource to MODS/XML: ${headers[CamelFcrepoIdentifier]}")
               .to("xslt:{{mods.xslt}}?saxon=true");
+
+        from("direct:options")
+            .routeId("XmlOptions")
+            .setHeader(CONTENT_TYPE).constant("text/turtle")
+            .setHeader("Allow").constant("GET,OPTIONS")
+            .to("language:simple:resource:classpath:options.ttl");
 
         from("direct:getResource")
             .routeId("XmlTransformationCommon")
