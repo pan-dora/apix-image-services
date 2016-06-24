@@ -15,12 +15,8 @@
   <name>Karaf Integration tests for repository services</name>
 
   <properties>
-    <!-- dependencies -->
-    <jackson2.version>2.7.3</jackson2.version>
-
     <!-- osgi bundle configuration -->
     <osgi.import.packages>*</osgi.import.packages>
-
   </properties>
 
   <dependencies>
@@ -324,11 +320,11 @@
               <scanIntervalSeconds>0</scanIntervalSeconds>
               <daemon>true</daemon>
               <contextHandlers>
-                <contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">
+                <contextHandler implementation="org.eclipse.jetty.maven.plugin.JettyWebAppContext">
                   <war>${project.build.directory}/fuseki.war</war>
                   <contextPath>/fuseki</contextPath>
                 </contextHandler>
-                <contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">
+                <contextHandler implementation="org.eclipse.jetty.maven.plugin.JettyWebAppContext">
                   <war>${project.build.directory}/fcrepo.war</war>
                   <contextPath>/fcrepo</contextPath>
                 </contextHandler>
