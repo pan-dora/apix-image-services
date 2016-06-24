@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.amherst.acdc.jsonld.service;
+package edu.amherst.acdc.exts.jsonld;
 
 import java.util.Dictionary;
 import java.util.Map;

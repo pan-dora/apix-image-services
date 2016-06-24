@@ -95,7 +95,7 @@
     <bundle>mvn:edu.amherst.acdc/acrepo-services-jsonld/${project.version}</bundle>
   </feature>
 
-  <feature name="acrepo-jsonld-service" version="${project.version}" resolver="(orb)" start-level="50">
+  <feature name="acrepo-exts-jsonld" version="${project.version}" resolver="(orb)" start-level="50">
     <details>Installs a sample JSON-LD transformation workflow</details>
 
     <feature version="${camel.version}">camel</feature>
@@ -104,9 +104,9 @@
     <feature version="${fcrepo-camel.version}">fcrepo-camel</feature>
     <feature version="${project.version}">acrepo-services-jsonld</feature>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-jsonld-service/${project.version}</bundle>
+    <bundle>mvn:edu.amherst.acdc/acrepo-exts-jsonld/${project.version}</bundle>
 
-    <configfile finalname="/etc/edu.amherst.acdc.jsonld.service.cfg">mvn:edu.amherst.acdc/acrepo-jsonld-service/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/edu.amherst.acdc.exts.jsonld.cfg">mvn:edu.amherst.acdc/acrepo-exts-jsonld/${project.version}/cfg/configuration</configfile>
   </feature>
 
   <feature name="acrepo-template-mustache" version="${project.version}" resolver="(orb)" start-level="50">

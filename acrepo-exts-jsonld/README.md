@@ -19,7 +19,7 @@ This projects can be deployed in an OSGi container. For example using
 command from its shell:
 
     feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
-    feature:install acrepo-jsonld-service
+    feature:install acrepo-exts-jsonld
 
 Or by copying any of the compiled bundles into `$KARAF_HOME/deploy`.
 
@@ -27,7 +27,7 @@ Configuration
 -------------
 
 The application can be configured by creating the following configuration
-file `$KARAF_HOME/etc/edu.amherst.acdc.jsonld.service.cfg`. The following values
+file `$KARAF_HOME/etc/edu.amherst.acdc.exts.jsonld.cfg`. The following values
 are available for configuration:
 
 In the event of failure, the maximum number of times a redelivery will be attempted.
