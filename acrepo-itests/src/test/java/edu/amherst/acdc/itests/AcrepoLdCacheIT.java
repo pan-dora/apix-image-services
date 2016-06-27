@@ -78,7 +78,7 @@ public class AcrepoLdCacheIT extends AbstractOSGiIT {
                         .versionAsInProject().classifier("features").type("xml"), "scr", "wrap"),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(),
-                    "acrepo-services-ldcache", "acrepo-services-ldcache-pgsql"),
+                    "acrepo-services-ldcache"),
 
             systemProperty("fcrepo.port").value(fcrepoPort),
 
