@@ -21,8 +21,6 @@ command from its shell:
     feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
     feature:install acrepo-exts-jsonld
 
-Or by copying any of the compiled bundles into `$KARAF_HOME/deploy`.
-
 Configuration
 -------------
 
