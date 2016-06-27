@@ -57,6 +57,13 @@
 
     <dependency>
       <groupId>edu.amherst.acdc</groupId>
+      <artifactId>acrepo-services-ldcache-file</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>edu.amherst.acdc</groupId>
       <artifactId>acrepo-services-ldcache</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>

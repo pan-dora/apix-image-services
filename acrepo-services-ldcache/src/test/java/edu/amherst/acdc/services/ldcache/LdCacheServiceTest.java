@@ -15,6 +15,7 @@
  */
 package edu.amherst.acdc.services.ldcache;
 
+import static edu.amherst.acdc.services.ldcache.file.LDCacheFileBackendFactory.createBackend;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
@@ -37,7 +38,7 @@ public class LdCacheServiceTest {
     private static final String LABEL = "http://www.w3.org/2000/01/rdf-schema#label";
     private static final String OFFICIAL_NAME = "http://www.geonames.org/ontology#officialName";
 
-    private static final LDCacheService svc = new LDCacheServiceImpl("/tmp/ldcache");
+    private static final LDCacheService svc = new LDCacheServiceImpl(createBackend("/tmp/ldcache"));
 
     @Test
     public void testFetchDbpedia() throws Exception {

@@ -63,6 +63,18 @@
     <configfile finalname="/etc/edu.amherst.acdc.services.ldcache.cfg">mvn:edu.amherst.acdc/acrepo-services-ldcache/${project.version}/cfg/configuration</configfile>
   </feature>
 
+  <feature name="acrepo-services-ldcache-file" version="${project.version}">
+    <details>Installs the LDCache service</details>
+
+    <bundle>mvn:edu.amherst.acdc/acrepo-services-ldcache-file/${project.version}</bundle>
+
+    <feature version="${project.version}">acrepo-marmotta-libs</feature>
+
+    <bundle>${wrapped.bundle.location}/org.apache.marmotta.ldcache-backend-file-${marmotta.version}.jar</bundle>
+
+    <configfile finalname="/etc/edu.amherst.acdc.services.ldcache.file.cfg">mvn:edu.amherst.acdc/acrepo-services-ldcache-file/${project.version}/cfg/configuration</configfile>
+  </feature>
+
   <feature name="acrepo-services-mint" version="${project.version}">
     <details>Installs the id minter</details>
 
@@ -222,7 +234,6 @@
     <bundle>${wrapped.bundle.location}/org.apache.marmotta.ldclient-provider-rdf-${marmotta.version}.jar</bundle>
     <bundle>${wrapped.bundle.location}/org.apache.marmotta.ldclient-provider-rdfa-${marmotta.version}.jar</bundle>
     <bundle>${wrapped.bundle.location}/org.apache.marmotta.ldclient-provider-xml-${marmotta.version}.jar</bundle>
-    <bundle>${wrapped.bundle.location}/org.apache.marmotta.ldcache-backend-file-${marmotta.version}.jar</bundle>
 
     <bundle dependency="true">mvn:commons-collections/commons-collections/${commons-collections.version}</bundle>
     <bundle dependency="true">mvn:com.google.guava/guava/${guava16.version}</bundle>

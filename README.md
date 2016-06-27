@@ -23,6 +23,7 @@ These modules provide particular services, independent of Fedora Resources.
 
 * `acrepo-services-jsonld`: This service creates expanded or compact JSON-LD representations of input documents
 * `acrepo-services-ldcache`: This service dereferences and caches URIs, retrieving the `object` of particular triples on demand
+* `acrepo-services-ldcache-file`: A file-based backend for the `acrepo-services-ldcache` service
 * `acrepo-services-mint`: This mints random (public) URIs for use with fedora resources
 * `acrepo-services-validation`: An OSGi-based validation service
 
@@ -69,6 +70,7 @@ command from its shell:
     feature:install acrepo-services-mint
     feature:install acrepo-services-jsonld
     feature:install acrepo-services-ldcache
+    feature:install acrepo-services-ldcache-file
     feature:install acrepo-services-mint
     feature:install acrepo-services-validation
     feature:install acrepo-xml-metadata

@@ -9,20 +9,17 @@
 
   <cm:property-placeholder persistent-id="edu.amherst.acdc.services.ldcache" update-strategy="reload" >
     <cm:default-properties>
-      <cm:property name="ldcache.timeout" value="0"/>
+      <cm:property name="ldcache.cacheDir" value="/tmp/ldcache"/>
     </cm:default-properties>
   </cm:property-placeholder>
 
-  <reference id="cachingBackend" interface="org.apache.marmotta.ldcache.api.LDCachingBackend" filter="(osgi.jndi.service.name=cachingbackend)"/>
-
-  <bean id="ldcacheServiceBean" class="edu.amherst.acdc.services.ldcache.LDCacheServiceImpl">
-    <argument ref="cachingBackend"/>
-    <argument value="${ldcache.timeout}"/>
+  <bean id="ldcacheBackendBean" class="edu.amherst.acdc.services.ldcache.file.LDCacheFileBackendFactory" factory-method="createBackend">
+    <argument value="${ldcache.cacheDir}"/>
   </bean>
 
-  <service ref="ldcacheServiceBean" interface="edu.amherst.acdc.services.ldcache.LDCacheService">
+  <service ref="ldcacheBackendBean" interface="org.apache.marmotta.ldcache.api.LDCachingBackend">
     <service-properties>
-      <entry key="osgi.jndi.service.name" value="ldcache"/>
+      <entry key="osgi.jndi.service.name" value="cachingbackend"/>
     </service-properties>
   </service>
 

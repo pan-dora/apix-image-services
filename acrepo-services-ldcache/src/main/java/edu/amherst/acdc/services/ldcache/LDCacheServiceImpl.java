@@ -19,7 +19,6 @@ import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.slf4j.LoggerFactory.getLogger;
 
-import java.io.File;
 import java.util.List;
 
 import com.github.jsonldjava.sesame.SesameJSONLDParserFactory;
@@ -29,7 +28,6 @@ import org.openrdf.model.URI;
 import org.openrdf.model.ValueFactory;
 import org.openrdf.model.impl.ValueFactoryImpl;
 import org.apache.marmotta.ldcache.api.LDCachingBackend;
-import org.apache.marmotta.ldcache.backend.file.LDCachingFileBackend;
 import org.apache.marmotta.ldcache.model.CacheConfiguration;
 import org.apache.marmotta.ldcache.services.LDCache;
 import org.apache.marmotta.ldclient.endpoint.rdf.SPARQLEndpoint;
@@ -87,16 +85,11 @@ public class LDCacheServiceImpl implements LDCacheService {
 
     /**
      * Create a LDCacheServiceImpl object with a backing filesystem cache
-     * @param storageDir the directory where data is stored
+     * @param backend the caching backend to use
      * @param timeout the number of seconds before the cache is cleared
-     * TODO - this constructor should accept a LDCachingBackend that is defined separately
-     * as an OSGi service, but this is fine for now.
      */
-    public LDCacheServiceImpl(final String storageDir, final long timeout) {
+    public LDCacheServiceImpl(final LDCachingBackend backend, final long timeout) {
         try {
-            final LDCachingBackend backend = new LDCachingFileBackend(new File(storageDir));
-            backend.initialize();
-
             final CacheConfiguration config = new CacheConfiguration(buildClientConfiguration());
             if (timeout > 0) {
                 config.setDefaultExpiry(timeout * 1000);
@@ -111,11 +104,10 @@ public class LDCacheServiceImpl implements LDCacheService {
 
     /**
      * Create a LDCacheServiceImpl object with a backing filesystem cache
-     * @param storageDir the directory where data is stored
-     * TODO - this constructor should accept a LDCachingBackend object (see above)
+     * @param backend the caching backend to use
      */
-    public LDCacheServiceImpl(final String storageDir) {
-        this(storageDir, 0);
+    public LDCacheServiceImpl(final LDCachingBackend backend) {
+        this(backend, 0);
     }
 
     @Override
