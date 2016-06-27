@@ -41,11 +41,11 @@ Other OSGi Features
 In addition to what is listed above, a number of Karaf features are made available to make it easier to install
 sets of related bundles in an OSGi container.
 
+* `acrepo-libs-jackson`: The Jackson JSON libraries
 * `acrepo-libs-jena`: The Jena 3.x libraries
+* `acrepo-libs-jsonld`: The JSON-LD libraries
 * `acrepo-libs-marmotta`: The Marmotta libraries
 * `acrepo-libs-sesame`: The Sesame 2.x libraries
-* `acrepo-libs-jackson`: The Jackson JSON libraries
-* `acrepo-libs-jsonld`: The JSON-LD libraries
 
 Building
 --------
