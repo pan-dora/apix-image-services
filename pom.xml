@@ -115,10 +115,10 @@
     <module>acrepo-services-ldcache-file</module>
     <module>acrepo-services-mint</module>
     <module>acrepo-services-validation</module>
-    <module>acrepo-xml-metadata</module>
-    <module>acrepo-exts-jsonld</module>
     <module>acrepo-template-mustache</module>
     <module>acrepo-exts-fits</module>
+    <module>acrepo-exts-jsonld</module>
+    <module>acrepo-exts-serialize-xml</module>
   </modules>
 
   <dependencyManagement>

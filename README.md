@@ -14,7 +14,7 @@ by making available a REST-based HTTP interface.
 * `acrepo-exts-fits`: This service will return FITS information associated with a Fedora Binary, in XML format
 * `acrepo-exts-jsonld`: This module exposes an HTTP endpoint for creating compact JSON-LD documents from a fedora repository using a pluggable context document
 * `acrepo-image-service`: An image manipulation service
-* `acrepo-xml-metadata`: This service translates Fedora RDF documents into MODS/XML or DC/XML
+* `acrepo-exts-serialize-xml`: This service translates Fedora RDF documents into MODS/XML or DC/XML
 
 Services
 --------
@@ -64,6 +64,7 @@ command from its shell:
     feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
     feature:install acrepo-exts-fits
     feature:install acrepo-exts-jsonld
+    feature:install acrepo-exts-serialize-xml
     feature:install acrepo-idiomatic
     feature:install acrepo-idiomatic-pgsql
     feature:install acrepo-image-service
@@ -72,7 +73,6 @@ command from its shell:
     feature:install acrepo-services-ldcache-file
     feature:install acrepo-services-mint
     feature:install acrepo-services-validation
-    feature:install acrepo-xml-metadata
 
 More information
 ----------------
