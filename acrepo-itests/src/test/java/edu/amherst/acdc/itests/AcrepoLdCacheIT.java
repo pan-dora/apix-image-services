@@ -15,6 +15,8 @@
  */
 package edu.amherst.acdc.itests;
 
+import static org.junit.Assume.assumeTrue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.ops4j.pax.exam.CoreOptions.maven;
 import static org.ops4j.pax.exam.CoreOptions.systemProperty;
@@ -27,6 +29,7 @@ import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.logLevel;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.io.File;
+import java.util.List;
 
 import edu.amherst.acdc.services.ldcache.LDCacheService;
 import edu.amherst.acdc.services.ldcache.LDCacheServiceImpl;
@@ -93,27 +96,121 @@ public class AcrepoLdCacheIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-ldcache")));
     }
 
-    @Test
-    public void testLdCacheService() throws Exception {
 
-        assertTrue(svc.get("http://dbpedia.org/resource/Berlin", LABEL).contains("Berlin"));
-        assertTrue(svc.get("http://sws.geonames.org/2658434/", OFFICIAL_NAME).contains("Switzerland"));
-        assertTrue(svc.get("http://id.loc.gov/vocabulary/resourceTypes/txt", PREF_LABEL).contains("Text"));
-        assertTrue(svc.get("http://id.loc.gov/authorities/names/n79006936", PREF_LABEL)
-                .contains("Melville, Herman, 1819-1891"));
-        assertTrue(svc.get("http://purl.org/dc/dcmitype/StillImage", LABEL).contains("Still Image"));
-        assertTrue(svc.get("http://vocab.getty.edu/tgn/7003712", PREF_LABEL).contains("Berlin"));
+    @Test
+    public void testFetchDbpedia() throws Exception {
+
+        final List<String> dbpedia = svc.get("http://dbpedia.org/resource/Berlin", LABEL);
+        assumeTrue(dbpedia.size() > 0);
+
+        assertTrue(dbpedia.contains("Berlin"));
     }
 
     @Test
-    public void testLdCacheServiceWithLang() throws Exception {
+    public void testFetchGeonames() throws Exception {
+        final List<String> geonames = svc.get("http://sws.geonames.org/2658434/", OFFICIAL_NAME);
+        assumeTrue(geonames.size() > 0);
 
-        assertTrue(svc.get("http://dbpedia.org/resource/Berlin", LABEL, "en").contains("Berlin"));
-        assertTrue(svc.get("http://sws.geonames.org/2658434/", OFFICIAL_NAME, "en").contains("Switzerland"));
-        assertTrue(svc.get("http://id.loc.gov/vocabulary/resourceTypes/txt", PREF_LABEL, "en").contains("Text"));
-        assertTrue(svc.get("http://id.loc.gov/authorities/names/n79006936", PREF_LABEL, "en")
-                .contains("Melville, Herman, 1819-1891"));
-        assertTrue(svc.get("http://purl.org/dc/dcmitype/StillImage", LABEL, "en").contains("Still Image"));
-        assertTrue(svc.get("http://vocab.getty.edu/tgn/7003712", PREF_LABEL, "en").contains("Berlin"));
+        assertTrue(geonames.contains("Switzerland"));
     }
+
+    @Test
+    public void testFetchGetty() throws Exception {
+
+        final List<String> getty = svc.get("http://vocab.getty.edu/tgn/7003712", PREF_LABEL);
+
+        assumeTrue(getty.size() > 0);
+        assertTrue(getty.contains("Berlin"));
+    }
+
+    @Test
+    public void testFetchResourceTypes() throws Exception {
+
+        final List<String> types = svc.get("http://id.loc.gov/vocabulary/resourceTypes/txt", PREF_LABEL);
+
+        assumeTrue(types.size() > 0);
+        assertTrue(types.contains("Text"));
+    }
+
+    @Test
+    public void testFetchLocName() throws Exception {
+
+        final List<String> name = svc.get("http://id.loc.gov/authorities/names/n79006936", PREF_LABEL);
+
+        assumeTrue(name.size() > 0);
+        assertTrue(name.contains("Melville, Herman, 1819-1891"));
+    }
+
+    @Test
+    public void testDcmiTypes() throws Exception {
+
+        final List<String> types = svc.get("http://purl.org/dc/dcmitype/StillImage", LABEL);
+
+        assumeTrue(types.size() > 0);
+        assertTrue(types.contains("Still Image"));
+    }
+
+    @Test
+    public void testFetchDbpediaWithLang() throws Exception {
+
+        final List<String> dbpedia = svc.get("http://dbpedia.org/resource/Berlin", LABEL, "en");
+        assumeTrue(dbpedia.size() > 0);
+
+        assertEquals(dbpedia.size(), 1);
+        assertTrue(dbpedia.contains("Berlin"));
+    }
+
+    @Test
+    public void testFetchGeonamesWithLang() throws Exception {
+        final List<String> geonames = svc.get("http://sws.geonames.org/2658434/", OFFICIAL_NAME, "en");
+        assumeTrue(geonames.size() > 0);
+
+        assertEquals(geonames.size(), 1);
+        assertTrue(geonames.contains("Switzerland"));
+    }
+
+    @Test
+    public void testFetchGettyWithLang() throws Exception {
+
+        final List<String> getty = svc.get("http://vocab.getty.edu/tgn/7003712", PREF_LABEL, "en");
+
+        assumeTrue(getty.size() > 0);
+
+        assertEquals(getty.size(), 1);
+        assertTrue(getty.contains("Berlin"));
+    }
+
+    @Test
+    public void testFetchResourceTypesWithLang() throws Exception {
+
+        final List<String> types = svc.get("http://id.loc.gov/vocabulary/resourceTypes/txt", PREF_LABEL, "en");
+
+        assumeTrue(types.size() > 0);
+
+        assertEquals(types.size(), 1);
+        assertTrue(types.contains("Text"));
+    }
+
+    @Test
+    public void testFetchLocNameWithLang() throws Exception {
+
+        final List<String> name = svc.get("http://id.loc.gov/authorities/names/n79006936", PREF_LABEL, "en");
+
+        assumeTrue(name.size() > 0);
+
+        assertEquals(name.size(), 1);
+        assertTrue(name.contains("Melville, Herman, 1819-1891"));
+    }
+
+    @Test
+    public void testDcmiTypesWithLang() throws Exception {
+
+        final List<String> types = svc.get("http://purl.org/dc/dcmitype/StillImage", LABEL, "en");
+
+        assumeTrue(types.size() > 0);
+
+        assertEquals(types.size(), 1);
+        assertTrue(types.contains("Still Image"));
+    }
+
 }
