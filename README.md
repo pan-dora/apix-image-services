@@ -67,7 +67,6 @@ command from its shell:
     feature:install acrepo-idiomatic
     feature:install acrepo-idiomatic-pgsql
     feature:install acrepo-image-service
-    feature:install acrepo-services-mint
     feature:install acrepo-services-jsonld
     feature:install acrepo-services-ldcache
     feature:install acrepo-services-ldcache-file
