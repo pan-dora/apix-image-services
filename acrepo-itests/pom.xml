@@ -57,6 +57,13 @@
 
     <dependency>
       <groupId>edu.amherst.acdc</groupId>
+      <artifactId>acrepo-services-ldcache</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>edu.amherst.acdc</groupId>
       <artifactId>acrepo-karaf</artifactId>
       <version>${project.version}</version>
       <type>xml</type>
@@ -64,7 +71,7 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- Testing & Camel Plugin -->
+    <!-- Testing -->
     <dependency>
       <groupId>org.glassfish.hk2.external</groupId>
       <artifactId>javax.inject</artifactId>

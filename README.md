@@ -14,6 +14,7 @@ Services
 * `acrepo-image-service`: An image manipulation service
 * `acrepo-jsonld-service`: This service exposes an HTTP endpoint for creating compact JSON-LD documents from a fedora repository using a pluggable context document
 * `acrepo-services-jsonld`: This service creates expanded or compact JSON-LD representations of input documents
+* `acrepo-services-ldcache`: This service dereferences and caches URIs, retrieving the `object` of particular triples on demand
 * `acrepo-services-mint`: This mints random (public) URIs for use with fedora resources
 * `acrepo-services-validation`: An OSGi-based validation service
 * `acrepo-xml-metadata`: This service translates Fedora RDF documents into MODS/XML or DC/XML
@@ -38,8 +39,9 @@ command from its shell:
     feature:install acrepo-idiomatic-pgsql
     feature:install acrepo-image-service
     feature:install acrepo-jsonld-service
-    feature:install acrepo-services-mint
     feature:install acrepo-services-jsonld
+    feature:install acrepo-services-ldcache
+    feature:install acrepo-services-mint
     feature:install acrepo-services-validation
     feature:install acrepo-xml-metadata
 
