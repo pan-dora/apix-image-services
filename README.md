@@ -3,7 +3,7 @@ Amherst College Repository Services
 
 [![Build Status](https://travis-ci.org/acoburn/repository-extension-services.png?branch=master)](https://travis-ci.org/acoburn/repository-extension-services)
 
-This is a collection of OSGi services that extend the functionality of a Fedora4 repository.
+This is a collection of OSGi services that extend the functionality of a [Fedora4](https://wiki.duraspace.org/display/FF/Fedora+Repository+Home) repository.
 
 Extensions
 ----------
@@ -41,11 +41,11 @@ Other OSGi Features
 In addition to what is listed above, a number of Karaf features are made available to make it easier to install
 sets of related bundles in an OSGi container.
 
-* `acrepo-libs-jackson`: The Jackson JSON libraries
-* `acrepo-libs-jena`: The Jena 3.x libraries
-* `acrepo-libs-jsonld`: The JSON-LD libraries
-* `acrepo-libs-marmotta`: The Marmotta libraries
-* `acrepo-libs-sesame`: The Sesame 2.x libraries
+* `acrepo-libs-jackson`: The [Jackson](http://wiki.fasterxml.com/JacksonHome) JSON libraries
+* `acrepo-libs-jena`: The [Jena 3.x](http://jena.apache.org/) libraries
+* `acrepo-libs-jsonld`: The [JSON-LD](https://github.com/jsonld-java/jsonld-java) libraries
+* `acrepo-libs-marmotta`: The [Marmotta](http://marmotta.apache.org) libraries
+* `acrepo-libs-sesame`: The [Sesame 2.x](http://rdf4j.org/) libraries
 
 Building
 --------
