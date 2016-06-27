@@ -76,7 +76,7 @@ public class AcrepoFitsIT extends AbstractOSGiIT {
                         .versionAsInProject().classifier("features").type("xml"), "scr"),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(),
-                        "acrepo-fits-rest"),
+                        "acrepo-exts-fits"),
 
             systemProperty("karaf.fits.port").value(fitsServicePort),
             systemProperty("fcrepo.port").value(fcrepoPort),
@@ -84,8 +84,8 @@ public class AcrepoFitsIT extends AbstractOSGiIT {
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", rmiRegistryPort),
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", rmiServerPort),
             editConfigurationFilePut("etc/org.apache.karaf.shell.cfg", "sshPort", sshPort),
-            editConfigurationFilePut("etc/edu.amherst.acdc.fits.rest.cfg", "fcrepo.baseUrl", fcrepoBaseUrl),
-            editConfigurationFilePut("etc/edu.amherst.acdc.fits.rest.cfg", "rest.port", fitsServicePort)
+            editConfigurationFilePut("etc/edu.amherst.acdc.exts.fits.cfg", "fcrepo.baseUrl", fcrepoBaseUrl),
+            editConfigurationFilePut("etc/edu.amherst.acdc.exts.fits.cfg", "rest.port", fitsServicePort)
        };
     }
 
@@ -95,7 +95,7 @@ public class AcrepoFitsIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("camel-blueprint")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("camel-jetty9")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("camel-http4")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-fits-rest")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-fits")));
     }
 
     @Test
