@@ -81,8 +81,8 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
                     "acrepo-idiomatic-pgsql", "acrepo-xml-metadata", "acrepo-image-service",
                     "acrepo-services-validation", "acrepo-services-jsonld", "acrepo-services-mint",
                     "acrepo-exts-jsonld", "acrepo-template-mustache", "acrepo-fits-rest",
-                    "acrepo-jena-libs", "acrepo-sesame-libs", "acrepo-jsonld-libs",
-                    "acrepo-jackson-libs", "acrepo-marmotta-libs", "acrepo-services-ldcache"),
+                    "acrepo-libs-jena", "acrepo-libs-sesame", "acrepo-libs-jsonld",
+                    "acrepo-libs-jackson", "acrepo-libs-marmotta", "acrepo-services-ldcache"),
 
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.jsonld.cfg", "rest.port", jsonldPort),
             editConfigurationFilePut("etc/edu.amherst.acdc.template.mustache.cfg", "rest.port", templatePort),
@@ -111,10 +111,10 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-template-mustache")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-image-service")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-fits-rest")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-sesame-libs")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-marmotta-libs")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-jena-libs")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-jsonld-libs")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-jackson-libs")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-sesame")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-marmotta")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-jena")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-jsonld")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-jackson")));
     }
 }

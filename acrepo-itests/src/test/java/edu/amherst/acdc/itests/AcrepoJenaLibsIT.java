@@ -67,7 +67,7 @@ public class AcrepoJenaLibsIT extends AbstractOSGiIT {
             features(maven().groupId("org.apache.karaf.features").artifactId("standard")
                         .versionAsInProject().classifier("features").type("xml"), "scr"),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
-                        .type("xml").classifier("features").versionAsInProject(), "acrepo-jena-libs"),
+                        .type("xml").classifier("features").versionAsInProject(), "acrepo-libs-jena"),
 
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", rmiRegistryPort),
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", rmiServerPort),
@@ -77,7 +77,7 @@ public class AcrepoJenaLibsIT extends AbstractOSGiIT {
 
     @Test
     public void testInstallation() throws Exception {
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-jena-libs")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-jsonld-libs")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-jena")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-jsonld")));
     }
 }

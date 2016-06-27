@@ -58,7 +58,7 @@
 
     <bundle>mvn:edu.amherst.acdc/acrepo-services-ldcache/${project.version}</bundle>
 
-    <feature version="${project.version}">acrepo-marmotta-libs</feature>
+    <feature version="${project.version}">acrepo-libs-marmotta</feature>
 
     <configfile finalname="/etc/edu.amherst.acdc.services.ldcache.cfg">mvn:edu.amherst.acdc/acrepo-services-ldcache/${project.version}/cfg/configuration</configfile>
   </feature>
@@ -76,7 +76,7 @@
   <feature name="acrepo-services-validation" version="${project.version}">
     <details>Installs the validation service</details>
 
-    <feature version="${project.version}">acrepo-jena-libs</feature>
+    <feature version="${project.version}">acrepo-libs-jena</feature>
 
     <bundle>mvn:edu.amherst.acdc/acrepo-services-validation/${project.version}</bundle>
 
@@ -100,7 +100,7 @@
   <feature name="acrepo-services-jsonld" version="${project.version}">
     <details>Installs the JSON-LD transformation OSGi service</details>
 
-    <feature version="${project.version}">acrepo-jsonld-libs</feature>
+    <feature version="${project.version}">acrepo-libs-jsonld</feature>
 
     <bundle>mvn:edu.amherst.acdc/acrepo-services-jsonld/${project.version}</bundle>
   </feature>
@@ -149,10 +149,10 @@
     <configfile finalname="/etc/edu.amherst.acdc.fits.rest.cfg">mvn:edu.amherst.acdc/acrepo-fits-rest/${project.version}/cfg/configuration</configfile>
   </feature>
 
-  <feature name="acrepo-jena-libs" version="${project.version}">
+  <feature name="acrepo-libs-jena" version="${project.version}">
     <details>Installs jena and related dependencies</details>
 
-    <feature version="${project.version}" dependency="true">acrepo-jsonld-libs</feature>
+    <feature version="${project.version}" dependency="true">acrepo-libs-jsonld</feature>
 
     <bundle>mvn:org.apache.jena/jena-osgi/${jena.version}</bundle>
 
@@ -162,11 +162,11 @@
     <bundle dependency="true">mvn:com.github.andrewoma.dexx/collection/${dexx.version}</bundle>
   </feature>
 
-  <feature name="acrepo-sesame-libs" version="${project.version}">
+  <feature name="acrepo-libs-sesame" version="${project.version}">
     <details>Installs the OpenRDF libraries</details>
 
     <feature prerequisite="true" dependency="false">wrap</feature>
-    <feature version="${project.version}" dependency="true">acrepo-jackson-libs</feature>
+    <feature version="${project.version}" dependency="true">acrepo-libs-jackson</feature>
 
     <bundle>wrap:mvn:org.openrdf.sesame/sesame-repository-event/${sesame.version}</bundle>
     <bundle>wrap:mvn:org.openrdf.sesame/sesame-sail-memory/${sesame.version}</bundle>
@@ -205,12 +205,12 @@
     <bundle dependency="true">mvn:commons-io/commons-io/${commons-io.version}</bundle>
   </feature>
 
-  <feature name="acrepo-marmotta-libs" version="${project.version}">
+  <feature name="acrepo-libs-marmotta" version="${project.version}">
     <details>Installs the Marmotta libraries</details>
 
-    <feature version="${project.version}" dependency="true">acrepo-sesame-libs</feature>
-    <feature version="${project.version}" dependency="true">acrepo-jsonld-libs</feature>
-    <feature version="${project.version}" dependency="true">acrepo-jackson-libs</feature>
+    <feature version="${project.version}" dependency="true">acrepo-libs-sesame</feature>
+    <feature version="${project.version}" dependency="true">acrepo-libs-jsonld</feature>
+    <feature version="${project.version}" dependency="true">acrepo-libs-jackson</feature>
 
     <bundle>mvn:org.apache.marmotta/ldcache-api/${marmotta.version}</bundle>
 
@@ -249,12 +249,12 @@
     <bundle dependency="true">${wrapped.bundle.location}/org.semarglproject.semargl-sesame-${semargl.version}.jar</bundle>
   </feature>
 
-  <feature name="acrepo-jsonld-libs" version="${project.version}">
+  <feature name="acrepo-libs-jsonld" version="${project.version}">
     <details>Installs the JSON-LD related bundles</details>
 
     <bundle>mvn:com.github.jsonld-java/jsonld-java/${jsonld.version}</bundle>
 
-    <feature version="${project.version}" dependency="true">acrepo-jackson-libs</feature>
+    <feature version="${project.version}" dependency="true">acrepo-libs-jackson</feature>
 
     <bundle dependency="true">mvn:org.apache.httpcomponents/httpclient-osgi/${httpclient.version}</bundle>
     <bundle dependency="true">mvn:org.apache.httpcomponents/httpcore-osgi/${httpcore.version}</bundle>
@@ -262,7 +262,7 @@
     <bundle dependency="true">mvn:commons-io/commons-io/${commons-io.version}</bundle>
   </feature>
 
-  <feature name="acrepo-jackson-libs" version="${project.version}">
+  <feature name="acrepo-libs-jackson" version="${project.version}">
     <details>Installs the Jackson Libraries</details>
 
     <bundle>mvn:com.fasterxml.jackson.core/jackson-core/${jackson2.version}</bundle>
