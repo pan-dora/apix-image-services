@@ -15,9 +15,10 @@
  */
 package edu.amherst.acdc.itests;
 
-import static org.junit.Assume.assumeTrue;
+import static edu.amherst.acdc.services.ldcache.file.LDCacheFileBackendFactory.createBackend;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeTrue;
 import static org.ops4j.pax.exam.CoreOptions.maven;
 import static org.ops4j.pax.exam.CoreOptions.systemProperty;
 import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.configureConsole;
@@ -57,7 +58,7 @@ public class AcrepoLdCacheIT extends AbstractOSGiIT {
     private static final String OFFICIAL_NAME = "http://www.geonames.org/ontology#officialName";
 
     private static final Logger LOGGER = getLogger(AcrepoLdCacheIT.class);
-    private static final LDCacheService svc = new LDCacheServiceImpl("target/ldcache", 100000);
+    private static final LDCacheService svc = new LDCacheServiceImpl(createBackend("target/ldcache"), 100000);
 
     @Configuration
     public Option[] config() {
@@ -81,7 +82,7 @@ public class AcrepoLdCacheIT extends AbstractOSGiIT {
                         .versionAsInProject().classifier("features").type("xml"), "scr", "wrap"),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(),
-                    "acrepo-services-ldcache"),
+                    "acrepo-services-ldcache", "acrepo-services-ldcache-file"),
 
             systemProperty("fcrepo.port").value(fcrepoPort),
 
@@ -94,6 +95,7 @@ public class AcrepoLdCacheIT extends AbstractOSGiIT {
     @Test
     public void testInstallation() throws Exception {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-ldcache")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-ldcache-file")));
     }
 
 

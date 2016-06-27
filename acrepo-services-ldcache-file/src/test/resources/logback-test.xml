@@ -7,7 +7,7 @@
         </encoder>
     </appender>
 
-  <logger name="edu.amherst.acdc.services.ldcache" additivity="false" level="INFO">
+  <logger name="edu.amherst.acdc.services.ldcache.file" additivity="false" level="INFO">
     <appender-ref ref="STDOUT"/>
   </logger>
   <root additivity="false" level="INFO">
