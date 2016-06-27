@@ -117,7 +117,7 @@
     <module>acrepo-xml-metadata</module>
     <module>acrepo-exts-jsonld</module>
     <module>acrepo-template-mustache</module>
-    <module>acrepo-fits-rest</module>
+    <module>acrepo-exts-fits</module>
   </modules>
 
   <dependencyManagement>

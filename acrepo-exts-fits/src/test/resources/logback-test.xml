@@ -7,7 +7,7 @@
         </encoder>
     </appender>
 
-  <logger name="edu.amherst.acdc.fits.rest" additivity="false" level="INFO">
+  <logger name="edu.amherst.acdc.exts.fits" additivity="false" level="INFO">
     <appender-ref ref="STDOUT"/>
   </logger>
   <logger name="org.apache.camel" additivity="false" level="INFO">

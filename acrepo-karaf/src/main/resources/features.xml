@@ -136,7 +136,7 @@
     <configfile finalname="/etc/edu.amherst.acdc.template.mustache.cfg">mvn:edu.amherst.acdc/acrepo-template-mustache/${project.version}/cfg/configuration</configfile>
   </feature>
 
-  <feature name="acrepo-fits-rest" version="${project.version}">
+  <feature name="acrepo-exts-fits" version="${project.version}">
     <details>Installs a FITS RESTful service</details>
 
     <feature version="${camel.version}">camel</feature>
@@ -144,9 +144,9 @@
     <feature version="${camel.version}">camel-jetty9</feature>
     <feature version="${camel.version}">camel-http4</feature>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-fits-rest/${project.version}</bundle>
+    <bundle>mvn:edu.amherst.acdc/acrepo-exts-fits/${project.version}</bundle>
 
-    <configfile finalname="/etc/edu.amherst.acdc.fits.rest.cfg">mvn:edu.amherst.acdc/acrepo-fits-rest/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/edu.amherst.acdc.exts.fits.cfg">mvn:edu.amherst.acdc/acrepo-exts-fits/${project.version}/cfg/configuration</configfile>
   </feature>
 
   <feature name="acrepo-libs-jena" version="${project.version}">
