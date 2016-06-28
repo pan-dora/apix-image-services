@@ -9,7 +9,8 @@ Extensions
 ----------
 
 These modules extend the behavior of Fedora resources. Specifically, they connect Fedora Resources to specific services
-by making available a REST-based HTTP interface.
+by making available a REST-based HTTP interface. The intention is that these extensions will be compatible with the
+[Fedora API Extension](https://wiki.duraspace.org/display/FF/Design+-+API+Extension+Architecture) architecture.
 
 * `acrepo-exts-fits`: This service will return FITS information associated with a Fedora Binary, in XML format
 * `acrepo-exts-jsonld`: This module exposes an HTTP endpoint for creating compact JSON-LD documents from a fedora repository using a pluggable context document
