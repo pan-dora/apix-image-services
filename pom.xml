@@ -106,6 +106,7 @@
   </scm>
 
   <modules>
+    <module>acrepo-connector-broadcast</module>
     <module>acrepo-idiomatic-pgsql</module>
     <module>acrepo-idiomatic</module>
     <module>acrepo-exts-fits</module>

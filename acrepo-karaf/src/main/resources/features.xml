@@ -289,4 +289,16 @@
     <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/${jackson2.version}</bundle>
   </feature>
 
+  <feature name="acrepo-connector-broadcast" version="${project.version}">
+    <details>Installs the message broadcasting service</details>
+
+    <feature version="${camel.version}">camel</feature>
+    <feature version="${camel.version}">camel-blueprint</feature>
+    <feature version="${activemq.version}">activemq-camel</feature>
+
+    <bundle>mvn:edu.amherst.acdc/acrepo-connector-broadcast/${project.version}</bundle>
+
+    <configfile finalname="/etc/edu.amherst.acdc.connector.broadcast.cfg">mvn:edu.amherst.acdc/acrepo-connector-broadcast/${project.version}/cfg/configuration</configfile>
+  </feature>
+
 </features>
