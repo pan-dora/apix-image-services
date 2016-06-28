@@ -68,7 +68,7 @@
 
     <bundle>mvn:edu.amherst.acdc/acrepo-services-ldcache-file/${project.version}</bundle>
 
-    <feature version="${project.version}">acrepo-marmotta-libs</feature>
+    <feature version="${project.version}">acrepo-libs-marmotta</feature>
 
     <bundle>${wrapped.bundle.location}/org.apache.marmotta.ldcache-backend-file-${marmotta.version}.jar</bundle>
 
@@ -95,8 +95,8 @@
     <configfile finalname="/etc/edu.amherst.acdc.services.validation.cfg">mvn:edu.amherst.acdc/acrepo-services-validation/${project.version}/cfg/configuration</configfile>
   </feature>
 
-  <feature name="acrepo-xml-metadata" version="${project.version}">
-    <details>Installs the MODS/XML translation service</details>
+  <feature name="acrepo-exts-serialize-xml" version="${project.version}">
+    <details>Installs the MODS/XML and DC/XML serialization service</details>
 
     <feature version="${camel.version}">camel</feature>
     <feature version="${camel.version}">camel-blueprint</feature>
@@ -104,9 +104,9 @@
     <feature version="${camel.version}">camel-saxon</feature>
     <feature version="${fcrepo-camel.version}">fcrepo-camel</feature>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-xml-metadata/${project.version}</bundle>
+    <bundle>mvn:edu.amherst.acdc/acrepo-exts-serialize-xml/${project.version}</bundle>
 
-    <configfile finalname="/etc/edu.amherst.acdc.xml.metadata.cfg">mvn:edu.amherst.acdc/acrepo-xml-metadata/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/edu.amherst.acdc.exts.serialize.xml.cfg">mvn:edu.amherst.acdc/acrepo-exts-serialize-xml/${project.version}/cfg/configuration</configfile>
   </feature>
 
   <feature name="acrepo-services-jsonld" version="${project.version}">
