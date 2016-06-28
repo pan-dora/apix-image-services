@@ -79,7 +79,7 @@ public class KarafIT {
         final String acrepoIdiomatic = getBundleUri("acrepo-idiomatic", version);
         final String acrepoValidationSvc = getBundleUri("acrepo-services-validation", version);
         final String acrepoJsonLdSvc = getBundleUri("acrepo-services-jsonld", version);
-        final String acrepoJsonLd = getBundleUri("acrepo-jsonld-service", version);
+        final String acrepoJsonLd = getBundleUri("acrepo-exts-jsonld", version);
         final String acrepoMintSvc = getBundleUri("acrepo-services-mint", version);
 
         return new Option[] {
