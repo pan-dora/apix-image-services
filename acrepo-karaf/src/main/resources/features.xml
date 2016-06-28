@@ -39,7 +39,7 @@
     <configfile finalname="/etc/org.ops4j.datasource-idiomatic.cfg">mvn:edu.amherst.acdc/acrepo-idiomatic-pgsql/${project.version}/cfg/configuration</configfile>
   </feature>
 
-  <feature name="acrepo-image-service" version="${project.version}">
+  <feature name="acrepo-exts-image" version="${project.version}">
     <details>Installs the image service</details>
 
     <feature version="${camel.version}">camel</feature>
@@ -48,9 +48,9 @@
     <feature version="${camel.version}">camel-http4</feature>
     <feature version="${camel.version}">camel-exec</feature>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-image-service/${project.version}</bundle>
+    <bundle>mvn:edu.amherst.acdc/acrepo-exts-image/${project.version}</bundle>
 
-    <configfile finalname="/etc/edu.amherst.acdc.image.service.cfg">mvn:edu.amherst.acdc/acrepo-image-service/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/edu.amherst.acdc.exts.image.cfg">mvn:edu.amherst.acdc/acrepo-exts-image/${project.version}/cfg/configuration</configfile>
   </feature>
 
   <feature name="acrepo-services-ldcache" version="${project.version}">

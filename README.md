@@ -13,8 +13,8 @@ by making available a REST-based HTTP interface. The intention is that these ext
 [Fedora API Extension](https://wiki.duraspace.org/display/FF/Design+-+API+Extension+Architecture) architecture.
 
 * `acrepo-exts-fits`: This service will return FITS information associated with a Fedora Binary, in XML format
-* `acrepo-exts-jsonld`: This module exposes an HTTP endpoint for creating compact JSON-LD documents from a fedora repository using a pluggable context document
-* `acrepo-image-service`: An image manipulation service
+* `acrepo-exts-image`: An image manipulation service
+* `acrepo-exts-jsonld`: This module exposes an HTTP endpoint for creating compact JSON-LD documents from a Fedora repository using a pluggable context document
 * `acrepo-exts-serialize-xml`: This service translates Fedora RDF documents into MODS/XML or DC/XML
 * `acrepo-template-mustache`: A module for converting Fedora resources into some other form, using a [mustache](https://mustache.github.io/) template.
 
@@ -26,7 +26,7 @@ These modules provide particular services, independent of Fedora Resources.
 * `acrepo-services-jsonld`: This service creates expanded or compact JSON-LD representations of input documents
 * `acrepo-services-ldcache`: This service dereferences and caches URIs, retrieving the `object` of particular triples on demand
 * `acrepo-services-ldcache-file`: A file-based backend for the `acrepo-services-ldcache` service
-* `acrepo-services-mint`: This mints random (public) URIs for use with fedora resources
+* `acrepo-services-mint`: This mints random (public) URIs for use with Fedora resources
 * `acrepo-services-pcdm`: This makes it easy to work with PCDM objects
 * `acrepo-services-validation`: An OSGi-based validation service
 
@@ -35,7 +35,7 @@ Connectors
 
 These modules listen to repository events and react accordingly.
 
-* `acrepo-idiomatic`: Id Mapping Service: This maps a public ID to a (internal and typically much longer) fedora URI
+* `acrepo-idiomatic`: Id Mapping Service: This maps a public ID to a (internal and typically much longer) Fedora URI
 * `acrepo-idiomatic-pgsql`: Id Mapping Service Database: This exposes a Postgres datastore for use with the Id Mapping service
 
 Other OSGi Features
@@ -66,12 +66,12 @@ command from its shell:
 
     feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
     feature:install acrepo-exts-fits
+    feature:install acrepo-exts-image
     feature:install acrepo-exts-jsonld
     feature:install acrepo-exts-serialize-xml
     feature:install acrepo-template-mustache
     feature:install acrepo-idiomatic
     feature:install acrepo-idiomatic-pgsql
-    feature:install acrepo-image-service
     feature:install acrepo-services-jsonld
     feature:install acrepo-services-ldcache
     feature:install acrepo-services-ldcache-file

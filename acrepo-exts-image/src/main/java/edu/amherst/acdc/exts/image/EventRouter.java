@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.amherst.acdc.image.service;
+package edu.amherst.acdc.exts.image;
 
 import static java.util.Arrays.stream;
 import static org.apache.camel.Exchange.CONTENT_TYPE;

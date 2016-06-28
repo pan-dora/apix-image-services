@@ -9,13 +9,13 @@
     <version>1.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>acrepo-image-service</artifactId>
+  <artifactId>acrepo-exts-image</artifactId>
   <packaging>bundle</packaging>
 
   <name>Image manipulation service</name>
 
   <properties>
-    <osgi.export.packages>edu.amherst.acdc.image.service;version=${project.version}</osgi.export.packages>
+    <osgi.export.packages>edu.amherst.acdc.exts.image;version=${project.version}</osgi.export.packages>
   </properties>
 
   <dependencies>
@@ -84,7 +84,7 @@
             <configuration>
               <artifacts>
                 <artifact>
-                  <file>src/main/cfg/edu.amherst.acdc.image.service.cfg</file>
+                  <file>src/main/cfg/edu.amherst.acdc.exts.image.cfg</file>
                   <type>cfg</type>
                   <classifier>configuration</classifier>
                 </artifact>
