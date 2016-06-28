@@ -114,6 +114,7 @@
     <module>acrepo-services-ldcache</module>
     <module>acrepo-services-ldcache-file</module>
     <module>acrepo-services-mint</module>
+    <module>acrepo-services-pcdm</module>
     <module>acrepo-services-validation</module>
     <module>acrepo-template-mustache</module>
     <module>acrepo-exts-fits</module>
