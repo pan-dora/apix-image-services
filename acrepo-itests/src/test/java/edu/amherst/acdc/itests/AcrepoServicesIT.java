@@ -82,7 +82,8 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
                     "acrepo-services-validation", "acrepo-services-jsonld", "acrepo-services-mint",
                     "acrepo-exts-jsonld", "acrepo-template-mustache", "acrepo-exts-fits",
                     "acrepo-libs-jena", "acrepo-libs-sesame", "acrepo-libs-jsonld",
-                    "acrepo-libs-jackson", "acrepo-libs-marmotta", "acrepo-services-ldcache"),
+                    "acrepo-libs-jackson", "acrepo-libs-marmotta", "acrepo-services-ldcache",
+                    "acrepo-services-pcdm"),
 
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.fits.cfg", "rest.port", fitsPort),
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.jsonld.cfg", "rest.port", jsonldPort),
@@ -105,6 +106,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-jsonld")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-ldcache")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-mint")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-pcdm")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-validation")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-fits")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-jsonld")));

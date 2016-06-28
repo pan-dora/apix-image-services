@@ -85,6 +85,14 @@
     <configfile finalname="/etc/edu.amherst.acdc.services.mint.cfg">mvn:edu.amherst.acdc/acrepo-services-mint/${project.version}/cfg/configuration</configfile>
   </feature>
 
+  <feature name="acrepo-services-pcdm" version="${project.version}">
+    <details>Installs the PCDM Resource service</details>
+
+    <feature version="${project.version}">acrepo-libs-jena</feature>
+
+    <bundle>mvn:edu.amherst.acdc/acrepo-services-pcdm/${project.version}</bundle>
+  </feature>
+
   <feature name="acrepo-services-validation" version="${project.version}">
     <details>Installs the validation service</details>
 

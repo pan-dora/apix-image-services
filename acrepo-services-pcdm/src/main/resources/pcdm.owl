@@ -1,0 +1,109 @@
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ore: <http://www.openarchives.org/ore/terms/> .
+@prefix pcdm: <http://pcdm.org/models#> .
+
+<http://pcdm.org/models#>
+  a owl:Ontology ;
+  dc:title "Portland Common Data Model"@en ;
+  dc:modified "2015-09-28"^^xsd:date ;
+  dc:publisher <http://www.duraspace.org/> ;
+  rdfs:seeAlso <https://github.com/duraspace/pcdm/wiki> ;
+  rdfs:comment "Ontology for the Portland Common Data Model, intended to underlie a wide array of repository and DAMS applications."@en ;
+  owl:versionInfo "2015/09/28" ;
+  owl:priorVersion <http://pcdm.org/2015/03/16/models> .
+
+pcdm:Collection
+  a rdfs:Class ;
+  rdfs:label "Collection"@en ;
+  rdfs:comment """
+        A Collection is a group of resources. Collections have descriptive metadata, access metadata,
+        and may links to works and/or collections. By default, member works and collections are an
+        unordered set, but can be ordered using the ORE Proxy class.
+      """@en ;
+  rdfs:subClassOf ore:Aggregation ;
+  rdfs:isDefinedBy <http://pcdm.org/models#> .
+
+pcdm:Object
+  a rdfs:Class ;
+  rdfs:label "Object"@en ;
+  rdfs:comment """
+        An Object is an intellectual entity, sometimes called a "work", "digital object", etc.
+        Objects have descriptive metadata, access metadata, may contain files and other Objects as
+        member "components". Each level of a work is therefore represented by an Object instance,
+        and is capable of standing on its own, being linked to from Collections and other Objects.
+        Member Objects can be ordered using the ORE Proxy class.
+      """@en ;
+  rdfs:subClassOf ore:Aggregation ;
+  rdfs:isDefinedBy <http://pcdm.org/models#> .
+
+pcdm:File
+  a rdfs:Class ;
+  rdfs:label "File"@en ;
+  rdfs:comment """
+        A File is a sequence of binary data and is described by some accompanying metadata.
+        The metadata typically includes at least basic technical metadata (size, content type,
+        modification date, etc.), but can also include properties related to preservation,
+        digitization process, provenance, etc. Files MUST be contained by exactly one Object.
+      """@en ;
+  rdfs:isDefinedBy <http://pcdm.org/models#> .
+
+pcdm:hasFile
+  a rdf:Property ;
+  rdfs:label "has file"@en ;
+  rdfs:comment "Links to a File contained by this Object."@en ;
+  rdfs:domain pcdm:Object ;
+  rdfs:range pcdm:File ;
+  rdfs:subPropertyOf ore:aggregates ;
+  rdfs:isDefinedBy <http://pcdm.org/models#> .
+
+pcdm:fileOf
+  a rdf:Property ;
+  rdfs:label "is file of"@en ;
+  rdfs:comment "Links from a File to its containing Object."@en ;
+  rdfs:range pcdm:Object ;
+  rdfs:domain pcdm:File ;
+  rdfs:subPropertyOf ore:isAggregatedBy ;
+  rdfs:isDefinedBy <http://pcdm.org/models#> ;
+  owl:inverseOf pcdm:hasFile .
+
+pcdm:hasMember
+  a rdf:Property ;
+  rdfs:label "has member"@en ;
+  rdfs:comment "Links to a subsidiary Object or Collection. Typically used to link to component parts, such as a book linking to a page."@en ;
+  rdfs:domain ore:Aggregation ;
+  rdfs:range ore:Aggregation ;
+  rdfs:subPropertyOf ore:aggregates ;
+  rdfs:isDefinedBy <http://pcdm.org/models#> .
+
+pcdm:memberOf
+  a rdf:Property ;
+  rdfs:label "is member of"@en ;
+  rdfs:comment "Links from an Object or Collection to a containing Object or Collection."@en ;
+  rdfs:range ore:Aggregation ;
+  rdfs:domain ore:Aggregation ;
+  rdfs:subPropertyOf ore:isAggregatedBy ;
+  rdfs:isDefinedBy <http://pcdm.org/models#> ;
+  owl:inverseOf pcdm:hasMember .
+
+pcdm:hasRelatedObject
+  a rdf:Property ;
+  rdfs:label "has related object"@en ;
+  rdfs:comment "Links to a related Object that is not a component part, such as an object representing a donor agreement or policies that govern the resource."@en ;
+  rdfs:domain ore:Aggregation ;
+  rdfs:range pcdm:Object ;
+  rdfs:subPropertyOf ore:aggregates ;
+  rdfs:isDefinedBy <http://pcdm.org/models#> .
+
+pcdm:relatedObjectOf
+  a rdf:Property ;
+  rdfs:label "is related object of"@en ;
+  rdfs:comment "Links from an Object to a Object or Collection that it is related to."@en ;
+  rdfs:range ore:Aggregation ;
+  rdfs:domain pcdm:Object ;
+  rdfs:subPropertyOf ore:isAggregatedBy ;
+  rdfs:isDefinedBy <http://pcdm.org/models#> ;
+  owl:inverseOf pcdm:hasRelatedObject .
