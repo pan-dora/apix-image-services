@@ -27,7 +27,7 @@ import org.apache.jena.rdf.model.Model;
 public interface PcdmService {
 
     /**
-     * Parse an InputStream whether an RDF graph is valid according to a set of OWL restrictions
+     * Parse an RDF InputStream into an empty model
      *
      * @param input The input RDF graph
      * @param contentType The mimeType of the input
