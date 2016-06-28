@@ -50,7 +50,13 @@
       <version>${project.version}</version>
     </dependency>
 
-    <!-- Testing & Camel Plugin -->
+    <dependency>
+      <groupId>edu.amherst.acdc</groupId>
+      <artifactId>acrepo-services-pcdm</artifactId>
+      <scope>test</scope>
+      <version>${project.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
