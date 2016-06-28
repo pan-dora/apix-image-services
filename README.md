@@ -15,6 +15,7 @@ by making available a REST-based HTTP interface.
 * `acrepo-exts-jsonld`: This module exposes an HTTP endpoint for creating compact JSON-LD documents from a fedora repository using a pluggable context document
 * `acrepo-image-service`: An image manipulation service
 * `acrepo-exts-serialize-xml`: This service translates Fedora RDF documents into MODS/XML or DC/XML
+* `acrepo-template-mustache`: A module for converting Fedora resources into some other form, using a [mustache](https://mustache.github.io/) template.
 
 Services
 --------
@@ -65,6 +66,7 @@ command from its shell:
     feature:install acrepo-exts-fits
     feature:install acrepo-exts-jsonld
     feature:install acrepo-exts-serialize-xml
+    feature:install acrepo-template-mustache
     feature:install acrepo-idiomatic
     feature:install acrepo-idiomatic-pgsql
     feature:install acrepo-image-service
