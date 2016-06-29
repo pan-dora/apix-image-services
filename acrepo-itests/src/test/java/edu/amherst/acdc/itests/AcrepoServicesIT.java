@@ -78,7 +78,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
                         .type("xml").classifier("features").versionAsInProject(), "activemq-camel"),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(), "acrepo-connector-idiomatic",
-                    "acrepo-idiomatic-pgsql", "acrepo-exts-fits", "acrepo-exts-image",
+                    "acrepo-connector-idiomatic-pgsql", "acrepo-exts-fits", "acrepo-exts-image",
                     "acrepo-exts-jsonld", "acrepo-exts-serialize-xml", "acrepo-template-mustache",
                     "acrepo-libs-jena", "acrepo-libs-sesame", "acrepo-libs-jsonld",
                     "acrepo-libs-jackson", "acrepo-libs-marmotta",
@@ -104,7 +104,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("fcrepo-camel")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-connector-broadcast")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-connector-idiomatic")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-idiomatic-pgsql")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-connector-idiomatic-pgsql")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-fits")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-image")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-jsonld")));

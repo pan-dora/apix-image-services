@@ -9,7 +9,7 @@
       <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>acrepo-idiomatic-pgsql</artifactId>
+    <artifactId>acrepo-connector-idiomatic-pgsql</artifactId>
     <packaging>pom</packaging>
 
     <name>PostgreSQL DataService Connector</name>
@@ -29,7 +29,7 @@
               <configuration>
                 <artifacts>
                   <artifact>
-                    <file>src/main/cfg/edu.amherst.acdc.idiomatic.pgsql.cfg</file>
+                    <file>src/main/cfg/edu.amherst.acdc.connector.idiomatic.pgsql.cfg</file>
                     <type>cfg</type>
                     <classifier>configuration</classifier>
                   </artifact>
