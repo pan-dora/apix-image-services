@@ -36,13 +36,6 @@ public class EventRouter extends RouteBuilder {
      */
     public void configure() throws Exception {
 
-        /**
-         * A generic error handler (specific to this RouteBuilder)
-         */
-        onException(Exception.class)
-            .maximumRedeliveries("{{error.maxRedeliveries}}")
-            .log("Event Routing Error: ${routeId}");
-
         from("jetty:http://{{rest.host}}:{{rest.port}}{{rest.prefix}}?" +
               "matchOnUriPrefix=true&sendServerVersion=false&httpMethodRestrict=GET,OPTIONS")
           .routeId("JsonLdRouter")
