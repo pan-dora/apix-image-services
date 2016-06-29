@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.amherst.acdc.template.mustache;
+package edu.amherst.acdc.exts.template;
 
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;

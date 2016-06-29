@@ -113,6 +113,7 @@
     <module>acrepo-exts-image</module>
     <module>acrepo-exts-jsonld</module>
     <module>acrepo-exts-serialize-xml</module>
+    <module>acrepo-exts-template</module>
     <module>acrepo-karaf</module>
     <module>acrepo-services-jsonld</module>
     <module>acrepo-services-ldcache</module>
@@ -120,7 +121,6 @@
     <module>acrepo-services-mint</module>
     <module>acrepo-services-pcdm</module>
     <module>acrepo-services-validation</module>
-    <module>acrepo-template-mustache</module>
   </modules>
 
   <dependencyManagement>

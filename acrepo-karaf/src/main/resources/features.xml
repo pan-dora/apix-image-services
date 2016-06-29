@@ -139,7 +139,7 @@
     <configfile finalname="/etc/edu.amherst.acdc.exts.jsonld.cfg">mvn:edu.amherst.acdc/acrepo-exts-jsonld/${project.version}/cfg/configuration</configfile>
   </feature>
 
-  <feature name="acrepo-template-mustache" version="${project.version}">
+  <feature name="acrepo-exts-template" version="${project.version}">
     <details>Installs a sample JSON-LD-based template rendering service</details>
 
     <feature version="${camel.version}">camel</feature>
@@ -151,9 +151,9 @@
     <feature version="${fcrepo-camel.version}">fcrepo-camel</feature>
     <feature version="${project.version}">acrepo-services-jsonld</feature>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-template-mustache/${project.version}</bundle>
+    <bundle>mvn:edu.amherst.acdc/acrepo-exts-template/${project.version}</bundle>
 
-    <configfile finalname="/etc/edu.amherst.acdc.template.mustache.cfg">mvn:edu.amherst.acdc/acrepo-template-mustache/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/edu.amherst.acdc.exts.template.cfg">mvn:edu.amherst.acdc/acrepo-exts-template/${project.version}/cfg/configuration</configfile>
   </feature>
 
   <feature name="acrepo-exts-fits" version="${project.version}">

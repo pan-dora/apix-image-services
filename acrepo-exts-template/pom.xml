@@ -9,13 +9,13 @@
     <version>1.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>acrepo-template-mustache</artifactId>
+  <artifactId>acrepo-exts-template</artifactId>
   <packaging>bundle</packaging>
 
   <name>A template rendering service, based on JSON-LD documents</name>
 
   <properties>
-    <osgi.export.packages>edu.amherst.acdc.template.mustache;version=${project.version}</osgi.export.packages>
+    <osgi.export.packages>edu.amherst.acdc.exts.template;version=${project.version}</osgi.export.packages>
   </properties>
 
   <dependencies>
@@ -109,7 +109,7 @@
             <configuration>
               <artifacts>
                 <artifact>
-                  <file>src/main/cfg/edu.amherst.acdc.template.mustache.cfg</file>
+                  <file>src/main/cfg/edu.amherst.acdc.exts.template.cfg</file>
                   <type>cfg</type>
                   <classifier>configuration</classifier>
                 </artifact>

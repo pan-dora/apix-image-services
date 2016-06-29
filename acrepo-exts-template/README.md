@@ -23,13 +23,13 @@ This project can be deployed in an OSGi container. For example using
 command from its shell:
 
     feature:repo-add mvn:edu.amherst.acdc/repository-services/LATEST/xml/features
-    feature:install acrepo-template-mustache
+    feature:install acrepo-exts-template
 
 Configuration
 -------------
 
 The application can be configured by creating the following configuration
-file `$KARAF_HOME/etc/edu.amherst.acdc.template.mustache.cfg`. The following values
+file `$KARAF_HOME/etc/edu.amherst.acdc.exts.template.cfg`. The following values
 are available for configuration:
 
 In the event of failure, the maximum number of times a redelivery will be attempted.
@@ -54,7 +54,7 @@ The fedora baseUrl value
 
 The location of the mustache template
 
-    mustache.template=edu/amherst/acdc/template/mustache/template.mustache
+    mustache.template=edu/amherst/acdc/exts/template/mustache/template.mustache
 
 The content-type of the rendered template
 
