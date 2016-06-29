@@ -5,7 +5,7 @@
   <repository>mvn:org.apache.activemq/activemq-karaf/${activemq.version}/xml/features</repository>
   <repository>mvn:org.ops4j.pax.jdbc/pax-jdbc-features/${pax-jdbc.version}/xml/features</repository>
 
-  <feature name="acrepo-idiomatic" version="${project.version}">
+  <feature name="acrepo-connector-idiomatic" version="${project.version}">
     <details>Installs the id mapping service</details>
 
     <feature>jndi</feature>
@@ -20,9 +20,9 @@
 
     <bundle dependency="true">mvn:org.codehaus.woodstox/woodstox-core-asl/${woodstox.version}</bundle>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-idiomatic/${project.version}</bundle>
+    <bundle>mvn:edu.amherst.acdc/acrepo-connector-idiomatic/${project.version}</bundle>
 
-    <configfile finalname="/etc/edu.amherst.acdc.idiomatic.cfg">mvn:edu.amherst.acdc/acrepo-idiomatic/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/edu.amherst.acdc.connector.idiomatic.cfg">mvn:edu.amherst.acdc/acrepo-connector-idiomatic/${project.version}/cfg/configuration</configfile>
   </feature>
 
   <feature name="acrepo-idiomatic-pgsql" version="${project.version}">

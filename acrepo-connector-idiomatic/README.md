@@ -28,7 +28,7 @@ This project can be deployed in an OSGi container. For example using
 command from its shell:
 
     feature:repo-add mvn:edu.amherst.acdc/repository-services/LATEST/xml/features
-    feature:install acrepo-idiomatic
+    feature:install acrepo-connector-idiomatic
 
 Or by copying the compiled bundle into `$KARAF_HOME/deploy`.
 
@@ -36,7 +36,7 @@ Configuration
 -------------
 
 The application can be configured by creating the following configuration
-file `$KARAF_HOME/etc/edu.amherst.acdc.idiomatic.cfg`. The following values
+file `$KARAF_HOME/etc/edu.amherst.acdc.connector.idiomatic.cfg`. The following values
 are available for configuration:
 
 In the event of failure, the maximum number of times a redelivery will be attempted.
