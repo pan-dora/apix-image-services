@@ -76,7 +76,7 @@ public class KarafIT {
         final String sshPort = cm.getProperty("karaf.ssh.port");
 
         final String version = cm.getProperty("project.version");
-        final String acrepoIdiomatic = getBundleUri("acrepo-idiomatic", version);
+        final String acrepoIdiomatic = getBundleUri("acrepo-connector-idiomatic", version);
         final String acrepoPcdmSvc = getBundleUri("acrepo-services-pcdm", version);
         final String acrepoValidationSvc = getBundleUri("acrepo-services-validation", version);
         final String acrepoJsonLdSvc = getBundleUri("acrepo-services-jsonld", version);

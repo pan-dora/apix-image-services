@@ -108,7 +108,7 @@
   <modules>
     <module>acrepo-connector-broadcast</module>
     <module>acrepo-idiomatic-pgsql</module>
-    <module>acrepo-idiomatic</module>
+    <module>acrepo-connector-idiomatic</module>
     <module>acrepo-exts-fits</module>
     <module>acrepo-exts-image</module>
     <module>acrepo-exts-jsonld</module>

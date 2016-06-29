@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.amherst.acdc.idiomatic;
+package edu.amherst.acdc.connector.idiomatic;
 
-import static edu.amherst.acdc.idiomatic.IdiomaticHeaders.FEDORA;
-import static edu.amherst.acdc.idiomatic.IdiomaticHeaders.ID;
+import static edu.amherst.acdc.connector.idiomatic.IdiomaticHeaders.FEDORA;
+import static edu.amherst.acdc.connector.idiomatic.IdiomaticHeaders.ID;
 import static org.apache.camel.builder.PredicateBuilder.not;
 import static org.fcrepo.camel.JmsHeaders.IDENTIFIER;
 

@@ -77,7 +77,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
             features(maven().groupId("org.apache.activemq").artifactId("activemq-karaf")
                         .type("xml").classifier("features").versionAsInProject(), "activemq-camel"),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
-                        .type("xml").classifier("features").versionAsInProject(), "acrepo-idiomatic",
+                        .type("xml").classifier("features").versionAsInProject(), "acrepo-connector-idiomatic",
                     "acrepo-idiomatic-pgsql", "acrepo-exts-fits", "acrepo-exts-image",
                     "acrepo-exts-jsonld", "acrepo-exts-serialize-xml", "acrepo-template-mustache",
                     "acrepo-libs-jena", "acrepo-libs-sesame", "acrepo-libs-jsonld",
@@ -91,7 +91,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.jsonld.cfg", "rest.port", jsonldPort),
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.serialize.xml.cfg", "rest.port", metadataPort),
             editConfigurationFilePut("etc/edu.amherst.acdc.template.mustache.cfg", "rest.port", templatePort),
-            editConfigurationFilePut("etc/edu.amherst.acdc.idiomatic.cfg", "rest.port", idiomaticPort),
+            editConfigurationFilePut("etc/edu.amherst.acdc.connector.idiomatic.cfg", "rest.port", idiomaticPort),
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", rmiRegistryPort),
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", rmiServerPort),
             editConfigurationFilePut("etc/org.apache.karaf.shell.cfg", "sshPort", sshPort)
@@ -103,7 +103,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("camel-core")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("fcrepo-camel")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-connector-broadcast")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-idiomatic")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-connector-idiomatic")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-idiomatic-pgsql")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-fits")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-image")));

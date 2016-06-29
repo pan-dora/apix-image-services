@@ -9,14 +9,14 @@
     <version>1.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>acrepo-idiomatic</artifactId>
+  <artifactId>acrepo-connector-idiomatic</artifactId>
   <packaging>bundle</packaging>
 
   <name>ID mapping service</name>
   <description>Camel-based service for mapping public IDs to Fedora IDs</description>
 
   <properties>
-    <osgi.export.packages>edu.amherst.acdc.idiomatic;version=${project.version}</osgi.export.packages>
+    <osgi.export.packages>edu.amherst.acdc.connector.idiomatic;version=${project.version}</osgi.export.packages>
     <osgi.import.packages>javax.sql,*</osgi.import.packages>
   </properties>
 
@@ -110,7 +110,7 @@
             <configuration>
               <artifacts>
                 <artifact>
-                  <file>src/main/cfg/edu.amherst.acdc.idiomatic.cfg</file>
+                  <file>src/main/cfg/edu.amherst.acdc.connector.idiomatic.cfg</file>
                   <type>cfg</type>
                   <classifier>configuration</classifier>
                 </artifact>
