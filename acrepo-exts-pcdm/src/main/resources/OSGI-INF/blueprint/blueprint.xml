@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+       xsi:schemaLocation="
+       http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+       http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd
+       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
+
+   <!-- OSGI blueprint property placeholder -->
+   <cm:property-placeholder persistent-id="edu.amherst.acdc.exts.jsonld" update-strategy="reload">
+     <cm:default-properties>
+       <cm:property name="rest.port" value="9107"/>
+       <cm:property name="rest.prefix" value="/pcdm"/>
+       <cm:property name="rest.host" value="localhost"/>
+       <cm:property name="pcdm.concurrency" value="10"/>
+       <cm:property name="fcrepo.baseUrl" value="http://localhost:8080/fcrepo/rest"/>
+     </cm:default-properties>
+   </cm:property-placeholder>
+
+  <reference id="pcdmService" interface="edu.amherst.acdc.services.pcdm.PcdmService" filter="(osgi.jndi.service.name=pcdm)" />
+
+  <camelContext id="AcrepoExtPcdm" xmlns="http://camel.apache.org/schema/blueprint">
+    <package>edu.amherst.acdc.exts.pcdm</package>
+
+    <route id="PcdmParser">
+      <from uri="direct:parse"/>
+      <setHeader headerName="CamelPcdmModel">
+        <method ref="pcdmService" method="parseInto(${header[CamelPcdmModel]}, ${body}, ${header[Content-Type]})"/>
+      </setHeader>
+    </route>
+
+    <route id="PcdmMembers">
+      <from uri="direct:members"/>
+      <setHeader headerName="CamelPcdmMembers">
+        <method ref="pcdmService" method="hasMember(${header[CamelPcdmModel]}, ${header[CamelPcdmSubject]})"/>
+      </setHeader>
+    </route>
+
+    <route id="PcdmFiles">
+      <from uri="direct:files"/>
+      <setHeader headerName="CamelPcdmFiles">
+        <method ref="pcdmService" method="hasFile(${header[CamelPcdmModel]}, ${header[CamelPcdmSubject]})"/>
+      </setHeader>
+    </route>
+
+    <route id="PcdmRelatedObject">
+      <from uri="direct:relatedObjects"/>
+      <setHeader headerName="CamelPcdmRelatedObjects">
+        <method ref="pcdmService" method="hasRelatedObject(${header[CamelPcdmModel]}, ${header[CamelPcdmSubject]})"/>
+      </setHeader>
+    </route>
+
+    <route id="PcdmWrite">
+      <from uri="direct:write"/>
+      <setBody>
+        <method ref="pcdmService" method="write(${header[CamelPcdmModel]}, ${header[Accept]})"/>
+      </setBody>
+    </route>
+
+  </camelContext>
+
+</blueprint>

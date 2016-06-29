@@ -1,0 +1,27 @@
+@prefix premis: <http://www.loc.gov/premis/rdf/v1#> .
+@prefix pcdm: <http://pcdm.org/models#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix fedora: <http://fedora.info/definitions/v4/repository#> .
+@prefix ebucore: <http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#> .
+@prefix ldp: <http://www.w3.org/ns/ldp#> .
+@prefix iana: <http://www.iana.org/assignments/relation/> .
+
+<http://localhost:8080/fcrepo/rest/pcdm/members/page1/files/file1> a fedora:Binary , fedora:Resource , ldp:NonRDFSource , pcdm:File ;
+    ebucore:filename "IMG_0107.jpg"^^<http://www.w3.org/2001/XMLSchema#string> ;
+    ebucore:hasMimeType "image/jpeg"^^<http://www.w3.org/2001/XMLSchema#string> ;
+    premis:hasSize "1565421"^^<http://www.w3.org/2001/XMLSchema#long> ;
+    premis:hasMessageDigest <urn:sha1:c9790c378f3589bfcfe092f834d212685f44fff9> ;
+    iana:describedby <http://localhost:8080/fcrepo/rest/pcdm/members/page1/files/file1/fcr:metadata> ;
+    fedora:lastModifiedBy "bypassAdmin"^^<http://www.w3.org/2001/XMLSchema#string> ;
+    fedora:createdBy "bypassAdmin"^^<http://www.w3.org/2001/XMLSchema#string> ;
+    fedora:created "2016-06-28T00:21:22.621Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+    fedora:lastModified "2016-06-28T00:21:22.621Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+    fedora:writable "true"^^<http://www.w3.org/2001/XMLSchema#boolean> ;
+    fedora:hasParent <http://localhost:8080/fcrepo/rest/pcdm/members/page1/files> ;
+    fedora:numberOfChildren "0"^^<http://www.w3.org/2001/XMLSchema#long> ;
+    fedora:hasFixityService <http://localhost:8080/fcrepo/rest/pcdm/members/page1/files/file1/fcr:fixity> .

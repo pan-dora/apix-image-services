@@ -27,18 +27,9 @@ import org.apache.jena.rdf.model.Model;
 public interface PcdmService {
 
     /**
-     * Parse an RDF InputStream into an empty model
-     *
-     * @param input The input RDF graph
-     * @param contentType The mimeType of the input
-     * @return the RDF Model
-     */
-    Model parse(final InputStream input, final String contentType);
-
-    /**
      * Parse an InputStream into an existing model
      *
-     * @param model the existing model
+     * @param model the existing model or null for a new model
      * @param input the input RDF graph
      * @param contentType the mimeType of the input
      * @return the RDF Model
@@ -79,7 +70,7 @@ public interface PcdmService {
      * @param subject the subject
      * @return a set of object values
      */
-    Set<String> getMemberOf(final Model model, final String subject);
+    Set<String> memberOf(final Model model, final String subject);
 
     /**
      * Get the object values for the pcdm:hasMember triples
@@ -88,7 +79,7 @@ public interface PcdmService {
      * @param subject the subject
      * @return a set of object values
      */
-    Set<String> getHasMember(final Model model, final String subject);
+    Set<String> hasMember(final Model model, final String subject);
 
     /**
      * Get the object values for the pcdm:fileOf triples
@@ -97,7 +88,7 @@ public interface PcdmService {
      * @param subject the subject
      * @return a set of object values
      */
-    Set<String> getFileOf(final Model model, final String subject);
+    Set<String> fileOf(final Model model, final String subject);
 
     /**
      * Get the object values for the pcdm:hasFile triples
@@ -106,7 +97,7 @@ public interface PcdmService {
      * @param subject the subject
      * @return a set of object values
      */
-    Set<String> getHasFile(final Model model, final String subject);
+    Set<String> hasFile(final Model model, final String subject);
 
     /**
      * Get the object values for the pcdm:relatedObjectOf triples
@@ -115,7 +106,7 @@ public interface PcdmService {
      * @param subject the subject
      * @return a set of object values
      */
-    Set<String> getRelatedObjectOf(final Model model, final String subject);
+    Set<String> relatedObjectOf(final Model model, final String subject);
 
     /**
      * Get the object values for the pcdm:hasRelatedObject triples
@@ -124,7 +115,7 @@ public interface PcdmService {
      * @param subject the subject
      * @return a set of object values
      */
-    Set<String> getHasRelatedObject(final Model model, final String subject);
+    Set<String> hasRelatedObject(final Model model, final String subject);
 
     /**
      * Get the triples from this model
@@ -133,5 +124,5 @@ public interface PcdmService {
      * @param contentType the contentType
      * @return the RDF serialization
      */
-    InputStream getTriples(final Model model, final String contentType);
+    InputStream write(final Model model, final String contentType);
 }

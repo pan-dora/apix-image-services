@@ -1,0 +1,13 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> .
+@prefix fedora: <http://fedora.info/definitions/v4/repository#> .
+@prefix registry: <http://acdc.amherst.edu/extensions#> .
+@prefix pcdm: <http://pcdm.org/models#> .
+@prefix apix: <urn:apix#> .
+
+<#Extension> a apix:Extension ;
+    rdfs:label "PCDM Object extension" ;
+    rdfs:comment "An extension that builds an entire PCDM object" ;
+    apix:exposesService registry:PcdmService ;
+    apix:exposesServiceAtURI "svc:pcdm" ;
+    apix:bindsTo pcdm:Object .
