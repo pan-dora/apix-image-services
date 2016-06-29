@@ -25,7 +25,7 @@
     <configfile finalname="/etc/edu.amherst.acdc.connector.idiomatic.cfg">mvn:edu.amherst.acdc/acrepo-connector-idiomatic/${project.version}/cfg/configuration</configfile>
   </feature>
 
-  <feature name="acrepo-idiomatic-pgsql" version="${project.version}">
+  <feature name="acrepo-connector-idiomatic-pgsql" version="${project.version}">
     <details>Installs the id mapping service database</details>
 
     <feature>jdbc</feature>
@@ -36,7 +36,7 @@
 
     <bundle>mvn:org.postgresql/postgresql/${postgresql.version}</bundle>
 
-    <configfile finalname="/etc/org.ops4j.datasource-idiomatic.cfg">mvn:edu.amherst.acdc/acrepo-idiomatic-pgsql/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/org.ops4j.datasource-idiomatic.cfg">mvn:edu.amherst.acdc/acrepo-connector-idiomatic-pgsql/${project.version}/cfg/configuration</configfile>
   </feature>
 
   <feature name="acrepo-exts-image" version="${project.version}">
