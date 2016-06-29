@@ -30,8 +30,6 @@ command from its shell:
     feature:repo-add mvn:edu.amherst.acdc/repository-services/LATEST/xml/features
     feature:install acrepo-connector-idiomatic
 
-Or by copying the compiled bundle into `$KARAF_HOME/deploy`.
-
 Configuration
 -------------
 
