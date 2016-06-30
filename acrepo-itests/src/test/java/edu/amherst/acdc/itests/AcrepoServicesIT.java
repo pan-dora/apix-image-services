@@ -79,7 +79,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(), "acrepo-connector-idiomatic",
                     "acrepo-connector-idiomatic-pgsql", "acrepo-exts-fits", "acrepo-exts-image",
-                    "acrepo-exts-jsonld", "acrepo-exts-serialize-xml", "acrepo-template-mustache",
+                    "acrepo-exts-jsonld", "acrepo-exts-serialize-xml", "acrepo-exts-template",
                     "acrepo-libs-jena", "acrepo-libs-sesame", "acrepo-libs-jsonld",
                     "acrepo-libs-jackson", "acrepo-libs-marmotta",
                     "acrepo-services-jsonld", "acrepo-services-ldcache",
@@ -90,7 +90,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.image.cfg", "rest.port", imagePort),
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.jsonld.cfg", "rest.port", jsonldPort),
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.serialize.xml.cfg", "rest.port", metadataPort),
-            editConfigurationFilePut("etc/edu.amherst.acdc.template.mustache.cfg", "rest.port", templatePort),
+            editConfigurationFilePut("etc/edu.amherst.acdc.exts.template.cfg", "rest.port", templatePort),
             editConfigurationFilePut("etc/edu.amherst.acdc.connector.idiomatic.cfg", "rest.port", idiomaticPort),
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", rmiRegistryPort),
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", rmiServerPort),
@@ -109,12 +109,12 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-image")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-jsonld")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-serialize-xml")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-template-mustache")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-sesame")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-marmotta")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-template")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-jackson")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-jena")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-jsonld")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-jackson")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-marmotta")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-sesame")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-jsonld")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-ldcache")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-mint")));

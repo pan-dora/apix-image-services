@@ -75,7 +75,7 @@ public class AcrepoTemplateIT extends AbstractOSGiIT {
                         .versionAsInProject().classifier("features").type("xml"), "scr"),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(),
-                    "acrepo-template-mustache", "acrepo-services-jsonld"),
+                    "acrepo-exts-template", "acrepo-services-jsonld"),
 
             systemProperty("karaf.template.port").value(templateServicePort),
             systemProperty("fcrepo.port").value(fcrepoPort),
@@ -83,8 +83,8 @@ public class AcrepoTemplateIT extends AbstractOSGiIT {
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", rmiRegistryPort),
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", rmiServerPort),
             editConfigurationFilePut("etc/org.apache.karaf.shell.cfg", "sshPort", sshPort),
-            editConfigurationFilePut("etc/edu.amherst.acdc.template.mustache.cfg", "fcrepo.baseUrl", fcrepoBaseUrl),
-            editConfigurationFilePut("etc/edu.amherst.acdc.template.mustache.cfg", "rest.port", templateServicePort)
+            editConfigurationFilePut("etc/edu.amherst.acdc.exts.template.cfg", "fcrepo.baseUrl", fcrepoBaseUrl),
+            editConfigurationFilePut("etc/edu.amherst.acdc.exts.template.cfg", "rest.port", templateServicePort)
        };
     }
 
@@ -92,7 +92,7 @@ public class AcrepoTemplateIT extends AbstractOSGiIT {
     public void testInstallation() throws Exception {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("camel-core")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("fcrepo-camel")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-template-mustache")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-template")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-jsonld")));
     }
 
