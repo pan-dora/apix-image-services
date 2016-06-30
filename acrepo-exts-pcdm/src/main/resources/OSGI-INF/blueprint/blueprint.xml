@@ -51,10 +51,10 @@
       </setHeader>
     </route>
 
-    <route id="PcdmWrite">
-      <from uri="direct:write"/>
+    <route id="PcdmSerialize">
+      <from uri="direct:serialize"/>
       <setBody>
-        <method ref="pcdmService" method="write(${header[CamelPcdmModel]}, ${header[Accept]})"/>
+        <method ref="pcdmService" method="serialize(${header[CamelPcdmModel]}, ${header[CamelPcdmAccept]})"/>
       </setBody>
     </route>
 

@@ -20,6 +20,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Collections.emptyList;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -130,7 +131,7 @@ public class PcdmServiceTest {
         assertEquals(svc.hasFile(m, uri).size(), 0);
         assertEquals(svc.relatedObjectOf(m, uri).size(), 0);
         assertEquals(svc.hasRelatedObject(m, uri).size(), 0);
-        assertNotNull(svc.write(m, "text/turtle"));
+        assertNotNull(svc.serialize(m, "text/turtle"));
     }
 
     @Test
@@ -155,7 +156,7 @@ public class PcdmServiceTest {
         assertEquals(svc.hasFile(m, uri).size(), files.size());
         assertEquals(svc.relatedObjectOf(m, uri).size(), 0);
         assertEquals(svc.hasRelatedObject(m, uri).size(), 0);
-        assertNotNull(svc.write(m, "text/turtle"));
+        assertNotNull(svc.serialize(m, "text/turtle"));
         // test inference
         members.forEach(member -> {
             assertEquals(1, svc.memberOf(m, uri + "/members/" + member).size());
@@ -189,7 +190,7 @@ public class PcdmServiceTest {
         assertEquals(svc.hasFile(m, uri).size(), 0);
         assertEquals(svc.relatedObjectOf(m, uri).size(), 0);
         assertEquals(svc.hasRelatedObject(m, uri).size(), 0);
-        assertNotNull(svc.write(m, "text/turtle"));
+        assertNotNull(svc.serialize(m, "text/turtle"));
         // Test inference
         members.forEach(member -> {
             assertEquals(1, svc.memberOf(m, uri + "/members/" + member).size());
@@ -197,5 +198,29 @@ public class PcdmServiceTest {
                 assertEquals(parent, uri);
             });
         });
+    }
+
+    @Test
+    public void testSerializeTurtle() {
+        final String uri = "http://localhost:8080/fcrepo/rest/pcdm/collection";
+        final Model m = svc.parseInto(null, getPcdmObject(uri, emptyList(), emptyList()), "text/turtle");
+        assertNotNull(m);
+        assertNotNull(svc.serialize(m, "text/turtle"));
+    }
+
+    @Test
+    public void testSerializeNull() {
+        final String uri = "http://localhost:8080/fcrepo/rest/pcdm/collection";
+        final Model m = svc.parseInto(null, getPcdmObject(uri, emptyList(), emptyList()), "text/turtle");
+        assertNotNull(m);
+        assertNotNull(svc.serialize(m, null));
+    }
+
+    @Test
+    public void testSerializeBogus() {
+        final String uri = "http://localhost:8080/fcrepo/rest/pcdm/collection";
+        final Model m = svc.parseInto(null, getPcdmObject(uri, emptyList(), emptyList()), "text/turtle");
+        assertNotNull(m);
+        assertNotNull(svc.serialize(m, "amherst/cool"));
     }
 }

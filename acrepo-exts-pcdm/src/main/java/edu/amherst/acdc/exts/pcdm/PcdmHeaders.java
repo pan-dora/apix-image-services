@@ -22,6 +22,7 @@ package edu.amherst.acdc.exts.pcdm;
  */
 class PcdmHeaders {
 
+    public final static String PCDM_ACCEPT = "CamelPcdmAccept";
     public final static String PCDM_MODEL = "CamelPcdmModel";
     public final static String PCDM_SUBJECT = "CamelPcdmSubject";
     public final static String PCDM_MEMBERS = "CamelPcdmMembers";

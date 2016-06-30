@@ -118,11 +118,11 @@ public interface PcdmService {
     Set<String> hasRelatedObject(final Model model, final String subject);
 
     /**
-     * Get the triples from this model
+     * Serialize this model as an InputStream
      *
      * @param model the model
      * @param contentType the contentType
      * @return the RDF serialization
      */
-    InputStream write(final Model model, final String contentType);
+    InputStream serialize(final Model model, final String contentType);
 }
