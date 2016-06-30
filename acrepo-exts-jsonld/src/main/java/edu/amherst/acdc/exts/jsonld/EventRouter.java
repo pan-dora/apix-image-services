@@ -58,7 +58,7 @@ public class EventRouter extends RouteBuilder {
 
         from("direct:getResource")
           .routeId("JsonLdResource")
-          .removeHeader("breadcrumId")
+          .removeHeader("breadcrumbId")
           .removeHeader("Accept")
           .removeHeader("User-Agent")
           .setHeader(FCREPO_BASE_URL).simple("{{fcrepo.baseUrl}}")
