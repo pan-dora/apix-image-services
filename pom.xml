@@ -112,6 +112,7 @@
     <module>acrepo-exts-fits</module>
     <module>acrepo-exts-image</module>
     <module>acrepo-exts-jsonld</module>
+    <module>acrepo-exts-pcdm</module>
     <module>acrepo-exts-serialize-xml</module>
     <module>acrepo-exts-template</module>
     <module>acrepo-karaf</module>

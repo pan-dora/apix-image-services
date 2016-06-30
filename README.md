@@ -15,6 +15,7 @@ by making available a REST-based HTTP interface. The intention is that these ext
 * `acrepo-exts-fits`: This service will return FITS information associated with a Fedora Binary, in XML format
 * `acrepo-exts-image`: An image manipulation service
 * `acrepo-exts-jsonld`: This module exposes an HTTP endpoint for creating compact JSON-LD documents from a Fedora repository using a pluggable context document
+* `acrepo-exts-pcdm`: This constructs a complete PCDM object graph for Fedora resources
 * `acrepo-exts-serialize-xml`: This service translates Fedora RDF documents into MODS/XML or DC/XML
 * `acrepo-exts-template`: A module for converting Fedora resources into some other form, using a [mustache](https://mustache.github.io/) template.
 
@@ -66,14 +67,18 @@ Each of these projects can be deployed in an OSGi container. For example using
 command from its shell:
 
     feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
+
     feature:install acrepo-connector-broadcast
     feature:install acrepo-connector-idiomatic
     feature:install acrepo-connector-idiomatic-pgsql
+
     feature:install acrepo-exts-fits
     feature:install acrepo-exts-image
     feature:install acrepo-exts-jsonld
+    feature:install acrepo-exts-pcdm
     feature:install acrepo-exts-serialize-xml
     feature:install acrepo-exts-template
+
     feature:install acrepo-services-jsonld
     feature:install acrepo-services-ldcache
     feature:install acrepo-services-ldcache-file

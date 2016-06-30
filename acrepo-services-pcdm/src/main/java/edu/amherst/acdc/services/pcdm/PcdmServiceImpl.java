@@ -15,6 +15,7 @@
  */
 package edu.amherst.acdc.services.pcdm;
 
+import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toSet;
 import static org.apache.jena.atlas.iterator.Iter.asStream;
 import static org.apache.jena.rdf.model.ModelFactory.createDefaultModel;
@@ -22,18 +23,22 @@ import static org.apache.jena.rdf.model.ModelFactory.createInfModel;
 import static org.apache.jena.rdf.model.ResourceFactory.createProperty;
 import static org.apache.jena.rdf.model.ResourceFactory.createResource;
 import static org.apache.jena.reasoner.ReasonerRegistry.getOWLMicroReasoner;
-import static org.apache.jena.riot.RDFLanguages.contentTypeToLang;
 import static org.apache.jena.vocabulary.RDF.type;
+import static org.slf4j.LoggerFactory.getLogger;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.jena.rdf.model.InfModel;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.riot.Lang;
+import org.apache.jena.riot.RDFLanguages;
+import org.slf4j.Logger;
 
 /**
  * @author acoburn
@@ -41,7 +46,11 @@ import org.apache.jena.rdf.model.RDFNode;
  */
 public class PcdmServiceImpl implements PcdmService {
 
+    private static final Logger LOGGER = getLogger(PcdmServiceImpl.class);
+
     private static final String PCDM_NAMESPACE = "http://pcdm.org/models#";
+
+    private static final String DEFAULT_LANG = "TTL";
 
     private final Model pcdmModel = createDefaultModel();
 
@@ -53,13 +62,11 @@ public class PcdmServiceImpl implements PcdmService {
     }
 
     @Override
-    public Model parse(final InputStream input, final String contentType) {
-        return parseInto(createDefaultModel(), input, contentType);
-    }
-
-    @Override
     public Model parseInto(final Model model, final InputStream input, final String contentType) {
-        model.read(input, null, contentTypeToLang(contentType).getName());
+        if (model == null) {
+            return parseInto(createDefaultModel(), input, contentType);
+        }
+        model.read(input, null, getRdfLanguage(contentType).orElse(DEFAULT_LANG));
         return model;
     }
 
@@ -82,45 +89,50 @@ public class PcdmServiceImpl implements PcdmService {
     }
 
     @Override
-    public Set<String> getMemberOf(final Model model, final String subject) {
+    public Set<String> memberOf(final Model model, final String subject) {
         return getObjectsOfProperty(model, subject, PCDM_NAMESPACE + "memberOf");
     }
 
     @Override
-    public Set<String> getHasMember(final Model model, final String subject) {
+    public Set<String> hasMember(final Model model, final String subject) {
         return getObjectsOfProperty(model, subject, PCDM_NAMESPACE + "hasMember");
     }
 
     @Override
-    public Set<String> getFileOf(final Model model, final String subject) {
+    public Set<String> fileOf(final Model model, final String subject) {
         return getObjectsOfProperty(model, subject, PCDM_NAMESPACE + "fileOf");
     }
 
     @Override
-    public Set<String> getHasFile(final Model model, final String subject) {
+    public Set<String> hasFile(final Model model, final String subject) {
         return getObjectsOfProperty(model, subject, PCDM_NAMESPACE + "hasFile");
     }
 
     @Override
-    public Set<String> getRelatedObjectOf(final Model model, final String subject) {
+    public Set<String> relatedObjectOf(final Model model, final String subject) {
         return getObjectsOfProperty(model, subject, PCDM_NAMESPACE + "relatedObjectOf");
     }
 
     @Override
-    public Set<String> getHasRelatedObject(final Model model, final String subject) {
+    public Set<String> hasRelatedObject(final Model model, final String subject) {
         return getObjectsOfProperty(model, subject, PCDM_NAMESPACE + "hasRelatedObject");
     }
 
     @Override
-    public InputStream getTriples(final Model model, final String contentType) {
+    public InputStream serialize(final Model model, final String contentType) {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
-        model.write(os, contentTypeToLang(contentType).getName());
+        model.write(os, getRdfLanguage(contentType).orElse(DEFAULT_LANG));
         return new ByteArrayInputStream(os.toByteArray());
     }
 
+    private Optional<String> getRdfLanguage(final String contentType) {
+        return ofNullable(contentType).map(RDFLanguages::contentTypeToLang).map(Lang::getName);
+    }
+
     private Set<String> getObjectsOfProperty(final Model model, final String subject, final String property) {
-        final InfModel infModel = createInfModel(getOWLMicroReasoner(), model);
-        infModel.add(pcdmModel);
+        final InfModel infModel = createInfModel(getOWLMicroReasoner(), createDefaultModel());
+        infModel.add(model.listStatements());
+        infModel.add(pcdmModel.listStatements());
         return asStream(infModel.listObjectsOfProperty(createResource(subject), createProperty(property)))
                 .filter(RDFNode::isURIResource).map(RDFNode::asResource).map(Resource::getURI).collect(toSet());
     }

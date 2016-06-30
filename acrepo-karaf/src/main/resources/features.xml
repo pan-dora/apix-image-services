@@ -53,6 +53,21 @@
     <configfile finalname="/etc/edu.amherst.acdc.exts.image.cfg">mvn:edu.amherst.acdc/acrepo-exts-image/${project.version}/cfg/configuration</configfile>
   </feature>
 
+  <feature name="acrepo-exts-pcdm" version="${project.version}">
+    <details>Installs the image service</details>
+
+    <feature version="${camel.version}">camel</feature>
+    <feature version="${camel.version}">camel-blueprint</feature>
+    <feature version="${camel.version}">camel-jetty9</feature>
+    <feature version="${fcrepo-camel.version}">fcrepo-camel</feature>
+    <feature version="${project.version}">acrepo-services-pcdm</feature>
+    <feature version="${project.version}">acrepo-libs-jena</feature>
+
+    <bundle>mvn:edu.amherst.acdc/acrepo-exts-pcdm/${project.version}</bundle>
+
+    <configfile finalname="/etc/edu.amherst.acdc.exts.pcdm.cfg">mvn:edu.amherst.acdc/acrepo-exts-pcdm/${project.version}/cfg/configuration</configfile>
+  </feature>
+
   <feature name="acrepo-services-ldcache" version="${project.version}">
     <details>Installs the LDCache service</details>
 
