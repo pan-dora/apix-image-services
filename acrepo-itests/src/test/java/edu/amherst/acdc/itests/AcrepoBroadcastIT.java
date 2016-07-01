@@ -34,6 +34,7 @@ import java.io.File;
 import org.apache.camel.CamelContext;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.junit.Test;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.ConfigurationManager;
@@ -96,6 +97,19 @@ public class AcrepoBroadcastIT extends AbstractOSGiIT {
             editConfigurationFilePut("etc/edu.amherst.acdc.connector.broadcast.cfg", "message.recipients",
                                      messageRecipients)
        };
+    }
+
+    @Before
+    public void setup() throws Exception {
+        // Clean out the fedora queue before these tests start, or the wrong number
+        // of messages might be received (more then expected).
+        final CamelContext ctx = getOsgiService(CamelContext.class, "(camel.context.name=AcrepoConnectorBroadcast)",
+                                                10000);
+        assertNotNull(ctx);
+
+        ((MockEndpoint) ctx.getEndpoint("mock:queue1")).reset();
+        ((MockEndpoint) ctx.getEndpoint("mock:queue2")).reset();
+        ((MockEndpoint) ctx.getEndpoint("mock:queue3")).reset();
     }
 
     @Test
