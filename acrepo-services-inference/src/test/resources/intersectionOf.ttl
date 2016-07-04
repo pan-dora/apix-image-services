@@ -1,0 +1,15 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fedora: <http://fedora.info/definitions/v4/repository#> .
+@prefix app: <urn:app#> .
+
+app:Complete owl:equivalentClass [
+    owl:intersectionOf (
+        [ a owl:Restriction ;
+            owl:onProperty skos:prefLabel ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ]
+        [ a owl:Restriction ;
+            owl:onProperty fedora:numberOfChildren ;
+            owl:hasValue "6"^^xsd:long ] ) ].
+

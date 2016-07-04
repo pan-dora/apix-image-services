@@ -1,5 +1,0 @@
-@prefix fedora: <http://fedora.info/definitions/v4/repository#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix validation: <urn:validation#> .
-
-fedora:Resource rdfs:subClassOf validation:Valid .

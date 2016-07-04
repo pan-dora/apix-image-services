@@ -1,5 +1,0 @@
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix fedora: <http://fedora.info/definitions/v4/repository#> .
-@prefix validation: <urn:validation#> .
-
-validation:Valid owl:equivalentClass fedora:Resource .
