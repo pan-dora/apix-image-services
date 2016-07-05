@@ -108,14 +108,12 @@
     <bundle>mvn:edu.amherst.acdc/acrepo-services-pcdm/${project.version}</bundle>
   </feature>
 
-  <feature name="acrepo-services-validation" version="${project.version}">
-    <details>Installs the validation service</details>
+  <feature name="acrepo-services-inference" version="${project.version}">
+    <details>Installs the inference service</details>
 
     <feature version="${project.version}">acrepo-libs-jena</feature>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-services-validation/${project.version}</bundle>
-
-    <configfile finalname="/etc/edu.amherst.acdc.services.validation.cfg">mvn:edu.amherst.acdc/acrepo-services-validation/${project.version}/cfg/configuration</configfile>
+    <bundle>mvn:edu.amherst.acdc/acrepo-services-inference/${project.version}</bundle>
   </feature>
 
   <feature name="acrepo-exts-serialize-xml" version="${project.version}">
