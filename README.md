@@ -24,6 +24,7 @@ Services
 
 These modules provide particular services, independent of Fedora Resources.
 
+* `acrepo-services-activemq`: This service creates a ActiveMQ connection for other modules to use
 * `acrepo-services-inference`: An OSGi-based structural typing service using owl inference
 * `acrepo-services-jsonld`: This service creates expanded or compact JSON-LD representations of input documents
 * `acrepo-services-ldcache`: This service dereferences and caches URIs, retrieving the `object` of particular triples on demand

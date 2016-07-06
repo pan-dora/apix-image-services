@@ -116,6 +116,7 @@
     <module>acrepo-exts-serialize-xml</module>
     <module>acrepo-exts-template</module>
     <module>acrepo-karaf</module>
+    <module>acrepo-services-activemq</module>
     <module>acrepo-services-inference</module>
     <module>acrepo-services-jsonld</module>
     <module>acrepo-services-ldcache</module>
