@@ -81,10 +81,9 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
                     "acrepo-connector-idiomatic-pgsql", "acrepo-exts-fits", "acrepo-exts-image",
                     "acrepo-exts-jsonld", "acrepo-exts-serialize-xml", "acrepo-exts-template",
                     "acrepo-libs-jena", "acrepo-libs-sesame", "acrepo-libs-jsonld",
-                    "acrepo-libs-jackson", "acrepo-libs-marmotta",
-                    "acrepo-services-jsonld", "acrepo-services-ldcache",
-                    "acrepo-services-mint", "acrepo-services-pcdm", "acrepo-services-inference",
-                    "acrepo-connector-broadcast"),
+                    "acrepo-libs-jackson", "acrepo-libs-marmotta", "acrepo-services-activemq",
+                    "acrepo-services-inference" "acrepo-services-jsonld", "acrepo-services-ldcache",
+                    "acrepo-services-mint", "acrepo-services-pcdm", "acrepo-connector-broadcast"),
 
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.fits.cfg", "rest.port", fitsPort),
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.image.cfg", "rest.port", imagePort),
@@ -115,6 +114,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-jsonld")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-marmotta")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-sesame")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-activemq")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-inference")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-jsonld")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-ldcache")));
