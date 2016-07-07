@@ -34,6 +34,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpOptions;
 import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -52,7 +53,9 @@ import org.slf4j.Logger;
  */
 public abstract class AbstractOSGiIT {
 
-    private static Logger LOGGER = getLogger(AbstractOSGiIT.class);
+    private static final Logger LOGGER = getLogger(AbstractOSGiIT.class);
+
+    private final CloseableHttpClient httpclient = createDefault();
 
     @Inject
     protected FeaturesService featuresService;
@@ -67,7 +70,6 @@ public abstract class AbstractOSGiIT {
     }
 
     protected String post(final String url, final InputStream stream, final String contentType) {
-        final CloseableHttpClient httpclient = createDefault();
         try {
             final HttpPost req = new HttpPost(url);
             if (stream != null) {
@@ -79,13 +81,32 @@ public abstract class AbstractOSGiIT {
             assertEquals(SC_CREATED, response.getStatusLine().getStatusCode());
             return EntityUtils.toString(response.getEntity(), "UTF-8");
         } catch (final IOException ex) {
-            LOGGER.debug("Unable to extract HttpEntity response into an InputStream: ", ex);
-            return "";
+            LOGGER.error("Unable to extract HttpEntity response into an InputStream: ", ex);
         }
+        return "";
+    }
+
+    protected boolean put(final String url) {
+        return put(url, null, null);
+    }
+
+    protected boolean put(final String url, final InputStream stream, final String contentType) {
+        try {
+            final HttpPut req = new HttpPut(url);
+            if (stream != null) {
+                req.setHeader("Content-Type", contentType);
+                req.setEntity(new InputStreamEntity(stream));
+            }
+            final HttpResponse response = httpclient.execute(req);
+            assertEquals(SC_CREATED, response.getStatusLine().getStatusCode());
+            return true;
+        } catch (final IOException ex) {
+            LOGGER.error("Error patching to {}: {}", url, ex.getMessage());
+        }
+        return false;
     }
 
     protected boolean patch(final String url, final String sparql) {
-        final CloseableHttpClient httpclient = createDefault();
         try {
             final HttpPatch req = new HttpPatch(url);
             req.addHeader("Content-Type", "application/sparql-update");
@@ -94,35 +115,40 @@ public abstract class AbstractOSGiIT {
             assertEquals(SC_NO_CONTENT, response.getStatusLine().getStatusCode());
             return true;
         } catch (final IOException ex) {
-            LOGGER.warn("Error patching to {}: {}", url, ex.getMessage());
+            LOGGER.error("Error patching to {}: {}", url, ex.getMessage());
         }
         return false;
     }
 
     protected String get(final String url) {
-        final CloseableHttpClient httpclient = createDefault();
+        return get(url, null);
+    }
+
+    protected String get(final String url, final String accept) {
         try {
             final HttpGet req = new HttpGet(url);
+            if (accept != null) {
+                req.addHeader("Accept", accept);
+            }
             final HttpResponse response = httpclient.execute(req);
             assertEquals(SC_OK, response.getStatusLine().getStatusCode());
             return EntityUtils.toString(response.getEntity(), "UTF-8");
         } catch (final IOException ex) {
-            LOGGER.warn("Unable to extract HttpEntity response into an InputStream: ", ex);
-            return "";
+            LOGGER.error("Unable to extract HttpEntity response into an InputStream: ", ex);
         }
+        return "";
     }
 
     protected String options(final String url) {
-        final CloseableHttpClient httpclient = createDefault();
         try {
             final HttpOptions req = new HttpOptions(url);
             final HttpResponse response = httpclient.execute(req);
             assertEquals(SC_OK, response.getStatusLine().getStatusCode());
             return EntityUtils.toString(response.getEntity(), "UTF-8");
         } catch (final IOException ex) {
-            LOGGER.warn("Unable to extract HttpEntity response into an InputStream: ", ex);
-            return "";
+            LOGGER.error("Unable to extract HttpEntity response into an InputStream: ", ex);
         }
+        return "";
     }
 
     protected <T> T getOsgiService(final Class<T> type, final String filter, final long timeout) {

@@ -44,7 +44,6 @@ class RelatedProcessor implements Processor {
 
     @Override
     public void process(final Exchange exchange) throws Exception {
-        final Set<String> ids = new HashSet<>();
         @SuppressWarnings("unchecked")
         final List<String> members = exchange.getIn().getHeader(PCDM_MEMBERS, emptyList(), List.class);
         @SuppressWarnings("unchecked")
@@ -52,6 +51,7 @@ class RelatedProcessor implements Processor {
         @SuppressWarnings("unchecked")
         final List<String> relatedObjects = exchange.getIn().getHeader(PCDM_RELATED_OBJECTS, emptyList(), List.class);
 
+        final Set<String> ids = new HashSet<>();
         ids.addAll(members);
         ids.addAll(files);
         ids.addAll(relatedObjects);

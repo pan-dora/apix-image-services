@@ -15,7 +15,7 @@
  */
 package edu.amherst.acdc.exts.pcdm;
 
-import static java.util.Optional.of;
+import static java.util.Optional.ofNullable;
 import static org.apache.camel.Exchange.CONTENT_TYPE;
 import static org.apache.camel.Exchange.HTTP_METHOD;
 import static org.apache.camel.Exchange.HTTP_PATH;
@@ -67,7 +67,8 @@ public class PcdmRouter extends RouteBuilder {
           .removeHeader("breadcrumbId")
           .process(exchange -> {
               final String contentType = exchange.getIn().getHeader(PCDM_ACCEPT, String.class);
-              final Optional<String> rdfLang = of(contentType).map(RDFLanguages::contentTypeToLang).map(Lang::getName);
+              final Optional<String> rdfLang = ofNullable(contentType).map(RDFLanguages::contentTypeToLang)
+                                .map(Lang::getName);
               exchange.getIn().setHeader(CONTENT_TYPE, rdfLang.isPresent() ? contentType : DEFAULT_CONTENT_TYPE);
           })
           .to("direct:serialize");
