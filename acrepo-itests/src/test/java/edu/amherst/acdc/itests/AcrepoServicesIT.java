@@ -82,7 +82,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
                     "acrepo-exts-jsonld", "acrepo-exts-serialize-xml", "acrepo-exts-template",
                     "acrepo-libs-jena", "acrepo-libs-sesame", "acrepo-libs-jsonld",
                     "acrepo-libs-jackson", "acrepo-libs-marmotta", "acrepo-services-activemq",
-                    "acrepo-services-inference" "acrepo-services-jsonld", "acrepo-services-ldcache",
+                    "acrepo-services-inference", "acrepo-services-jsonld", "acrepo-services-ldcache",
                     "acrepo-services-mint", "acrepo-services-pcdm", "acrepo-connector-broadcast"),
 
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.fits.cfg", "rest.port", fitsPort),
