@@ -27,11 +27,13 @@ import javax.sql.DataSource;
 
 import edu.amherst.acdc.services.mint.MinterService;
 import java.util.function.Supplier;
+import org.apache.camel.Component;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
+import org.apache.camel.component.seda.SedaComponent;
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
 import org.apache.camel.util.KeyValueHolder;
 import org.apache.camel.util.ObjectHelper;
@@ -86,6 +88,8 @@ public class RouteTest extends CamelBlueprintTestSupport {
                 asService(new EmbeddedDataSource(), "osgi.jndi.service.name", "idiomaticds"));
         services.put(Supplier.class.getName(),
                 asService(new MinterService(MINT_LENGTH), "osgi.jndi.service.name", "minter"));
+        services.put(Component.class.getName(),
+                asService(new SedaComponent(), "osgi.jndi.service.name", "acrepobroker"));
     }
 
     @Test

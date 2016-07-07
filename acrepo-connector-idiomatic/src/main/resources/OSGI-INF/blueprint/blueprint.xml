@@ -11,8 +11,7 @@
    <cm:property-placeholder persistent-id="edu.amherst.acdc.connector.idiomatic" update-strategy="reload">
      <cm:default-properties>
        <cm:property name="error.maxRedeliveries" value="10"/>
-       <cm:property name="jms.brokerUrl" value="tcp://localhost:61616"/>
-       <cm:property name="input.stream" value="activemq:topic:fedora"/>
+       <cm:property name="input.stream" value="broker:topic:fedora"/>
        <cm:property name="rest.host" value="localhost"/>
        <cm:property name="rest.prefix" value="/idiomatic"/>
        <cm:property name="rest.port" value="9101"/>
@@ -27,13 +26,11 @@
 
   <reference id="minterService" interface="java.util.function.Supplier" filter="(osgi.jndi.service.name=minter)" />
 
+  <reference id="broker" interface="org.apache.camel.Component" filter="(osgi.jndi.service.name=acrepobroker)"/>
+
   <!-- component-wide configuration of jdbc -->
   <bean id="sql" class="org.apache.camel.component.sql.SqlComponent">
     <property name="dataSource" ref="dataSource"/>
-  </bean>
-
-  <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
-    <property name="brokerURL" value="${jms.brokerUrl}"/>
   </bean>
 
   <camelContext xmlns="http://camel.apache.org/schema/blueprint">
