@@ -80,6 +80,12 @@
 
     <!-- Testing -->
     <dependency>
+      <groupId>org.apache.jena</groupId>
+      <artifactId>jena-osgi</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.glassfish.hk2.external</groupId>
       <artifactId>javax.inject</artifactId>
         <version>${hk2.version}</version>
@@ -187,12 +193,13 @@
             <portName>fcrepo.dynamic.test.port</portName>
             <portName>fcrepo.dynamic.jms.port</portName>
             <portName>fcrepo.dynamic.stomp.port</portName>
-            <portName>karaf.jsonld.port</portName>
-            <portName>karaf.template.port</portName>
-            <portName>karaf.metadata.port</portName>
-            <portName>karaf.image.port</portName>
             <portName>karaf.fits.port</portName>
             <portName>karaf.idiomatic.port</portName>
+            <portName>karaf.image.port</portName>
+            <portName>karaf.jsonld.port</portName>
+            <portName>karaf.metadata.port</portName>
+            <portName>karaf.pcdm.port</portName>
+            <portName>karaf.template.port</portName>
             <portName>karaf.rmiRegistry.port</portName>
             <portName>karaf.rmiServer.port</portName>
             <portName>karaf.ssh.port</portName>
@@ -222,12 +229,15 @@
             <fcrepo.dynamic.test.port>${fcrepo.dynamic.test.port}</fcrepo.dynamic.test.port>
             <fcrepo.dynamic.jms.port>${fcrepo.dynamic.jms.port}</fcrepo.dynamic.jms.port>
             <project.build.outputDirectory>${project.build.outputDirectory}</project.build.outputDirectory>
-            <karaf.jsonld.port>${karaf.jsonld.port}</karaf.jsonld.port>
-            <karaf.template.port>${karaf.template.port}</karaf.template.port>
-            <karaf.idiomatic.port>${karaf.idiomatic.port}</karaf.idiomatic.port>
-            <karaf.metadata.port>${karaf.metadata.port}</karaf.metadata.port>
-            <karaf.image.port>${karaf.image.port}</karaf.image.port>
+
             <karaf.fits.port>${karaf.fits.port}</karaf.fits.port>
+            <karaf.idiomatic.port>${karaf.idiomatic.port}</karaf.idiomatic.port>
+            <karaf.image.port>${karaf.image.port}</karaf.image.port>
+            <karaf.jsonld.port>${karaf.jsonld.port}</karaf.jsonld.port>
+            <karaf.metadata.port>${karaf.metadata.port}</karaf.metadata.port>
+            <karaf.pcdm.port>${karaf.pcdm.port}</karaf.pcdm.port>
+            <karaf.template.port>${karaf.template.port}</karaf.template.port>
+
             <karaf.ssh.port>${karaf.ssh.port}</karaf.ssh.port>
             <karaf.rmiRegistry.port>${karaf.rmiRegistry.port}</karaf.rmiRegistry.port>
             <karaf.rmiServer.port>${karaf.rmiServer.port}</karaf.rmiServer.port>

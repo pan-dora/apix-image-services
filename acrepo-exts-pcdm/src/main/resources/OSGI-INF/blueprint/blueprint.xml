@@ -8,7 +8,7 @@
        http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
 
    <!-- OSGI blueprint property placeholder -->
-   <cm:property-placeholder persistent-id="edu.amherst.acdc.exts.jsonld" update-strategy="reload">
+   <cm:property-placeholder persistent-id="edu.amherst.acdc.exts.pcdm" update-strategy="reload">
      <cm:default-properties>
        <cm:property name="rest.port" value="9107"/>
        <cm:property name="rest.prefix" value="/pcdm"/>
