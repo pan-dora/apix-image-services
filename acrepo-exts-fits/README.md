@@ -30,26 +30,26 @@ are available for configuration:
 
 The base URL of the Fedora repository and any authentication parameters
 
-  fcrepo.baseUrl=localhost:8080/fcrepo/rest
-  fcrepo.authHost=
-  fcrepo.authUsername=
-  fcrepo.password=
+    fcrepo.baseUrl=localhost:8080/fcrepo/rest
+    fcrepo.authHost=
+    fcrepo.authUsername=
+    fcrepo.password=
 
 The prefix for the service
 
-  rest.prefix=/fits
+    rest.prefix=/fits
 
 The port on which the service is made available
 
-  rest.port=9601
+    rest.port=9601
 
 The hostname on which the service is available
 
-  rest.host=localhost
+    rest.host=localhost
 
 The endpoint on which the FITS server is located
 
-  fits.endpoint=localhost:8080/fits
+    fits.endpoint=localhost:8080/fits
 
 By editing this file, any currently running routes will be immediately redeployed
 with the new values.
