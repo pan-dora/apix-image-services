@@ -51,7 +51,6 @@ sets of related bundles in an OSGi container.
 * `acrepo-libs-jena`: The [Jena 3.x](http://jena.apache.org/) libraries
 * `acrepo-libs-jsonld`: The [JSON-LD](https://github.com/jsonld-java/jsonld-java) libraries
 * `acrepo-libs-marmotta`: The [Marmotta](http://marmotta.apache.org) libraries
-* `acrepo-libs-sesame`: The [Sesame 2.x](http://rdf4j.org/) libraries
 
 Building
 --------

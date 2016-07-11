@@ -86,6 +86,8 @@
     <httpcore-nio.version>4.4.4</httpcore-nio.version>
     <httpmime.version>4.5.2</httpmime.version>
     <jdom2.version>2.0.5</jdom2.version>
+    <sesame-logback.version>0.9.30</sesame-logback.version>
+    <opencsv.version>2.4</opencsv.version>
     <wrapped.bundle.location>http://www.ats.amherst.edu/bundles</wrapped.bundle.location>
 
     <!-- test gear -->

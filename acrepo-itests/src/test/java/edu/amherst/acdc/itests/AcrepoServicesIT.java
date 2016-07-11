@@ -84,7 +84,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
                     "acrepo-exts-fits", "acrepo-exts-image", "acrepo-exts-jsonld", "acrepo-exts-pcdm",
                     "acrepo-exts-serialize-xml", "acrepo-exts-template",
 
-                    "acrepo-libs-jena", "acrepo-libs-sesame", "acrepo-libs-jsonld",
+                    "acrepo-libs-jena", "acrepo-libs-jsonld",
                     "acrepo-libs-jackson", "acrepo-libs-marmotta",
 
                     "acrepo-services-activemq", "acrepo-services-inference", "acrepo-services-jsonld",
@@ -120,7 +120,6 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-jena")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-jsonld")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-marmotta")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-sesame")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-activemq")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-inference")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-jsonld")));
