@@ -9,30 +9,21 @@
 
   <cm:property-placeholder persistent-id="edu.amherst.acdc.connector.broadcast" update-strategy="reload">
     <cm:default-properties>
-      <cm:property name="jms.brokerUrl" value="tcp://localhost:61616" />
-      <cm:property name="jms.username" value="" />
-      <cm:property name="jms.password" value="" />
-      <cm:property name="jms.input" value="activemq:topic:fedora" />
+      <cm:property name="input.stream" value="broker:topic:fedora" />
       <cm:property name="message.recipients" value="" />
     </cm:default-properties>
   </cm:property-placeholder>
 
-  <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
-    <property name="brokerURL" value="${jms.brokerUrl}" />
-    <property name="userName" value="${jms.username}" />
-    <property name="password" value="${jms.password}" />
-  </bean>
+  <reference id="broker" interface="org.apache.camel.Component" filter="(osgi.jndi.service.name=acrepobroker)"/>
 
   <camelContext id="AcrepoConnectorBroadcast" xmlns="http://camel.apache.org/schema/blueprint">
-
     <route id="MessageBroadcaster">
       <description>Broadcast messages from one queue/topic to other specified queues/topics.</description>
-      <from uri="{{jms.input}}" />
+      <from uri="{{input.stream}}" />
       <log message="Distributing message: ${headers[org.fcrepo.jms.timestamp]}: ${headers[org.fcrepo.jms.identifier]}:${headers[org.fcrepo.jms.eventType]}"/>
       <recipientList parallelProcessing="true" ignoreInvalidEndpoints="true">
           <simple>{{message.recipients}}</simple>
       </recipientList>
     </route>
-
   </camelContext>
 </blueprint>

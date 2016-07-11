@@ -23,19 +23,13 @@ This application can be configured by creating the following configuration
 file `$KARAF_HOME/etc/edu.amherst.acdc.connector.broadcast.cfg`. The following
 values are available for configuration:
 
-The JMS broker to use
+The Camel URI for the incoming message stream
 
-    jms.brokerUrl=tcp://localhost:61616
-    jms.username=
-    jms.password=
-
-The queue/topic, on the above broker, that should be listened to for incoming messages
-
-    jms.input=activemq:topic:fedora
+    input.stream=broker:topic:fedora
 
 Comma separate list of recipient queues to broadcast the incoming messages to
 
-    message.recipients=activemq:queue:fcrepo-serialization,activemq:queue:fcrepo-indexing-triplestore
+    message.recipients=broker:queue:fcrepo-serialization,broker:queue:fcrepo-indexing-triplestore
 
 By editing this file, any currently running routes in this service will be immediately redeployed
 with the new values.

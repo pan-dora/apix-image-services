@@ -65,6 +65,13 @@
 
     <dependency>
       <groupId>edu.amherst.acdc</groupId>
+      <artifactId>acrepo-services-activemq</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>edu.amherst.acdc</groupId>
       <artifactId>acrepo-karaf</artifactId>
       <version>${project.version}</version>
       <type>xml</type>

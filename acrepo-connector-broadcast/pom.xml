@@ -16,12 +16,6 @@
 
   <properties>
     <osgi.export.packages>edu.amherst.acdc.connector.broadcast;version=${project.version}</osgi.export.packages>
-    <osgi.import.packages>
-      org.apache.camel.*,
-      org.apache.activemq.camel.component,
-      org.osgi.service.blueprint,
-      *
-    </osgi.import.packages>
   </properties>
 
   <dependencies>
@@ -32,10 +26,6 @@
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-blueprint</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.activemq</groupId>
-      <artifactId>activemq-camel</artifactId>
     </dependency>
     <dependency>
       <groupId>org.fcrepo.camel</groupId>

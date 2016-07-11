@@ -58,14 +58,15 @@ public class AcrepoBroadcastIT extends AbstractOSGiIT {
     @Configuration
     public Option[] config() {
         final ConfigurationManager cm = new ConfigurationManager();
-        final String fcrepoPort = cm.getProperty("fcrepo.dynamic.test.port");
         final String jmsPort = cm.getProperty("fcrepo.dynamic.jms.port");
+        final String fcrepoPort = cm.getProperty("fcrepo.dynamic.test.port");
         final String rmiRegistryPort = cm.getProperty("karaf.rmiRegistry.port");
         final String rmiServerPort = cm.getProperty("karaf.rmiServer.port");
         final String sshPort = cm.getProperty("karaf.ssh.port");
-        final String fcrepoBaseUrl = "localhost:" + fcrepoPort + "/fcrepo/rest";
-        final String brokerUrl = "tcp://localhost:" + jmsPort;
+        final String inputStream = "broker:topic:fedora";
         final String messageRecipients = "mock:queue1,mock:queue2,mock:queue3";
+        final String brokerUrl = "tcp://localhost:" + jmsPort;
+
 
         return new Option[] {
             karafDistributionConfiguration()
@@ -83,7 +84,7 @@ public class AcrepoBroadcastIT extends AbstractOSGiIT {
                         .type("xml").classifier("features").versionAsInProject(), "activemq-camel"),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(),
-                        "acrepo-connector-broadcast"),
+                        "acrepo-services-activemq", "acrepo-connector-broadcast"),
 
             mavenBundle().groupId("org.apache.httpcomponents").artifactId("httpclient-osgi").versionAsInProject(),
             mavenBundle().groupId("org.apache.httpcomponents").artifactId("httpcore-osgi").versionAsInProject(),
@@ -93,7 +94,8 @@ public class AcrepoBroadcastIT extends AbstractOSGiIT {
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", rmiRegistryPort),
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", rmiServerPort),
             editConfigurationFilePut("etc/org.apache.karaf.shell.cfg", "sshPort", sshPort),
-            editConfigurationFilePut("etc/edu.amherst.acdc.connector.broadcast.cfg", "jms.brokerUrl", brokerUrl),
+            editConfigurationFilePut("etc/edu.amherst.acdc.services.activemq.cfg", "jms.brokerUrl", brokerUrl),
+            editConfigurationFilePut("etc/edu.amherst.acdc.connector.broadcast.cfg", "input.stream", inputStream),
             editConfigurationFilePut("etc/edu.amherst.acdc.connector.broadcast.cfg", "message.recipients",
                                      messageRecipients)
        };
@@ -117,6 +119,7 @@ public class AcrepoBroadcastIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("camel-core")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("camel-blueprint")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("activemq-camel")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-activemq")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-connector-broadcast")));
     }
 

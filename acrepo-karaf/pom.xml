@@ -65,6 +65,12 @@
     </dependency>
 
     <dependency>
+      <groupId>edu.amherst.acdc</groupId>
+      <artifactId>acrepo-services-activemq</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
     </dependency>

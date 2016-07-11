@@ -41,13 +41,9 @@ In the event of failure, the maximum number of times a redelivery will be attemp
 
     error.maxRedeliveries=10
 
-The connection URI used to connect to a local or remote ActiveMQ broker
-
-    jms.brokerUrl=tcp://localhost:61616
-
 The camel URI for the incoming message stream.
 
-    input.stream=activemq:topic:fedora
+    input.stream=broker:topic:fedora
 
 The RDF property used to identify external IDs
 
