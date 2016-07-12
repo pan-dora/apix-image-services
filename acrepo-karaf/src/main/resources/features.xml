@@ -206,10 +206,53 @@
     <bundle dependency="true">mvn:com.github.andrewoma.dexx/collection/${dexx.version}</bundle>
   </feature>
 
+  <feature name="acrepo-libs-sesame" version="${project.version}">
+    <details>Installs the OpenRDF libraries</details>
+
+    <feature prerequisite="true" dependency="false">wrap</feature>
+    <feature version="${project.version}" dependency="true">acrepo-libs-jackson</feature>
+
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-repository-event/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-sail-memory/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-model/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-util/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-repository-api/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-api/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-query/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-queryresultio-api/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-rdfjson/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-rdfxml/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-turtle/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-n3/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-repository-sail/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-queryparser-api/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-queryalgebra-model/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-trig/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-sail-api/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-sail-nativerdf/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-sail-inferencer/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-queryalgebra-evaluation/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-repository-sparql/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-queryparser-sparql/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-queryresultio-sparqlxml/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-http-client/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-http-protocol/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-ntriples/${sesame.version}</bundle>
+
+    <bundle>mvn:com.github.jsonld-java/jsonld-java-sesame/${jsonld-sesame.version}</bundle>
+    <bundle>mvn:com.github.jsonld-java/jsonld-java/${jsonld-sesame.version}</bundle>
+
+    <bundle dependency="true">${wrapped.bundle.location}/commons-httpclient.commons-httpclient-${commons-httpclient.version}.jar</bundle>
+    <bundle dependency="true">mvn:org.apache.httpcomponents/httpclient-osgi/${httpclient.version}</bundle>
+    <bundle dependency="true">mvn:org.apache.httpcomponents/httpcore-osgi/${httpcore.version}</bundle>
+    <bundle dependency="true">mvn:commons-codec/commons-codec/${commons-codec.version}</bundle>
+    <bundle dependency="true">mvn:commons-io/commons-io/${commons-io.version}</bundle>
+  </feature>
+
   <feature name="acrepo-libs-marmotta" version="${project.version}">
     <details>Installs the Marmotta libraries</details>
 
-    <feature prerequisite="true" dependency="false">wrap</feature>
+    <feature version="${project.version}" dependency="true">acrepo-libs-sesame</feature>
     <feature version="${project.version}" dependency="true">acrepo-libs-jsonld</feature>
     <feature version="${project.version}" dependency="true">acrepo-libs-jackson</feature>
 
@@ -224,13 +267,6 @@
     <bundle>${wrapped.bundle.location}/org.apache.marmotta.ldclient-provider-rdfa-${marmotta.version}.jar</bundle>
     <bundle>${wrapped.bundle.location}/org.apache.marmotta.ldclient-provider-xml-${marmotta.version}.jar</bundle>
 
-    <bundle dependency="true">mvn:org.openrdf.sesame/sesame-runtime-osgi/${sesame.version}</bundle>
-    <bundle dependency="true">mvn:com.github.jsonld-java/jsonld-java-sesame/${jsonld-sesame.version}</bundle>
-    <bundle dependency="true">mvn:com.github.jsonld-java/jsonld-java/${jsonld-sesame.version}</bundle>
-    <bundle dependency="true">wrap:mvn:au.com.bytecode/opencsv/${opencsv.version}</bundle>
-    <bundle dependency="true">mvn:ch.qos.logback/logback-classic/${sesame-logback.version}</bundle>
-    <bundle dependency="true">mvn:ch.qos.logback/logback-core/${sesame-logback.version}</bundle>
-
     <bundle dependency="true">mvn:commons-collections/commons-collections/${commons-collections.version}</bundle>
     <bundle dependency="true">mvn:com.google.guava/guava/${guava16.version}</bundle>
     <bundle dependency="true">mvn:joda-time/joda-time/${joda-time.version}</bundle>
@@ -243,17 +279,17 @@
     <bundle dependency="true">mvn:org.apache.httpcomponents/httpcore-osgi/${httpcore.version}</bundle>
     <bundle dependency="true">mvn:jaxen/jaxen/${jaxen.version}</bundle>
 
-    <bundle dependency="true">wrap:mvn:commons-digester/commons-digester/${commons-digester.version}</bundle>
-    <bundle dependency="true">wrap:mvn:org.apache.httpcomponents/fluent-hc/${fluent-hc.version}</bundle>
-    <bundle dependency="true">wrap:mvn:org.apache.httpcomponents/httpclient-cache/${httpclient-cache.version}</bundle>
-    <bundle dependency="true">wrap:mvn:org.apache.httpcomponents/httpcore-nio/${httpcore-nio.version}</bundle>
-    <bundle dependency="true">wrap:mvn:org.apache.httpcomponents/httpmime/${httpmime.version}</bundle>
-    <bundle dependency="true">wrap:mvn:org.jdom/jdom2/${jdom2.version}</bundle>
+    <bundle dependency="true">${wrapped.bundle.location}/commons-digester.commons-digester-${commons-digester.version}.jar</bundle>
+    <bundle dependency="true">${wrapped.bundle.location}/org.apache.httpcomponents.fluent-hc-${fluent-hc.version}.jar</bundle>
+    <bundle dependency="true">${wrapped.bundle.location}/org.apache.httpcomponents.httpclient-cache-${httpclient-cache.version}.jar</bundle>
+    <bundle dependency="true">${wrapped.bundle.location}/org.apache.httpcomponents.httpcore-nio-${httpcore-nio.version}.jar</bundle>
+    <bundle dependency="true">${wrapped.bundle.location}/org.apache.httpcomponents.httpmime-${httpmime.version}.jar</bundle>
+    <bundle dependency="true">${wrapped.bundle.location}/org.jdom.jdom2-${jdom2.version}.jar</bundle>
 
-    <bundle dependency="true">wrap:mvn:org.semarglproject/semargl-rdfa/${semargl.version}</bundle>
-    <bundle dependency="true">wrap:mvn:org.semarglproject/semargl-core/${semargl.version}</bundle>
-    <bundle dependency="true">wrap:mvn:org.semarglproject/semargl-rdf/${semargl.version}</bundle>
-    <bundle dependency="true">wrap:mvn:org.semarglproject/semargl-sesame/${semargl.version}</bundle>
+    <bundle dependency="true">${wrapped.bundle.location}/org.semarglproject.semargl-rdfa-${semargl.version}.jar</bundle>
+    <bundle dependency="true">${wrapped.bundle.location}/org.semarglproject.semargl-core-${semargl.version}.jar</bundle>
+    <bundle dependency="true">${wrapped.bundle.location}/org.semarglproject.semargl-rdf-${semargl.version}.jar</bundle>
+    <bundle dependency="true">${wrapped.bundle.location}/org.semarglproject.semargl-sesame-${semargl.version}.jar</bundle>
   </feature>
 
   <feature name="acrepo-libs-jsonld" version="${project.version}">
