@@ -3,7 +3,7 @@ Repository ID Minting Service
 
 This module mints random IDs for use with a repository. The service is used with
 the `acrepo-idiomatic` service, but it can be replaced with any service that
-implements the same interface, using `osgi.jndi.service.name=minter`.
+implements the same interface, using `osgi.jndi.service.name=acrepo/Minter`.
 
 Building
 --------

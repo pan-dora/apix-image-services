@@ -13,7 +13,7 @@
     </cm:default-properties>
   </cm:property-placeholder>
 
-  <reference id="cachingBackend" interface="org.apache.marmotta.ldcache.api.LDCachingBackend" filter="(osgi.jndi.service.name=cachingbackend)"/>
+  <reference id="cachingBackend" interface="org.apache.marmotta.ldcache.api.LDCachingBackend" filter="(osgi.jndi.service.name=acrepo/LDCacheBackend)"/>
 
   <bean id="ldcacheServiceBean" class="edu.amherst.acdc.services.ldcache.LDCacheServiceImpl">
     <argument ref="cachingBackend"/>
@@ -22,7 +22,7 @@
 
   <service ref="ldcacheServiceBean" interface="edu.amherst.acdc.services.ldcache.LDCacheService">
     <service-properties>
-      <entry key="osgi.jndi.service.name" value="ldcache"/>
+      <entry key="osgi.jndi.service.name" value="acrepo/LDCache"/>
     </service-properties>
   </service>
 

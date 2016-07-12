@@ -73,13 +73,16 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
             configureConsole().ignoreLocalConsole(),
             features(maven().groupId("org.apache.karaf.features").artifactId("standard")
                         .versionAsInProject().classifier("features").type("xml"), "scr"),
+            features(maven().groupId("org.ops4j.pax.jdbc").artifactId("pax-jdbc-features")
+                        .type("xml").classifier("features"), "pax-jdbc-config",
+                            "pax-jdbc-h2"),
             features(maven().groupId("org.apache.camel.karaf").artifactId("apache-camel")
                         .type("xml").classifier("features").versionAsInProject(), "camel-blueprint"),
             features(maven().groupId("org.apache.activemq").artifactId("activemq-karaf")
                         .type("xml").classifier("features").versionAsInProject(), "activemq-camel"),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(),
-                    "acrepo-connector-broadcast", "acrepo-connector-idiomatic", "acrepo-connector-idiomatic-pgsql",
+                    "acrepo-connector-broadcast", "acrepo-connector-idiomatic",
 
                     "acrepo-exts-fits", "acrepo-exts-image", "acrepo-exts-jsonld", "acrepo-exts-pcdm",
                     "acrepo-exts-serialize-xml", "acrepo-exts-template",
@@ -88,7 +91,8 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
                     "acrepo-libs-jackson", "acrepo-libs-marmotta",
 
                     "acrepo-services-activemq", "acrepo-services-inference", "acrepo-services-jsonld",
-                    "acrepo-services-ldcache", "acrepo-services-mint", "acrepo-services-pcdm"),
+                    "acrepo-services-ldcache", "acrepo-services-ldcache-file", "acrepo-services-mint",
+                    "acrepo-services-pcdm"),
 
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.fits.cfg", "rest.port", fitsPort),
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.image.cfg", "rest.port", imagePort),
@@ -97,6 +101,9 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.serialize.xml.cfg", "rest.port", metadataPort),
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.template.cfg", "rest.port", templatePort),
             editConfigurationFilePut("etc/edu.amherst.acdc.connector.idiomatic.cfg", "rest.port", idiomaticPort),
+            editConfigurationFilePut("etc/org.ops4j.datasource-idiomatic.cfg", "osgi.jdbc.driver.name", "H2-pool-xa"),
+            editConfigurationFilePut("etc/org.ops4j.datasource-idiomatic.cfg", "url", "jdbc:h2:mem:idiomatic"),
+            editConfigurationFilePut("etc/org.ops4j.datasource-idiomatic.cfg", "dataSourceName", "idiomaticds"),
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", rmiRegistryPort),
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", rmiServerPort),
             editConfigurationFilePut("etc/org.apache.karaf.shell.cfg", "sshPort", sshPort)
@@ -109,7 +116,6 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("fcrepo-camel")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-connector-broadcast")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-connector-idiomatic")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-connector-idiomatic-pgsql")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-fits")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-image")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-jsonld")));

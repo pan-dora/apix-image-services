@@ -85,11 +85,11 @@ public class RouteTest extends CamelBlueprintTestSupport {
     @Override
     protected void addServicesOnStartup(final Map<String, KeyValueHolder<Object, Dictionary>> services) {
         services.put(DataSource.class.getName(),
-                asService(new EmbeddedDataSource(), "osgi.jndi.service.name", "idiomaticds"));
+                asService(new EmbeddedDataSource(), "osgi.jndi.service.name", "jdbc/idiomaticds"));
         services.put(Supplier.class.getName(),
-                asService(new MinterService(MINT_LENGTH), "osgi.jndi.service.name", "minter"));
+                asService(new MinterService(MINT_LENGTH), "osgi.jndi.service.name", "acrepo/Minter"));
         services.put(Component.class.getName(),
-                asService(new SedaComponent(), "osgi.jndi.service.name", "acrepobroker"));
+                asService(new SedaComponent(), "osgi.jndi.service.name", "acrepo/Broker"));
     }
 
     @Test

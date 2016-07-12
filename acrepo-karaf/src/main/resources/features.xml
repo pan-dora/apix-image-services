@@ -9,6 +9,7 @@
     <details>Installs the id mapping service</details>
 
     <feature>jndi</feature>
+    <feature>jdbc</feature>
 
     <feature version="${camel.version}">camel</feature>
     <feature version="${camel.version}">camel-blueprint</feature>
@@ -32,8 +33,7 @@
     <feature>transaction</feature>
     <feature>pax-jdbc-config</feature>
     <feature>pax-jdbc-postgresql</feature>
-
-    <bundle>mvn:org.postgresql/postgresql/${postgresql.version}</bundle>
+    <feature>pax-jdbc-pool-dbcp2</feature>
 
     <configfile finalname="/etc/org.ops4j.datasource-idiomatic.cfg">mvn:edu.amherst.acdc/acrepo-connector-idiomatic-pgsql/${project.version}/cfg/configuration</configfile>
   </feature>

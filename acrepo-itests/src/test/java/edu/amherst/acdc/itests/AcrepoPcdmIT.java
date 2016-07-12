@@ -74,7 +74,7 @@ public class AcrepoPcdmIT extends AbstractOSGiIT {
                         .versionAsInProject().type("zip"))
                 .unpackDirectory(new File("target", "exam"))
                 .useDeployFolder(false),
-            logLevel(LogLevel.INFO),
+            logLevel(LogLevel.WARN),
             keepRuntimeFolder(),
             configureConsole().ignoreLocalConsole(),
             features(maven().groupId("org.apache.karaf.features").artifactId("standard")
@@ -169,7 +169,6 @@ public class AcrepoPcdmIT extends AbstractOSGiIT {
         final String page4 = post(members);
 
         final String response = get(baseSvcUrl + pcdmObj.replace(baseUrl, ""), "application/ld+json");
-        LOGGER.info(response);
 
         final InputStream input = new ByteArrayInputStream(response.getBytes(UTF_8));
         final Model model = createDefaultModel();

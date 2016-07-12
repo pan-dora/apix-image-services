@@ -19,7 +19,7 @@
 
   <service ref="minterServiceBean" interface="java.util.function.Supplier">
     <service-properties>
-      <entry key="osgi.jndi.service.name" value="minter"/>
+      <entry key="osgi.jndi.service.name" value="acrepo/Minter"/>
     </service-properties>
   </service>
 
