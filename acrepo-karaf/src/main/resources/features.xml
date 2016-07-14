@@ -96,7 +96,7 @@
 
     <feature version="${project.version}">acrepo-libs-marmotta</feature>
 
-    <bundle>${wrapped.bundle.location}/org.apache.marmotta.ldcache-backend-file-${marmotta.version}.jar</bundle>
+    <bundle>wrap:mvn:org.apache.marmotta/ldcache-backend-file/${marmotta.version}</bundle>
 
     <configfile finalname="/etc/edu.amherst.acdc.services.ldcache.file.cfg">mvn:edu.amherst.acdc/acrepo-services-ldcache-file/${project.version}/cfg/configuration</configfile>
   </feature>
@@ -242,7 +242,7 @@
     <bundle>mvn:com.github.jsonld-java/jsonld-java-sesame/${jsonld-sesame.version}</bundle>
     <bundle>mvn:com.github.jsonld-java/jsonld-java/${jsonld-sesame.version}</bundle>
 
-    <bundle dependency="true">${wrapped.bundle.location}/commons-httpclient.commons-httpclient-${commons-httpclient.version}.jar</bundle>
+    <bundle dependency="true">wrap:mvn:commons-httpclient/commons-httpclient/${commons-httpclient.version}</bundle>
     <bundle dependency="true">mvn:org.apache.httpcomponents/httpclient-osgi/${httpclient.version}</bundle>
     <bundle dependency="true">mvn:org.apache.httpcomponents/httpcore-osgi/${httpcore.version}</bundle>
     <bundle dependency="true">mvn:commons-codec/commons-codec/${commons-codec.version}</bundle>
@@ -257,15 +257,16 @@
     <feature version="${project.version}" dependency="true">acrepo-libs-jackson</feature>
 
     <bundle>mvn:org.apache.marmotta/ldcache-api/${marmotta.version}</bundle>
+    <bundle>mvn:org.apache.marmotta/marmotta-commons/${marmotta.version}</bundle>
 
     <!-- locally wrapped OSGi bundles -->
-    <bundle>${wrapped.bundle.location}/org.apache.marmotta.ldcache-core-${marmotta.version}.jar</bundle>
     <bundle>${wrapped.bundle.location}/org.apache.marmotta.ldclient-api-${marmotta.version}.jar</bundle>
-    <bundle>${wrapped.bundle.location}/org.apache.marmotta.ldclient-core-${marmotta.version}.jar</bundle>
-    <bundle>${wrapped.bundle.location}/org.apache.marmotta.marmotta-commons-${marmotta.version}.jar</bundle>
-    <bundle>${wrapped.bundle.location}/org.apache.marmotta.ldclient-provider-rdf-${marmotta.version}.jar</bundle>
-    <bundle>${wrapped.bundle.location}/org.apache.marmotta.ldclient-provider-rdfa-${marmotta.version}.jar</bundle>
-    <bundle>${wrapped.bundle.location}/org.apache.marmotta.ldclient-provider-xml-${marmotta.version}.jar</bundle>
+
+    <bundle>wrap:mvn:org.apache.marmotta/ldcache-core/${marmotta.version}</bundle>
+    <bundle>wrap:mvn:org.apache.marmotta/ldclient-core/${marmotta.version}</bundle>
+    <bundle>wrap:mvn:org.apache.marmotta/ldclient-provider-rdf/${marmotta.version}</bundle>
+    <bundle>wrap:mvn:org.apache.marmotta/ldclient-provider-rdfa/${marmotta.version}</bundle>
+    <bundle>wrap:mvn:org.apache.marmotta/ldclient-provider-xml/${marmotta.version}</bundle>
 
     <bundle dependency="true">mvn:commons-collections/commons-collections/${commons-collections.version}</bundle>
     <bundle dependency="true">mvn:com.google.guava/guava/${guava16.version}</bundle>
@@ -279,17 +280,17 @@
     <bundle dependency="true">mvn:org.apache.httpcomponents/httpcore-osgi/${httpcore.version}</bundle>
     <bundle dependency="true">mvn:jaxen/jaxen/${jaxen.version}</bundle>
 
-    <bundle dependency="true">${wrapped.bundle.location}/commons-digester.commons-digester-${commons-digester.version}.jar</bundle>
-    <bundle dependency="true">${wrapped.bundle.location}/org.apache.httpcomponents.fluent-hc-${fluent-hc.version}.jar</bundle>
-    <bundle dependency="true">${wrapped.bundle.location}/org.apache.httpcomponents.httpclient-cache-${httpclient-cache.version}.jar</bundle>
-    <bundle dependency="true">${wrapped.bundle.location}/org.apache.httpcomponents.httpcore-nio-${httpcore-nio.version}.jar</bundle>
-    <bundle dependency="true">${wrapped.bundle.location}/org.apache.httpcomponents.httpmime-${httpmime.version}.jar</bundle>
-    <bundle dependency="true">${wrapped.bundle.location}/org.jdom.jdom2-${jdom2.version}.jar</bundle>
+    <bundle dependency="true">wrap:mvn:commons-digester/commons-digester/${commons-digester.version}</bundle>
+    <bundle dependency="true">wrap:mvn:org.apache.httpcomponents/fluent-hc/${fluent-hc.version}</bundle>
+    <bundle dependency="true">wrap:mvn:org.apache.httpcomponents/httpclient-cache/${httpclient-cache.version}</bundle>
+    <bundle dependency="true">wrap:mvn:org.apache.httpcomponents/httpcore-nio/${httpcore-nio.version}</bundle>
+    <bundle dependency="true">wrap:mvn:org.apache.httpcomponents/httpmime/${httpmime.version}</bundle>
+    <bundle dependency="true">wrap:mvn:org.jdom/jdom2/${jdom2.version}</bundle>
 
-    <bundle dependency="true">${wrapped.bundle.location}/org.semarglproject.semargl-rdfa-${semargl.version}.jar</bundle>
-    <bundle dependency="true">${wrapped.bundle.location}/org.semarglproject.semargl-core-${semargl.version}.jar</bundle>
-    <bundle dependency="true">${wrapped.bundle.location}/org.semarglproject.semargl-rdf-${semargl.version}.jar</bundle>
-    <bundle dependency="true">${wrapped.bundle.location}/org.semarglproject.semargl-sesame-${semargl.version}.jar</bundle>
+    <bundle dependency="true">wrap:mvn:org.semarglproject/semargl-rdfa/${semargl.version}</bundle>
+    <bundle dependency="true">wrap:mvn:org.semarglproject/semargl-core/${semargl.version}</bundle>
+    <bundle dependency="true">wrap:mvn:org.semarglproject/semargl-rdf/${semargl.version}</bundle>
+    <bundle dependency="true">wrap:mvn:org.semarglproject/semargl-sesame/${semargl.version}</bundle>
   </feature>
 
   <feature name="acrepo-libs-jsonld" version="${project.version}">
