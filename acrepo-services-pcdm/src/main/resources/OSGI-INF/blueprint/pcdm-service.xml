@@ -11,7 +11,7 @@
 
   <service ref="pcdmServiceBean" interface="edu.amherst.acdc.services.pcdm.PcdmService">
     <service-properties>
-      <entry key="osgi.jndi.service.name" value="pcdm"/>
+      <entry key="osgi.jndi.service.name" value="acrepo/Pcdm"/>
     </service-properties>
   </service>
 

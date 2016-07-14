@@ -7,7 +7,7 @@
   http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd"
   default-activation="lazy">
 
-  <cm:property-placeholder persistent-id="edu.amherst.acdc.services.ldcache" update-strategy="reload" >
+  <cm:property-placeholder persistent-id="edu.amherst.acdc.services.ldcache.file" update-strategy="reload" >
     <cm:default-properties>
       <cm:property name="ldcache.cacheDir" value="/tmp/ldcache"/>
     </cm:default-properties>
@@ -19,7 +19,7 @@
 
   <service ref="ldcacheBackendBean" interface="org.apache.marmotta.ldcache.api.LDCachingBackend">
     <service-properties>
-      <entry key="osgi.jndi.service.name" value="cachingbackend"/>
+      <entry key="osgi.jndi.service.name" value="acrepo/LDCacheBackend"/>
     </service-properties>
   </service>
 

@@ -14,7 +14,7 @@
     </cm:default-properties>
   </cm:property-placeholder>
 
-  <reference id="broker" interface="org.apache.camel.Component" filter="(osgi.jndi.service.name=acrepobroker)"/>
+  <reference id="broker" interface="org.apache.camel.Component" filter="(osgi.jndi.service.name=acrepo/Broker)"/>
 
   <camelContext id="AcrepoConnectorBroadcast" xmlns="http://camel.apache.org/schema/blueprint">
     <route id="MessageBroadcaster">

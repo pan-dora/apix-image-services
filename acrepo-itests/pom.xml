@@ -10,14 +10,8 @@
   </parent>
 
   <artifactId>acrepo-itests</artifactId>
-  <packaging>bundle</packaging>
 
   <name>Karaf Integration tests for repository services</name>
-
-  <properties>
-    <!-- osgi bundle configuration -->
-    <osgi.import.packages>*</osgi.import.packages>
-  </properties>
 
   <dependencies>
     <dependency>
@@ -386,12 +380,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-      </plugin>
-
-      <!-- to generate the MANIFEST-FILE of the bundle -->
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
       </plugin>
 
         <!--Bring in fcrepo webapp for integration testing-->

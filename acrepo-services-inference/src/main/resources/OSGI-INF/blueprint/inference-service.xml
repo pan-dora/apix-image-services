@@ -11,7 +11,7 @@
 
   <service ref="inferenceServiceBean" interface="edu.amherst.acdc.services.inference.InferenceService">
     <service-properties>
-      <entry key="osgi.jndi.service.name" value="inference"/>
+      <entry key="osgi.jndi.service.name" value="acrepo/Inference"/>
     </service-properties>
   </service>
 

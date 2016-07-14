@@ -18,7 +18,7 @@
      </cm:default-properties>
    </cm:property-placeholder>
 
-  <reference id="pcdmService" interface="edu.amherst.acdc.services.pcdm.PcdmService" filter="(osgi.jndi.service.name=pcdm)" />
+   <reference id="pcdmService" interface="edu.amherst.acdc.services.pcdm.PcdmService" filter="(osgi.jndi.service.name=acrepo/Pcdm)" />
 
   <camelContext id="AcrepoExtPcdm" xmlns="http://camel.apache.org/schema/blueprint">
     <package>edu.amherst.acdc.exts.pcdm</package>
