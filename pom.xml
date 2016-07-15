@@ -50,7 +50,6 @@
     <saxon.version>9.6.0-7</saxon.version>
     <slf4j.version>1.7.21</slf4j.version>
     <spring.version>4.1.7.RELEASE</spring.version>
-    <pax-jdbc.version>0.7.0</pax-jdbc.version>
     <woodstox.version>4.4.1</woodstox.version>
     <xerces.version>2.11.0</xerces.version>
     <jena.version>3.1.0</jena.version>
@@ -90,7 +89,7 @@
 
     <!-- test gear -->
     <fcrepo.version>4.5.1</fcrepo.version>
-    <karaf.version>4.0.4</karaf.version>
+    <karaf.version>4.0.5</karaf.version>
     <pax-exam.version>4.9.1</pax-exam.version>
     <jena.fuseki.version>2.3.1</jena.fuseki.version>
 

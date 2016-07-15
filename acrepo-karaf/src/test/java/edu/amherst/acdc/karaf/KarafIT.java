@@ -34,8 +34,14 @@ import static org.osgi.framework.FrameworkUtil.createFilter;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.io.File;
+import java.util.function.Supplier;
 import javax.inject.Inject;
 
+import edu.amherst.acdc.services.inference.InferenceService;
+import edu.amherst.acdc.services.jsonld.JsonLdService;
+import edu.amherst.acdc.services.pcdm.PcdmService;
+import org.apache.camel.Component;
+import org.apache.camel.CamelContext;
 import org.apache.karaf.features.FeaturesService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -145,6 +151,13 @@ public class KarafIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("camel-blueprint")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("camel-jetty9")));
         assertNotNull(bundleContext);
+
+        assertNotNull(getOsgiService(CamelContext.class, "(camel.context.name=AcrepoJsonLdService)", 10000));
+        assertNotNull(getOsgiService(Component.class, "(osgi.jndi.service.name=acrepo/Broker)", 10000));
+        assertNotNull(getOsgiService(InferenceService.class, "(osgi.jndi.service.name=acrepo/Inference)", 10000));
+        assertNotNull(getOsgiService(Supplier.class, "(osgi.jndi.service.name=acrepo/Minter)", 10000));
+        assertNotNull(getOsgiService(JsonLdService.class, "(osgi.jndi.service.name=acrepo/JsonLD)", 10000));
+        assertNotNull(getOsgiService(PcdmService.class, "(osgi.jndi.service.name=acrepo/Pcdm)", 10000));
 
         assertEquals(ACTIVE, bundleContext.getBundle(System.getProperty("acdc.idiomatic-bundle")).getState());
         assertEquals(ACTIVE, bundleContext.getBundle(System.getProperty("acdc.activemq-svc-bundle")).getState());

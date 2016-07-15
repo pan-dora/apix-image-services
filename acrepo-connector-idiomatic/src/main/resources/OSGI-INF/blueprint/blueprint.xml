@@ -22,7 +22,7 @@
      </cm:default-properties>
    </cm:property-placeholder>
 
-   <reference id="dataService" interface="javax.sql.DataSource" filter="(osgi.jndi.service.name=jdbc/idiomaticds)"/>
+   <reference id="dataSource" interface="javax.sql.DataSource" filter="(osgi.jndi.service.name=jdbc/idiomaticds)"/>
 
   <reference id="minterService" interface="java.util.function.Supplier" filter="(osgi.jndi.service.name=acrepo/Minter)"/>
 
@@ -30,7 +30,7 @@
 
   <!-- component-wide configuration of jdbc -->
   <bean id="sql" class="org.apache.camel.component.sql.SqlComponent">
-    <property name="dataSource" ref="dataService"/>
+    <property name="dataSource" ref="dataSource"/>
   </bean>
 
   <camelContext xmlns="http://camel.apache.org/schema/blueprint">
