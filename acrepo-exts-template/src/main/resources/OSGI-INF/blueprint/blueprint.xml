@@ -14,10 +14,10 @@
        <cm:property name="rest.host" value="localhost"/>
        <cm:property name="rest.port" value="9103"/>
        <cm:property name="rest.prefix" value="/template"/>
-       <cm:property name="mustache.template" value="edu/amherst/acdc/exts/template/template.mustache"/>
+       <cm:property name="fcrepo.baseUrl" value="localhost:8080/fcrepo/rest"/>
+       <cm:property name="mustache.templateUri" value="edu/amherst/acdc/exts/template/template.mustache"/>
        <cm:property name="mustache.contentType" value="text/html"/>
        <cm:property name="jsonld.context" value="https://acdc.amherst.edu/jsonld/models.json"/>
-       <cm:property name="fcrepo.baseUrl" value="localhost:8080/fcrepo/rest"/>
      </cm:default-properties>
    </cm:property-placeholder>
 

@@ -8,6 +8,10 @@ in order to retrieve a MODS version of the resource `a/b/c`:
 
     curl localhost:9103/template/a/b/c
 
+One can have the module use a customized Mustache template by doing the following:
+
+    curl localhost:9103/template/a/b/c?templateUri=/path/to/template/template2.mustache
+
 Building
 --------
 
@@ -54,7 +58,7 @@ The fedora baseUrl value
 
 The location of the mustache template
 
-    mustache.template=edu/amherst/acdc/exts/template/mustache/template.mustache
+    mustache.templateUri=edu/amherst/acdc/exts/template/mustache/template.mustache
 
 The content-type of the rendered template
 
