@@ -39,7 +39,8 @@ public class RouteTest extends CamelBlueprintTestSupport {
 
     @Override
     protected void addServicesOnStartup(final Map<String, KeyValueHolder<Object, Dictionary>> services) {
-        services.put(PcdmService.class.getName(), asService(new PcdmServiceImpl(), "name", "pcdm"));
+        services.put(PcdmService.class.getName(), asService(new PcdmServiceImpl(),
+              "osgi.jndi.service.name", "acrepo/Pcdm"));
     }
 
     @Test
