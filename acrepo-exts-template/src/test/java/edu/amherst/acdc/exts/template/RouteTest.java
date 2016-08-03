@@ -43,12 +43,6 @@ public class RouteTest extends CamelBlueprintTestSupport {
     protected ProducerTemplate template;
 
     @Override
-    protected void addServicesOnStartup(final Map<String, KeyValueHolder<Object, Dictionary>> services) {
-      services.put(JsonLdService.class.getName(), asService(new JsonLdServiceImpl(),
-            "osgi.jndi.service.name", "acrepo/JsonLD"));
-    }
-
-    @Override
     protected String getBlueprintDescriptor() {
         return "/OSGI-INF/blueprint/blueprint.xml";
     }
