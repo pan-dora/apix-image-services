@@ -85,4 +85,30 @@ public class RouteTest extends CamelBlueprintTestSupport {
         // assert expectations
         assertMockEndpointsSatisfied();
     }
+
+    @Test
+    public void testRouteCustomTemplate() throws Exception {
+
+        context.getRouteDefinition("TemplateRoute").adviceWith(context, new AdviceWithRouteBuilder() {
+            @Override
+            public void configure() throws Exception {
+                weaveAddLast().to("mock:result");
+            }
+        });
+
+        context.start();
+
+        resultEndpoint.expectedMinimumMessageCount(1);
+        resultEndpoint.expectedHeaderReceived("Content-Type", "text/html");
+        resultEndpoint.allMessages().body().contains("Fedora Template Service: Foo");
+        resultEndpoint.allMessages().body().contains("Custom Template: Sometime 2016");
+        resultEndpoint.allMessages().body().contains("<p>sample description</p>");
+
+        template.sendBodyAndHeader(
+            "{\"title\" : \"Foo\", \"description\" : \"sample description\", \"date\" : \"Sometime 2016\"}",
+            "templateUri", "/edu/amherst/acdc/exts/template/template2.mustache");
+
+        // assert expectations
+        assertMockEndpointsSatisfied();
+    }
 }

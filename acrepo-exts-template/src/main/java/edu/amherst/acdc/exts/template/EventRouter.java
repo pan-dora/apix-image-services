@@ -15,12 +15,12 @@
  */
 package edu.amherst.acdc.exts.template;
 
+import static org.apache.camel.component.mustache.MustacheConstants.MUSTACHE_RESOURCE_URI;
 import static org.apache.camel.Exchange.CONTENT_TYPE;
 import static org.apache.camel.Exchange.HTTP_METHOD;
 import static org.apache.camel.Exchange.HTTP_PATH;
 import static org.apache.camel.Exchange.HTTP_RESPONSE_CODE;
 import static org.fcrepo.camel.FcrepoHeaders.FCREPO_IDENTIFIER;
-
 import java.util.Map;
 
 import org.apache.camel.model.dataformat.JsonLibrary;
@@ -43,7 +43,7 @@ public class EventRouter extends RouteBuilder {
             .maximumRedeliveries("{{error.maxRedeliveries}}")
             .log("Event Routing Error: ${routeId}");
 
-        from("jetty:http://0.0.0.0:{{rest.port}}/template?" +
+        from("jetty:http://{{rest.host}}:{{rest.port}}/template?" +
                 "matchOnUriPrefix=true&httpMethodRestrict=GET,OPTIONS&sendServerVersion=false")
             .routeId("TemplateTransformation")
             .choice()
@@ -66,11 +66,22 @@ public class EventRouter extends RouteBuilder {
               .to("direct:compact")
               .to("direct:template");
 
+
         from("direct:template")
             .routeId("TemplateRoute")
             .setHeader(CONTENT_TYPE).simple("{{mustache.contentType}}")
             .unmarshal().json(JsonLibrary.Jackson, Map.class)
-            .to("mustache:{{mustache.template}}");
+            .choice()
+               .when(header("templateUri").isNull())
+                   .to("direct:defaultTemplate")
+               .otherwise()
+                   .setHeader(MUSTACHE_RESOURCE_URI).simple("${headers.templateUri}")
+                   /* the MUSTACHE_RESOURCE_URI in header overrides the passed in value below */
+                   .to("mustache:dummy");
+
+        from("direct:defaultTemplate")
+            .routeId("DefaultTemplateRoute")
+            .to("mustache:{{mustache.templateUri}}");
     }
 }
 
