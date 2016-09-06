@@ -1,0 +1,31 @@
+apply plugin: 'osgi'
+
+description = 'Message Broadcaster'
+dependencies {
+    compile group: 'org.apache.camel', name: 'camel-core', version: camelVersion
+    compile group: 'org.apache.camel', name: 'camel-blueprint', version: camelVersion
+    compile(group: 'org.fcrepo.camel', name: 'fcrepo-camel', version: fcrepoCamelVersion) {
+        exclude(module: 'slf4j-log4j12')
+    }
+    testCompile group: 'org.apache.camel', name: 'camel-test-blueprint', version: camelVersion
+    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
+}
+
+jar {
+    manifest {
+        description project.description
+        docURL project.docURL
+        vendor project.vendor
+        license project.license
+
+        instruction 'Import-Package', "org.apache.camel,${defaultOsgiImports}"
+        instruction 'Export-Package', "edu.amherst.acdc.connector.broadcast;version=${projectOsgiVersion}"
+    }
+}
+
+artifacts {
+    archives (file('build/cfg/main/edu.amherst.acdc.connector.broadcast.cfg')) {
+        classifier 'configuration'
+        type 'cfg'
+    }
+}

@@ -1,0 +1,26 @@
+apply plugin: 'osgi'
+
+description = 'Id Minter Blueprint Bundle'
+dependencies {
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: commonsLangVersion
+    testCompile group: 'junit', name: 'junit', version: junitVersion
+}
+
+jar {
+    manifest {
+        description project.description
+        docURL project.docURL
+        vendor project.vendor
+        license project.license
+
+        instruction 'Import-Package', defaultOsgiImports
+        instruction 'Export-Package', "edu.amherst.acdc.services.mint;version=${projectOsgiVersion}"
+    }
+}
+
+artifacts {
+    archives (file('build/cfg/main/edu.amherst.acdc.services.mint.cfg')) {
+        classifier 'configuration'
+        type 'cfg'
+    }
+}

@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.3.0" name="amherst-repo-services-${project.version}">
-  <repository>mvn:org.fcrepo.camel/fcrepo-camel/${fcrepo-camel.version}/xml/features</repository>
-  <repository>mvn:org.apache.camel.karaf/apache-camel/${camel.version}/xml/features</repository>
-  <repository>mvn:org.apache.activemq/activemq-karaf/${activemq.version}/xml/features</repository>
+  <repository>mvn:org.fcrepo.camel/fcrepo-camel/${fcrepoCamelVersion}/xml/features</repository>
+  <repository>mvn:org.apache.camel.karaf/apache-camel/${camelVersion}/xml/features</repository>
+  <repository>mvn:org.apache.activemq/activemq-karaf/${activemqVersion}/xml/features</repository>
 
   <feature name="acrepo-connector-idiomatic" version="${project.version}">
     <details>Installs the id mapping service</details>
@@ -10,14 +10,14 @@
     <feature>jndi</feature>
     <feature>jdbc</feature>
 
-    <feature version="${camel.version}">camel</feature>
-    <feature version="${camel.version}">camel-blueprint</feature>
-    <feature version="${camel.version}">camel-jetty9</feature>
-    <feature version="${camel.version}">camel-jackson</feature>
-    <feature version="${camel.version}">camel-sql</feature>
-    <feature version="${fcrepo-camel.version}">fcrepo-camel</feature>
+    <feature version="${camelVersion}">camel</feature>
+    <feature version="${camelVersion}">camel-blueprint</feature>
+    <feature version="${camelVersion}">camel-jetty9</feature>
+    <feature version="${camelVersion}">camel-jackson</feature>
+    <feature version="${camelVersion}">camel-sql</feature>
+    <feature version="${fcrepoCamelVersion}">fcrepo-camel</feature>
 
-    <bundle dependency="true">mvn:org.codehaus.woodstox/woodstox-core-asl/${woodstox.version}</bundle>
+    <bundle dependency="true">mvn:org.codehaus.woodstox/woodstox-core-asl/${woodstoxVersion}</bundle>
 
     <bundle>mvn:edu.amherst.acdc/acrepo-connector-idiomatic/${project.version}</bundle>
 
@@ -40,11 +40,11 @@
   <feature name="acrepo-exts-image" version="${project.version}">
     <details>Installs the image service</details>
 
-    <feature version="${camel.version}">camel</feature>
-    <feature version="${camel.version}">camel-blueprint</feature>
-    <feature version="${camel.version}">camel-jetty9</feature>
-    <feature version="${camel.version}">camel-http4</feature>
-    <feature version="${camel.version}">camel-exec</feature>
+    <feature version="${camelVersion}">camel</feature>
+    <feature version="${camelVersion}">camel-blueprint</feature>
+    <feature version="${camelVersion}">camel-jetty9</feature>
+    <feature version="${camelVersion}">camel-http4</feature>
+    <feature version="${camelVersion}">camel-exec</feature>
 
     <bundle>mvn:edu.amherst.acdc/acrepo-exts-image/${project.version}</bundle>
 
@@ -54,10 +54,10 @@
   <feature name="acrepo-exts-pcdm" version="${project.version}">
     <details>Installs the image service</details>
 
-    <feature version="${camel.version}">camel</feature>
-    <feature version="${camel.version}">camel-blueprint</feature>
-    <feature version="${camel.version}">camel-jetty9</feature>
-    <feature version="${fcrepo-camel.version}">fcrepo-camel</feature>
+    <feature version="${camelVersion}">camel</feature>
+    <feature version="${camelVersion}">camel-blueprint</feature>
+    <feature version="${camelVersion}">camel-jetty9</feature>
+    <feature version="${fcrepoCamelVersion}">fcrepo-camel</feature>
     <feature version="${project.version}">acrepo-services-pcdm</feature>
     <feature version="${project.version}">acrepo-libs-jena</feature>
 
@@ -69,9 +69,9 @@
   <feature name="acrepo-services-activemq" version="${project.version}">
     <details>Installs the ActiveMQ service</details>
 
-    <feature version="${camel.version}">camel</feature>
-    <feature version="${camel.version}">camel-blueprint</feature>
-    <feature version="${activemq.version}">activemq-camel</feature>
+    <feature version="${camelVersion}">camel</feature>
+    <feature version="${camelVersion}">camel-blueprint</feature>
+    <feature version="${activemqVersion}">activemq-camel</feature>
 
     <bundle>mvn:edu.amherst.acdc/acrepo-services-activemq/${project.version}</bundle>
 
@@ -95,7 +95,7 @@
 
     <feature version="${project.version}">acrepo-libs-marmotta</feature>
 
-    <bundle>wrap:mvn:org.apache.marmotta/ldcache-backend-file/${marmotta.version}</bundle>
+    <bundle>wrap:mvn:org.apache.marmotta/ldcache-backend-file/${marmottaVersion}</bundle>
 
     <configfile finalname="/etc/edu.amherst.acdc.services.ldcache.file.cfg">mvn:edu.amherst.acdc/acrepo-services-ldcache-file/${project.version}/cfg/configuration</configfile>
   </feature>
@@ -103,7 +103,7 @@
   <feature name="acrepo-services-mint" version="${project.version}">
     <details>Installs the id minter</details>
 
-    <bundle dependency="true">mvn:org.apache.commons/commons-lang3/${commons-lang.version}</bundle>
+    <bundle dependency="true">mvn:org.apache.commons/commons-lang3/${commonsLangVersion}</bundle>
 
     <bundle>mvn:edu.amherst.acdc/acrepo-services-mint/${project.version}</bundle>
 
@@ -129,11 +129,11 @@
   <feature name="acrepo-exts-serialize-xml" version="${project.version}">
     <details>Installs the MODS/XML and DC/XML serialization service</details>
 
-    <feature version="${camel.version}">camel</feature>
-    <feature version="${camel.version}">camel-blueprint</feature>
-    <feature version="${camel.version}">camel-jetty9</feature>
-    <feature version="${camel.version}">camel-saxon</feature>
-    <feature version="${fcrepo-camel.version}">fcrepo-camel</feature>
+    <feature version="${camelVersion}">camel</feature>
+    <feature version="${camelVersion}">camel-blueprint</feature>
+    <feature version="${camelVersion}">camel-jetty9</feature>
+    <feature version="${camelVersion}">camel-saxon</feature>
+    <feature version="${fcrepoCamelVersion}">fcrepo-camel</feature>
 
     <bundle>mvn:edu.amherst.acdc/acrepo-exts-serialize-xml/${project.version}</bundle>
 
@@ -151,10 +151,10 @@
   <feature name="acrepo-exts-jsonld" version="${project.version}">
     <details>Installs a sample JSON-LD transformation workflow</details>
 
-    <feature version="${camel.version}">camel</feature>
-    <feature version="${camel.version}">camel-blueprint</feature>
-    <feature version="${camel.version}">camel-jetty9</feature>
-    <feature version="${fcrepo-camel.version}">fcrepo-camel</feature>
+    <feature version="${camelVersion}">camel</feature>
+    <feature version="${camelVersion}">camel-blueprint</feature>
+    <feature version="${camelVersion}">camel-jetty9</feature>
+    <feature version="${fcrepoCamelVersion}">fcrepo-camel</feature>
     <feature version="${project.version}">acrepo-services-jsonld</feature>
 
     <bundle>mvn:edu.amherst.acdc/acrepo-exts-jsonld/${project.version}</bundle>
@@ -165,13 +165,13 @@
   <feature name="acrepo-exts-template" version="${project.version}">
     <details>Installs a sample JSON-LD-based template rendering service</details>
 
-    <feature version="${camel.version}">camel</feature>
-    <feature version="${camel.version}">camel-blueprint</feature>
-    <feature version="${camel.version}">camel-mustache</feature>
-    <feature version="${camel.version}">camel-jetty9</feature>
-    <feature version="${camel.version}">camel-jackson</feature>
-    <feature version="${camel.version}">camel-http4</feature>
-    <feature version="${fcrepo-camel.version}">fcrepo-camel</feature>
+    <feature version="${camelVersion}">camel</feature>
+    <feature version="${camelVersion}">camel-blueprint</feature>
+    <feature version="${camelVersion}">camel-mustache</feature>
+    <feature version="${camelVersion}">camel-jetty9</feature>
+    <feature version="${camelVersion}">camel-jackson</feature>
+    <feature version="${camelVersion}">camel-http4</feature>
+    <feature version="${fcrepoCamelVersion}">fcrepo-camel</feature>
     <feature version="${project.version}">acrepo-services-jsonld</feature>
 
     <bundle>mvn:edu.amherst.acdc/acrepo-exts-template/${project.version}</bundle>
@@ -182,10 +182,10 @@
   <feature name="acrepo-exts-fits" version="${project.version}">
     <details>Installs a FITS RESTful service</details>
 
-    <feature version="${camel.version}">camel</feature>
-    <feature version="${camel.version}">camel-blueprint</feature>
-    <feature version="${camel.version}">camel-jetty9</feature>
-    <feature version="${camel.version}">camel-http4</feature>
+    <feature version="${camelVersion}">camel</feature>
+    <feature version="${camelVersion}">camel-blueprint</feature>
+    <feature version="${camelVersion}">camel-jetty9</feature>
+    <feature version="${camelVersion}">camel-http4</feature>
 
     <bundle>mvn:edu.amherst.acdc/acrepo-exts-fits/${project.version}</bundle>
 
@@ -197,12 +197,12 @@
 
     <feature version="${project.version}" dependency="true">acrepo-libs-jsonld</feature>
 
-    <bundle>mvn:org.apache.jena/jena-osgi/${jena.version}</bundle>
+    <bundle>mvn:org.apache.jena/jena-osgi/${jenaVersion}</bundle>
 
-    <bundle dependency="true">mvn:org.apache.commons/commons-lang3/${commons-lang.version}</bundle>
-    <bundle dependency="true">mvn:org.apache.commons/commons-csv/${commons-csv.version}</bundle>
-    <bundle dependency="true">mvn:org.apache.thrift/libthrift/${thrift.version}</bundle>
-    <bundle dependency="true">mvn:com.github.andrewoma.dexx/collection/${dexx.version}</bundle>
+    <bundle dependency="true">mvn:org.apache.commons/commons-lang3/${commonsLangVersion}</bundle>
+    <bundle dependency="true">mvn:org.apache.commons/commons-csv/${commonsCsvVersion}</bundle>
+    <bundle dependency="true">mvn:org.apache.thrift/libthrift/${thriftVersion}</bundle>
+    <bundle dependency="true">mvn:com.github.andrewoma.dexx/collection/${dexxVersion}</bundle>
   </feature>
 
   <feature name="acrepo-libs-sesame" version="${project.version}">
@@ -211,41 +211,41 @@
     <feature prerequisite="true" dependency="false">wrap</feature>
     <feature version="${project.version}" dependency="true">acrepo-libs-jackson</feature>
 
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-repository-event/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-sail-memory/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-model/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-util/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-repository-api/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-api/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-query/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-queryresultio-api/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-rdfjson/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-rdfxml/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-turtle/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-n3/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-repository-sail/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-queryparser-api/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-queryalgebra-model/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-trig/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-sail-api/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-sail-nativerdf/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-sail-inferencer/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-queryalgebra-evaluation/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-repository-sparql/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-queryparser-sparql/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-queryresultio-sparqlxml/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-http-client/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-http-protocol/${sesame.version}</bundle>
-    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-ntriples/${sesame.version}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-repository-event/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-sail-memory/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-model/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-util/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-repository-api/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-api/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-query/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-queryresultio-api/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-rdfjson/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-rdfxml/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-turtle/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-n3/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-repository-sail/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-queryparser-api/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-queryalgebra-model/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-trig/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-sail-api/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-sail-nativerdf/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-sail-inferencer/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-queryalgebra-evaluation/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-repository-sparql/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-queryparser-sparql/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-queryresultio-sparqlxml/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-http-client/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-http-protocol/${sesameVersion}</bundle>
+    <bundle>wrap:mvn:org.openrdf.sesame/sesame-rio-ntriples/${sesameVersion}</bundle>
 
-    <bundle>mvn:com.github.jsonld-java/jsonld-java-sesame/${jsonld-sesame.version}</bundle>
-    <bundle>mvn:com.github.jsonld-java/jsonld-java/${jsonld-sesame.version}</bundle>
+    <bundle>mvn:com.github.jsonld-java/jsonld-java-sesame/${jsonldSesameVersion}</bundle>
+    <bundle>mvn:com.github.jsonld-java/jsonld-java/${jsonldSesameVersion}</bundle>
 
-    <bundle dependency="true">wrap:mvn:commons-httpclient/commons-httpclient/${commons-httpclient.version}</bundle>
-    <bundle dependency="true">mvn:org.apache.httpcomponents/httpclient-osgi/${httpclient.version}</bundle>
-    <bundle dependency="true">mvn:org.apache.httpcomponents/httpcore-osgi/${httpcore.version}</bundle>
-    <bundle dependency="true">mvn:commons-codec/commons-codec/${commons-codec.version}</bundle>
-    <bundle dependency="true">mvn:commons-io/commons-io/${commons-io.version}</bundle>
+    <bundle dependency="true">wrap:mvn:commons-httpclient/commons-httpclient/${commonsHttpclientVersion}</bundle>
+    <bundle dependency="true">mvn:org.apache.httpcomponents/httpclient-osgi/${httpclientVersion}</bundle>
+    <bundle dependency="true">mvn:org.apache.httpcomponents/httpcore-osgi/${httpcoreVersion}</bundle>
+    <bundle dependency="true">mvn:commons-codec/commons-codec/${commonsCodecVersion}</bundle>
+    <bundle dependency="true">mvn:commons-io/commons-io/${commonsIoVersion}</bundle>
   </feature>
 
   <feature name="acrepo-libs-marmotta" version="${project.version}">
@@ -255,69 +255,69 @@
     <feature version="${project.version}" dependency="true">acrepo-libs-jsonld</feature>
     <feature version="${project.version}" dependency="true">acrepo-libs-jackson</feature>
 
-    <bundle>mvn:org.apache.marmotta/ldcache-api/${marmotta.version}</bundle>
-    <bundle>mvn:org.apache.marmotta/marmotta-commons/${marmotta.version}</bundle>
+    <bundle>mvn:org.apache.marmotta/ldcache-api/${marmottaVersion}</bundle>
+    <bundle>mvn:org.apache.marmotta/marmotta-commons/${marmottaVersion}</bundle>
 
     <!-- locally wrapped OSGi bundles -->
-    <bundle>${wrapped.bundle.location}/org.apache.marmotta.ldclient-api-${marmotta.version}.jar</bundle>
+    <bundle>${wrappedBundleLocation}/org.apache.marmotta.ldclient-api-${marmottaVersion}.jar</bundle>
 
-    <bundle>wrap:mvn:org.apache.marmotta/ldcache-core/${marmotta.version}</bundle>
-    <bundle>wrap:mvn:org.apache.marmotta/ldclient-core/${marmotta.version}</bundle>
-    <bundle>wrap:mvn:org.apache.marmotta/ldclient-provider-rdf/${marmotta.version}</bundle>
-    <bundle>wrap:mvn:org.apache.marmotta/ldclient-provider-rdfa/${marmotta.version}</bundle>
-    <bundle>wrap:mvn:org.apache.marmotta/ldclient-provider-xml/${marmotta.version}</bundle>
+    <bundle>wrap:mvn:org.apache.marmotta/ldcache-core/${marmottaVersion}</bundle>
+    <bundle>wrap:mvn:org.apache.marmotta/ldclient-core/${marmottaVersion}</bundle>
+    <bundle>wrap:mvn:org.apache.marmotta/ldclient-provider-rdf/${marmottaVersion}</bundle>
+    <bundle>wrap:mvn:org.apache.marmotta/ldclient-provider-rdfa/${marmottaVersion}</bundle>
+    <bundle>wrap:mvn:org.apache.marmotta/ldclient-provider-xml/${marmottaVersion}</bundle>
 
-    <bundle dependency="true">mvn:commons-collections/commons-collections/${commons-collections.version}</bundle>
-    <bundle dependency="true">mvn:com.google.guava/guava/${guava16.version}</bundle>
-    <bundle dependency="true">mvn:joda-time/joda-time/${joda-time.version}</bundle>
-    <bundle dependency="true">mvn:commons-validator/commons-validator/${commons-validator.version}</bundle>
-    <bundle dependency="true">mvn:commons-beanutils/commons-beanutils/${commons-beanutils.version}</bundle>
-    <bundle dependency="true">mvn:org.apache.commons/commons-lang3/${commons-lang.version}</bundle>
-    <bundle dependency="true">mvn:ch.qos.cal10n/cal10n-api/${cal10n.version}</bundle>
+    <bundle dependency="true">mvn:commons-collections/commons-collections/${commonsCollectionsVersion}</bundle>
+    <bundle dependency="true">mvn:com.google.guava/guava/16.0</bundle>
+    <bundle dependency="true">mvn:joda-time/joda-time/${jodaTimeVersion}</bundle>
+    <bundle dependency="true">mvn:commons-validator/commons-validator/${commonsValidatorVersion}</bundle>
+    <bundle dependency="true">mvn:commons-beanutils/commons-beanutils/${commonsBeanutilsVersion}</bundle>
+    <bundle dependency="true">mvn:org.apache.commons/commons-lang3/${commonsLangVersion}</bundle>
+    <bundle dependency="true">mvn:ch.qos.cal10n/cal10n-api/${cal10nVersion}</bundle>
 
-    <bundle dependency="true">mvn:org.apache.httpcomponents/httpclient-osgi/${httpclient.version}</bundle>
-    <bundle dependency="true">mvn:org.apache.httpcomponents/httpcore-osgi/${httpcore.version}</bundle>
-    <bundle dependency="true">mvn:jaxen/jaxen/${jaxen.version}</bundle>
+    <bundle dependency="true">mvn:org.apache.httpcomponents/httpclient-osgi/${httpclientVersion}</bundle>
+    <bundle dependency="true">mvn:org.apache.httpcomponents/httpcore-osgi/${httpcoreVersion}</bundle>
+    <bundle dependency="true">mvn:jaxen/jaxen/${jaxenVersion}</bundle>
 
-    <bundle dependency="true">wrap:mvn:commons-digester/commons-digester/${commons-digester.version}</bundle>
-    <bundle dependency="true">wrap:mvn:org.apache.httpcomponents/fluent-hc/${fluent-hc.version}</bundle>
-    <bundle dependency="true">wrap:mvn:org.apache.httpcomponents/httpclient-cache/${httpclient-cache.version}</bundle>
-    <bundle dependency="true">wrap:mvn:org.apache.httpcomponents/httpcore-nio/${httpcore-nio.version}</bundle>
-    <bundle dependency="true">wrap:mvn:org.apache.httpcomponents/httpmime/${httpmime.version}</bundle>
-    <bundle dependency="true">wrap:mvn:org.jdom/jdom2/${jdom2.version}</bundle>
+    <bundle dependency="true">wrap:mvn:commons-digester/commons-digester/${commonsDigesterVersion}</bundle>
+    <bundle dependency="true">wrap:mvn:org.apache.httpcomponents/fluent-hc/${fluentHcVersion}</bundle>
+    <bundle dependency="true">wrap:mvn:org.apache.httpcomponents/httpclient-cache/${httpclientCacheVersion}</bundle>
+    <bundle dependency="true">wrap:mvn:org.apache.httpcomponents/httpcore-nio/${httpcoreNioVersion}</bundle>
+    <bundle dependency="true">wrap:mvn:org.apache.httpcomponents/httpmime/${httpmimeVersion}</bundle>
+    <bundle dependency="true">wrap:mvn:org.jdom/jdom2/${jdom2Version}</bundle>
 
-    <bundle dependency="true">wrap:mvn:org.semarglproject/semargl-rdfa/${semargl.version}</bundle>
-    <bundle dependency="true">wrap:mvn:org.semarglproject/semargl-core/${semargl.version}</bundle>
-    <bundle dependency="true">wrap:mvn:org.semarglproject/semargl-rdf/${semargl.version}</bundle>
-    <bundle dependency="true">wrap:mvn:org.semarglproject/semargl-sesame/${semargl.version}</bundle>
+    <bundle dependency="true">wrap:mvn:org.semarglproject/semargl-rdfa/${semarglVersion}</bundle>
+    <bundle dependency="true">wrap:mvn:org.semarglproject/semargl-core/${semarglVersion}</bundle>
+    <bundle dependency="true">wrap:mvn:org.semarglproject/semargl-rdf/${semarglVersion}</bundle>
+    <bundle dependency="true">wrap:mvn:org.semarglproject/semargl-sesame/${semarglVersion}</bundle>
   </feature>
 
   <feature name="acrepo-libs-jsonld" version="${project.version}">
     <details>Installs the JSON-LD related bundles</details>
 
-    <bundle>mvn:com.github.jsonld-java/jsonld-java/${jsonld.version}</bundle>
+    <bundle>mvn:com.github.jsonld-java/jsonld-java/${jsonldVersion}</bundle>
 
     <feature version="${project.version}" dependency="true">acrepo-libs-jackson</feature>
 
-    <bundle dependency="true">mvn:org.apache.httpcomponents/httpclient-osgi/${httpclient.version}</bundle>
-    <bundle dependency="true">mvn:org.apache.httpcomponents/httpcore-osgi/${httpcore.version}</bundle>
-    <bundle dependency="true">mvn:commons-codec/commons-codec/${commons-codec.version}</bundle>
-    <bundle dependency="true">mvn:commons-io/commons-io/${commons-io.version}</bundle>
+    <bundle dependency="true">mvn:org.apache.httpcomponents/httpclient-osgi/${httpclientVersion}</bundle>
+    <bundle dependency="true">mvn:org.apache.httpcomponents/httpcore-osgi/${httpcoreVersion}</bundle>
+    <bundle dependency="true">mvn:commons-codec/commons-codec/${commonsCodecVersion}</bundle>
+    <bundle dependency="true">mvn:commons-io/commons-io/${commonsIoVersion}</bundle>
   </feature>
 
   <feature name="acrepo-libs-jackson" version="${project.version}">
     <details>Installs the Jackson Libraries</details>
 
-    <bundle>mvn:com.fasterxml.jackson.core/jackson-core/${jackson2.version}</bundle>
-    <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/${jackson2.version}</bundle>
-    <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/${jackson2.version}</bundle>
+    <bundle>mvn:com.fasterxml.jackson.core/jackson-core/${jacksonVersion}</bundle>
+    <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/${jacksonVersion}</bundle>
+    <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/${jacksonVersion}</bundle>
   </feature>
 
   <feature name="acrepo-connector-broadcast" version="${project.version}">
     <details>Installs the message broadcasting service</details>
 
-    <feature version="${camel.version}">camel</feature>
-    <feature version="${camel.version}">camel-blueprint</feature>
+    <feature version="${camelVersion}">camel</feature>
+    <feature version="${camelVersion}">camel-blueprint</feature>
 
     <bundle>mvn:edu.amherst.acdc/acrepo-connector-broadcast/${project.version}</bundle>
 

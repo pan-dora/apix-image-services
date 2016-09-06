@@ -151,6 +151,7 @@ public abstract class AbstractOSGiIT {
         return "";
     }
 
+    @SuppressWarnings("unchecked")
     protected <T> T getOsgiService(final Class<T> type, final String filter, final long timeout) {
         try {
             final ServiceTracker tracker = new ServiceTracker(bundleContext,

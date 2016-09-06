@@ -1,0 +1,35 @@
+apply plugin: 'osgi'
+
+description = 'PCDM Object builder'
+dependencies {
+    compile group: 'org.apache.camel', name: 'camel-core', version: camelVersion
+    compile group: 'org.apache.camel', name: 'camel-blueprint', version: camelVersion
+    compile group: 'org.apache.camel', name: 'camel-jetty9', version: camelVersion
+    compile(group: 'org.fcrepo.camel', name: 'fcrepo-camel', version: fcrepoCamelVersion) {
+        exclude(module: 'slf4j-log4j12')
+    }
+    compile group: 'org.apache.jena', name: 'jena-osgi', version: jenaVersion
+    compile project(':acrepo-services-pcdm')
+    testCompile group: 'junit', name: 'junit', version: junitVersion
+    testCompile group: 'org.apache.camel', name: 'camel-test-blueprint', version: camelVersion
+    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
+}
+
+jar {
+    manifest {
+        description project.description
+        docURL project.docURL
+        vendor project.vendor
+        license project.license
+
+        instruction 'Import-Package', "org.apache.camel,edu.amherst.acdc.services.pcdm,${defaultOsgiImports}"
+        instruction 'Export-Package', "edu.amherst.acdc.exts.pcdm;version=${projectOsgiVersion}"
+    }
+}
+
+artifacts {
+    archives (file('build/cfg/main/edu.amherst.acdc.exts.pcdm.cfg')) {
+        classifier 'configuration'
+        type 'cfg'
+    }
+}

@@ -1,0 +1,201 @@
+plugins {
+    id 'com.github.hierynomus.license' version '0.13.1'
+    id 'net.researchgate.release' version '2.4.0'
+    id 'org.ajoberstar.github-pages' version '1.5.1'
+}
+
+allprojects  {
+    apply plugin: 'maven'
+
+    group = 'edu.amherst.acdc'
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+    apply plugin: 'signing'
+    apply plugin: 'checkstyle'
+    apply plugin: 'com.github.hierynomus.license'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    ext {
+        vendor = 'Amherst College'
+        homepage = 'https://www.amherst.edu'
+        docURL = 'https://acdc.amherst.edu/wiki'
+        license = 'Apache 2'
+
+        /* Dependencies */
+        camelVersion = '2.17.3'
+        activemqVersion = '5.14.0'
+        commonsLangVersion = '3.4'
+        commonsIoVersion = '2.5'
+        derbyVersion = '10.12.1.1'
+        fcrepoCamelVersion = '4.4.3'
+        hk2Version = '2.4.0'
+        junitVersion = '4.12'
+        jsonldVersion = '0.8.3'
+        logbackVersion = '1.1.7'
+        postgresqlVersion = '9.4.1208'
+        saxonVersion = '9.6.0-7'
+        slf4jVersion = '1.7.21'
+        springVersion = '4.1.7.RELEASE'
+        woodstoxVersion = '4.4.1'
+        xercesVersion = '2.11.0'
+        jenaVersion = '3.1.0'
+        jacksonVersion = '2.7.5'
+        marmottaVersion = '3.3.0'
+
+        /* Transitive deps */
+        cal10nVersion = '0.8.1'
+        commonsBeanutilsVersion = '1.8.3'
+        commonsCodecVersion = '1.10'
+        commonsCollectionsVersion = '3.2.1'
+        commonsCsvVersion = '1.4'
+        commonsDigesterVersion = '1.8'
+        commonsHttpclientVersion = '3.1'
+        commonsValidatorVersion = '1.4.0'
+        dexxVersion = '0.6'
+        fluentHcVersion = '4.5.2'
+        httpclientCacheVersion = '4.3.5'
+        httpclientVersion = '4.5.2'
+        httpmimeVersion = '4.5.2'
+        httpcoreNioVersion = '4.4.4'
+        httpcoreVersion = '4.4.5'
+        jaxenVersion = '1.1.6'
+        jdom2Version = '2.0.5'
+        jodaTimeVersion = '2.5'
+        jsonldSesameVersion = '0.5.1'
+        semarglVersion = '0.6.1'
+        sesameVersion = '2.7.13'
+        thriftVersion = '0.9.2'
+        wrappedBundleLocation = 'http://www.ats.amherst.edu/bundles'
+
+        /* OSGi */
+        defaultOsgiImports = 'org.osgi.service.blueprint;version="[1,2)",*'
+        projectOsgiVersion = project.version.replaceAll("-SNAPSHOT", ".SNAPSHOT")
+    }
+
+    task processConfig(type: Copy) {
+        from('src/main/cfg') {
+            include '**/*.cfg'
+        }
+        into 'build/cfg/main'
+    }
+
+    classes {
+        classes.dependsOn processConfig
+    }
+
+    checkstyle {
+        configFile = rootProject.file('gradle/checkstyle/checkstyle.xml')
+        configProperties.checkstyleConfigDir = rootProject.file('gradle/checkstyle')
+    }
+
+    license {
+        include "**/*.java"
+        header rootProject.file('gradle/license/HEADER.txt')
+        strictCheck true
+        mapping {
+            java = 'SLASHSTAR_STYLE'
+        }
+    }
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                from components.java
+            }
+        }
+    }
+
+    signing {
+        required { !version.endsWith("SNAPSHOT") && gradle.taskGraph.hasTask("uploadArchives") }
+        sign configurations.archives
+    }
+
+
+    uploadArchives {
+        repositories.mavenDeployer {
+            def sonatypeUsername = project.hasProperty('ossrhUsername') ? ossrhUsername : ""
+            def sonatypePassword = project.hasProperty('ossrhPassword') ? ossrhPassword : ""
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+
+            pom.project {
+                packaging 'jar'
+                url 'https://acdc.amherst.edu/wiki'
+                inceptionYear '2015'
+                name 'Amherst College Repository Extension Services'
+                description 'Repository Extension Services'
+
+                organization {
+                    name project.vendor
+                    url project.homepage
+                }
+
+                developers {
+                    developer {
+                        id 'acoburn'
+                        name 'Aaron Coburn'
+                        email 'acoburn @ (domain of organization url)'
+                        organization 'Amherst College'
+                        organizationUrl 'https://www.amherst.edu'
+                        roles {
+                            role 'developer'
+                        }
+                        timezone '-5'
+                    }
+                    developer {
+                        id 'bseeger'
+                        name 'Bethany Seeger'
+                        email 'bseeger @ (domain of organization url)'
+                        organization 'Amherst College'
+                        organizationUrl 'https://www.amherst.edu'
+                        roles {
+                            role 'developer'
+                        }
+                        timezone '-5'
+                    }
+                }
+
+                scm {
+                    connection 'scm:git:git://gitlab.amherst.edu/acdc/repository-extension-services.git'
+                    developerConnection 'scm:git:git@gitlab.amherst.edu:acdc/repository-extension-services.git'
+                    url 'https://gitlab.amherst.edu/acdc/repository-extension-services'
+                    tag 'HEAD'
+                }
+
+                licenses {
+                    license {
+                        name 'Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0'
+                        comments 'Copyright (c) 2016 Amherst College'
+                    }
+                }
+            }
+        }
+    }
+
+    configurations.all {
+    }
+}

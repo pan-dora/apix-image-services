@@ -1,0 +1,36 @@
+rootProject.name = 'repository-services'
+include ':acrepo-connector-broadcast'
+include ':acrepo-connector-idiomatic'
+include ':acrepo-connector-idiomatic-pgsql'
+include ':acrepo-exts-fits'
+include ':acrepo-exts-image'
+include ':acrepo-exts-jsonld'
+include ':acrepo-exts-pcdm'
+include ':acrepo-exts-serialize-xml'
+include ':acrepo-exts-template'
+include ':acrepo-karaf'
+include ':acrepo-services-activemq'
+include ':acrepo-services-inference'
+include ':acrepo-services-jsonld'
+include ':acrepo-services-ldcache'
+include ':acrepo-services-ldcache-file'
+include ':acrepo-services-mint'
+include ':acrepo-services-pcdm'
+
+project(':acrepo-connector-broadcast').projectDir = "$rootDir/acrepo-connector-broadcast" as File
+project(':acrepo-connector-idiomatic').projectDir = "$rootDir/acrepo-connector-idiomatic" as File
+project(':acrepo-connector-idiomatic-pgsql').projectDir = "$rootDir/acrepo-connector-idiomatic-pgsql" as File
+project(':acrepo-exts-fits').projectDir = "$rootDir/acrepo-exts-fits" as File
+project(':acrepo-exts-image').projectDir = "$rootDir/acrepo-exts-image" as File
+project(':acrepo-exts-jsonld').projectDir = "$rootDir/acrepo-exts-jsonld" as File
+project(':acrepo-exts-pcdm').projectDir = "$rootDir/acrepo-exts-pcdm" as File
+project(':acrepo-exts-serialize-xml').projectDir = "$rootDir/acrepo-exts-serialize-xml" as File
+project(':acrepo-exts-template').projectDir = "$rootDir/acrepo-exts-template" as File
+project(':acrepo-karaf').projectDir = "$rootDir/acrepo-karaf" as File
+project(':acrepo-services-activemq').projectDir = "$rootDir/acrepo-services-activemq" as File
+project(':acrepo-services-inference').projectDir = "$rootDir/acrepo-services-inference" as File
+project(':acrepo-services-jsonld').projectDir = "$rootDir/acrepo-services-jsonld" as File
+project(':acrepo-services-ldcache').projectDir = "$rootDir/acrepo-services-ldcache" as File
+project(':acrepo-services-ldcache-file').projectDir = "$rootDir/acrepo-services-ldcache-file" as File
+project(':acrepo-services-mint').projectDir = "$rootDir/acrepo-services-mint" as File
+project(':acrepo-services-pcdm').projectDir = "$rootDir/acrepo-services-pcdm" as File

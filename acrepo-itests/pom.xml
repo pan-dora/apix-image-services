@@ -4,14 +4,61 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>edu.amherst.acdc</groupId>
-    <artifactId>repository-services</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <groupId>org.fcrepo</groupId>
+    <artifactId>fcrepo-parent</artifactId>
+    <version>4.5.1</version>
   </parent>
 
+  <groupId>edu.amherst.acdc</groupId>
   <artifactId>acrepo-itests</artifactId>
+  <version>1.0.1-SNAPSHOT</version>
+  <!--<packaging>pom</packaging>-->
+  <url>https://acdc.amherst.edu/wiki</url>
+  <inceptionYear>2015</inceptionYear>
 
   <name>Karaf Integration tests for repository services</name>
+  <description>A collection of repository services for use with Fedora</description>
+
+  <organization>
+    <name>Amherst College</name>
+    <url>https://www.amherst.edu/</url>
+  </organization>
+
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+      <comments>Copyright (c) 2016 Amherst College</comments>
+    </license>
+  </licenses>
+
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <project.copyrightYear>2016</project.copyrightYear>
+    <activemq.version>5.14.0</activemq.version>
+    <camel.version>2.17.3</camel.version>
+    <fcrepo-camel.version>4.4.3</fcrepo-camel.version>
+    <hk2.version>2.4.0</hk2.version>
+    <junit.version>4.12</junit.version>
+    <slf4j.version>1.7.21</slf4j.version>
+    <jena.version>3.1.0</jena.version>
+    <jackson.version>2.7.5</jackson.version>
+    <httpclient.version>4.5.2</httpclient.version>
+    <httpcore.version>4.4.5</httpcore.version>
+
+    <!-- plugins -->
+    <paxexam.plugin.version>1.2.4</paxexam.plugin.version>
+    <jetty.plugin.version>9.3.8.v20160314</jetty.plugin.version>
+
+    <!-- test gear -->
+    <fcrepo.version>4.5.1</fcrepo.version>
+    <karaf.version>4.0.5</karaf.version>
+    <pax-exam.version>4.9.1</pax-exam.version>
+    <jena.fuseki.version>2.3.1</jena.fuseki.version>
+    <logback.version>1.1.7</logback.version>
+  </properties>
 
   <dependencies>
     <dependency>
@@ -83,6 +130,7 @@
     <dependency>
       <groupId>org.apache.jena</groupId>
       <artifactId>jena-osgi</artifactId>
+      <version>${jena.version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -95,21 +143,29 @@
 
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
+      <artifactId>httpclient-osgi</artifactId>
+      <version>${httpclient.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpcore-osgi</artifactId>
+      <version>${httpcore.version}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>${jackson2.version}</version>
+      <version>${jackson.version}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>${jackson2.version}</version>
+      <version>${jackson.version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -162,6 +218,13 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>${logback.version}</version>
+        <scope>test</scope>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -183,6 +246,13 @@
          </execution>
        </executions>
      </plugin>
+
+      <plugin>
+        <groupId>org.apache.karaf.tooling</groupId>
+        <artifactId>karaf-maven-plugin</artifactId>
+        <version>${karaf.version}</version>
+        <extensions>true</extensions>
+      </plugin>
 
       <!-- reserve network ports for integration testing -->
       <!-- add configuration file to artifact set for OSGi deployment -->
@@ -380,6 +450,10 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>com.mycila</groupId>
+        <artifactId>license-maven-plugin</artifactId>
       </plugin>
 
         <!--Bring in fcrepo webapp for integration testing-->
