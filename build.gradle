@@ -21,7 +21,7 @@ allprojects  {
     }
 
     release {
-        tagTemplate "$name-$version"
+        tagTemplate = '$name-$version'
     }
 
     afterReleaseBuild.dependsOn uploadArchives
