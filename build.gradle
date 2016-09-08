@@ -20,6 +20,10 @@ allprojects  {
         }
     }
 
+    release {
+        tagTemplate '$name-$version'
+    }
+
     afterReleaseBuild.dependsOn uploadArchives
 }
 
@@ -134,7 +138,6 @@ subprojects {
         publications {
             maven(MavenPublication) {
                 from components.java
-                artifact sourceJar
             }
         }
     }
