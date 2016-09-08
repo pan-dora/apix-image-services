@@ -139,9 +139,9 @@ public class AcrepoBroadcastIT extends AbstractOSGiIT {
         final MockEndpoint queue2 = (MockEndpoint) ctx.getEndpoint("mock:queue2");
         final MockEndpoint queue3 = (MockEndpoint) ctx.getEndpoint("mock:queue3");
 
-        queue1.expectedMessageCount(6);
-        queue2.expectedMessageCount(6);
-        queue3.expectedMessageCount(6);
+        queue1.expectedMinimumMessageCount(6);
+        queue2.expectedMinimumMessageCount(6);
+        queue3.expectedMinimumMessageCount(6);
 
         assertIsSatisfied(queue1);
         assertIsSatisfied(queue2);
