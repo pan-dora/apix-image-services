@@ -1,0 +1,33 @@
+apply plugin: 'osgi'
+
+description = 'Linked Data Caching Service'
+dependencies {
+    compile group: 'org.apache.marmotta', name: 'ldcache-api', version: marmottaVersion
+    compile group: 'org.apache.marmotta', name: 'ldcache-core', version: marmottaVersion
+    compile group: 'org.apache.marmotta', name: 'ldclient-provider-rdfa', version: marmottaVersion
+    compile group: 'org.apache.marmotta', name: 'ldclient-provider-rdf', version: marmottaVersion
+    compile group: 'org.apache.marmotta', name: 'ldclient-provider-xml', version: marmottaVersion
+    compile group: 'org.slf4j', name: 'slf4j-api', version: slf4jVersion
+    testCompile group: 'junit', name: 'junit', version: junitVersion
+    testCompile project(':acrepo-services-ldcache-file')
+    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
+}
+
+jar {
+    manifest {
+        description project.description
+        docURL project.docURL
+        vendor project.vendor
+        license project.license
+
+        instruction 'Import-Package', defaultOsgiImports
+        instruction 'Export-Package', "edu.amherst.acdc.services.ldcache;version=${projectOsgiVersion}"
+    }
+}
+
+artifacts {
+    archives (file('build/cfg/main/edu.amherst.acdc.services.ldcache.cfg')) {
+        classifier 'configuration'
+        type 'cfg'
+    }
+}

@@ -1,0 +1,34 @@
+apply plugin: 'osgi'
+
+description = 'FITS service bundle'
+dependencies {
+    compile group: 'org.apache.camel', name: 'camel-core', version: camelVersion
+    compile group: 'org.apache.camel', name: 'camel-jetty9', version: camelVersion
+    compile group: 'org.apache.camel', name: 'camel-blueprint', version: camelVersion
+    compile group: 'org.apache.camel', name: 'camel-http4', version: camelVersion
+    compile group: 'org.apache.httpcomponents', name: 'httpmime', version: httpmimeVersion
+    compile group: 'org.apache.httpcomponents', name: 'httpcore', version: httpcoreVersion
+    compile group: 'org.slf4j', name: 'slf4j-api', version: slf4jVersion
+    testCompile group: 'junit', name: 'junit', version: junitVersion
+    testCompile group: 'org.apache.camel', name: 'camel-test-blueprint', version: camelVersion
+    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
+}
+
+jar {
+    manifest {
+        description project.description
+        docURL project.docURL
+        vendor project.vendor
+        license project.license
+
+        instruction 'Import-Package', "org.apache.camel,${defaultOsgiImports}"
+        instruction 'Export-Package', "edu.amherst.acdc.exts.fits;version=${projectOsgiVersion}"
+    }
+}
+
+artifacts {
+    archives (file('build/cfg/main/edu.amherst.acdc.exts.fits.cfg')) {
+        classifier 'configuration'
+        type 'cfg'
+    }
+}

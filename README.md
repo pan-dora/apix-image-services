@@ -58,7 +58,7 @@ Building
 
 To build this project use
 
-    mvn install
+    ./gradlew build
 
 Deploying in OSGi
 -----------------

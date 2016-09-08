@@ -17,13 +17,6 @@
   <reference id="broker" interface="org.apache.camel.Component" filter="(osgi.jndi.service.name=acrepo/Broker)"/>
 
   <camelContext id="AcrepoConnectorBroadcast" xmlns="http://camel.apache.org/schema/blueprint">
-    <route id="MessageBroadcaster">
-      <description>Broadcast messages from one queue/topic to other specified queues/topics.</description>
-      <from uri="{{input.stream}}" />
-      <log message="Distributing message: ${headers[org.fcrepo.jms.timestamp]}: ${headers[org.fcrepo.jms.identifier]}:${headers[org.fcrepo.jms.eventType]}"/>
-      <recipientList parallelProcessing="true" ignoreInvalidEndpoints="true">
-          <simple>{{message.recipients}}</simple>
-      </recipientList>
-    </route>
+    <package>edu.amherst.acdc.connector.broadcast</package>
   </camelContext>
 </blueprint>
