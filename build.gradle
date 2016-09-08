@@ -25,6 +25,7 @@ allprojects  {
     }
 
     afterReleaseBuild.dependsOn uploadArchives
+    afterReleaseBuild.dependsOn publishGhPages
 }
 
 subprojects {
@@ -147,6 +148,12 @@ subprojects {
         sign configurations.archives
     }
 
+    githubPages {
+        pages {
+            from javadoc
+            into "docs/${version}"
+        }
+    }
 
     uploadArchives {
         repositories.mavenDeployer {
