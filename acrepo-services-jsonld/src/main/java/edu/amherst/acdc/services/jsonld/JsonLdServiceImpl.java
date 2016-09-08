@@ -17,6 +17,7 @@ package edu.amherst.acdc.services.jsonld;
 
 import static com.github.jsonldjava.utils.JsonUtils.fromInputStream;
 import static com.github.jsonldjava.utils.JsonUtils.fromURL;
+import static com.github.jsonldjava.utils.JsonUtils.getDefaultHttpClient;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.io.InputStream;
@@ -66,7 +67,7 @@ public class JsonLdServiceImpl implements JsonLdService {
         LOGGER.info("using context from: {}", contextUrl);
 
         try {
-            return doCompact(input, fromURL(new URL(contextUrl)));
+            return doCompact(input, fromURL(new URL(contextUrl), getDefaultHttpClient()));
         } catch (final MalformedURLException ex) {
             throw new RuntimeException("Invalid URL", ex);
         } catch (final JsonParseException ex) {
