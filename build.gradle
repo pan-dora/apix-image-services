@@ -122,13 +122,13 @@ subprojects {
     }
 
     checkstyle {
-        configFile = rootProject.file('gradle/checkstyle/checkstyle.xml')
-        configProperties.checkstyleConfigDir = rootProject.file('gradle/checkstyle')
+        configFile = rootProject.file('build/checkstyle/checkstyle.xml')
+        configProperties.checkstyleConfigDir = rootProject.file('build/checkstyle/')
     }
 
     license {
         include "**/*.java"
-        header rootProject.file('gradle/license/HEADER.txt')
+        header rootProject.file('build/license/HEADER.txt')
         strictCheck true
         mapping {
             java = 'SLASHSTAR_STYLE'
@@ -223,7 +223,27 @@ subprojects {
             }
         }
     }
-
-    configurations.all {
-    }
 }
+
+configurations {
+    buildToolsConfig
+}
+
+dependencies {
+    buildToolsConfig "edu.amherst.acdc:acrepo-build-tools:0.0.4"
+}
+
+task processBuildTools(type: Copy) {
+    from {
+        configurations.buildToolsConfig.collect {
+            zipTree(it).matching {
+                include 'checkstyle/*.xml'
+                include 'license/*.txt'
+            }
+        }
+    }
+    into 'build'
+}
+
+check.dependsOn processBuildTools
+

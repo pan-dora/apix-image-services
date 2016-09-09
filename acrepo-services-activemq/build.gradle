@@ -11,10 +11,10 @@ dependencies {
 }
 
 jar {
+    dependsOn {
+        file('build/java/main').mkdirs()
+    }
     manifest {
-        /* There is probably a better way to do this */
-        classesDir = file('build/resources/main/OSGI-INF')
-
         description project.description
         docURL project.docURL
         vendor project.vendor
