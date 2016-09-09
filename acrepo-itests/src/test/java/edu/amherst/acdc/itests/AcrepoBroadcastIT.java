@@ -67,11 +67,10 @@ public class AcrepoBroadcastIT extends AbstractOSGiIT {
         final String messageRecipients = "mock:queue1,mock:queue2,mock:queue3";
         final String brokerUrl = "tcp://localhost:" + jmsPort;
 
-
         return new Option[] {
             karafDistributionConfiguration()
                 .frameworkUrl(maven().groupId("org.apache.karaf").artifactId("apache-karaf")
-                        .versionAsInProject().type("zip"))
+                        .version(cm.getProperty("karaf.version")).type("zip"))
                 .unpackDirectory(new File("target", "exam"))
                 .useDeployFolder(false),
             logLevel(LogLevel.WARN),

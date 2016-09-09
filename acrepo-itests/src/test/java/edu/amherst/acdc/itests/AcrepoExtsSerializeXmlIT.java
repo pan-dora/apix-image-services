@@ -71,13 +71,13 @@ public class AcrepoExtsSerializeXmlIT extends AbstractOSGiIT {
         final String metadataServicePort = cm.getProperty("karaf.metadata.port");
         final String rmiRegistryPort = cm.getProperty("karaf.rmiRegistry.port");
         final String rmiServerPort = cm.getProperty("karaf.rmiServer.port");
-        final String fcrepoBaseUrl = "localhost:" + fcrepoPort + "/fcrepo/rest";
+        final String fcrepoBaseUrl = "http://localhost:" + fcrepoPort + "/fcrepo/rest";
         final String sshPort = cm.getProperty("karaf.ssh.port");
 
         return new Option[] {
             karafDistributionConfiguration()
                 .frameworkUrl(maven().groupId("org.apache.karaf").artifactId("apache-karaf")
-                        .versionAsInProject().type("zip"))
+                        .version(cm.getProperty("karaf.version")).type("zip"))
                 .unpackDirectory(new File("target", "exam"))
                 .useDeployFolder(false),
             logLevel(LogLevel.WARN),

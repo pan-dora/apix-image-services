@@ -1,0 +1,178 @@
+buildscript {
+    repositories {
+      jcenter()
+    }
+
+    dependencies {
+        classpath 'org.akhikhl.gretty:gretty:1.4.0'
+    }
+}
+
+apply plugin: 'org.akhikhl.gretty'
+
+description = """OSGi Integration tests for repository services"""
+
+def randomPort() {
+    try {
+        ServerSocket server = new ServerSocket()
+        server.setReuseAddress(true)
+        server.bind(new InetSocketAddress(0))
+        int port = server.getLocalPort()
+        server.close()
+        return port
+    } catch (IOException e) {
+        throw new IOException('Failed to find random free port', e)
+    }
+}
+
+repositories {
+  jcenter()
+  mavenLocal()
+  mavenCentral()
+}
+
+configurations {
+    karafDistro {
+        description = 'Configuration used to isolate the dependency on the Karaf distro'
+        transitive = false
+    }
+}
+
+ext {
+    fcrepoWebPort = randomPort()
+    fcrepoJmsPort = randomPort()
+    fcrepoStompPort = randomPort()
+}
+
+dependencies {
+    testCompile project(':acrepo-connector-broadcast')
+    testCompile project(':acrepo-connector-idiomatic')
+    testCompile project(':acrepo-connector-idiomatic-pgsql')
+    testCompile project(':acrepo-services-activemq')
+    testCompile project(':acrepo-services-inference')
+    testCompile project(':acrepo-services-jsonld')
+    testCompile project(':acrepo-services-ldcache-file')
+    testCompile project(':acrepo-services-ldcache')
+    testCompile project(':acrepo-services-mint')
+    testCompile project(':acrepo-services-pcdm')
+    testCompile project(':acrepo-exts-jsonld')
+    testCompile project(':acrepo-exts-fits')
+    testCompile project(':acrepo-exts-image')
+    testCompile project(':acrepo-exts-pcdm')
+    testCompile project(':acrepo-exts-serialize-xml')
+    testCompile project(':acrepo-exts-template')
+    testCompile project(':acrepo-karaf')
+
+    testCompile group: 'org.osgi', name: 'org.osgi.core', version: osgiVersion
+    testCompile group: 'org.osgi', name: 'org.osgi.compendium', version: osgiVersion
+    testCompile group: 'org.apache.jena', name: 'jena-osgi', version: jenaVersion
+    testCompile group: 'org.glassfish.hk2.external', name: 'javax.inject', version: hk2Version
+    testCompile group: 'org.apache.httpcomponents', name: 'httpclient-osgi', version: httpclientVersion
+    testCompile group: 'org.apache.httpcomponents', name: 'httpcore-osgi', version: httpcoreVersion
+    testCompile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: jacksonVersion
+    testCompile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
+    testCompile group: 'org.ops4j.pax.exam', name: 'pax-exam', version: paxExamVersion
+    testCompile group: 'org.ops4j.pax.exam', name: 'pax-exam-junit4', version: paxExamVersion
+    testCompile group: 'org.ops4j.pax.exam', name: 'pax-exam-container-karaf', version: paxExamVersion
+    testCompile group: 'org.apache.karaf.features', name: 'org.apache.karaf.features.core', version: karafVersion
+    testCompile(group: 'org.fcrepo.camel', name: 'fcrepo-camel', version: fcrepoCamelVersion) {
+        exclude(module: 'slf4j-log4j12')
+    }
+
+    testCompile group: 'org.apache.camel.karaf', name: 'apache-camel', version: camelVersion, classifier:'features', ext: 'xml'
+    testCompile group: 'org.apache.activemq', name: 'activemq-karaf', version: activemqVersion, classifier:'features', ext: 'xml'
+    testCompile group: 'org.apache.karaf.features', name: 'standard', version: karafVersion, classifier:'features', ext: 'xml'
+
+    karafDistro group: 'org.apache.karaf', name: 'apache-karaf', version: karafVersion, ext: 'zip'
+}
+
+
+task generateDependsFile {
+    // This is useful for the org.ops4j.pax.exam.CoreOptions.maven() stuff
+    File outputFileDir = project.file( 'build/classes/test/META-INF/maven/' )
+    File outputFile = new File( outputFileDir, 'dependencies.properties' )
+    outputs.file outputFile
+
+    doFirst {
+        outputFileDir.mkdirs()
+        Properties properties = new Properties();
+
+        // first we add our GAV info
+        properties.setProperty( "groupId", "${project.group}" );
+        properties.setProperty( "artifactId", project.name );
+        properties.setProperty( "version", "${project.version}" );
+        properties.setProperty( "${project.group}/${project.name}/version", "${project.version}" );
+
+        // then for all our deps
+        project.configurations.testRuntime.resolvedConfiguration.resolvedArtifacts.each {
+            final String keyBase = it.moduleVersion.id.group + '/' + it.moduleVersion.id.name;
+            properties.setProperty( "${keyBase}/scope", "compile" )
+            properties.setProperty( "${keyBase}/type", it.extension )
+            properties.setProperty( "${keyBase}/version", it.moduleVersion.id.version )
+        }
+
+        FileOutputStream outputStream = new FileOutputStream( outputFile );
+        try {
+            properties.store( outputStream, "Generated from Gradle for PaxExam testing" )
+        }
+        finally {
+            outputStream.close()
+        }
+    }
+}
+
+task copyTestResources(type: Copy) {
+    from "${projectDir}/src/test/resources"
+    into "${buildDir}/classes/test"
+}
+
+task integrationTest(type: Test) {
+    systemProperty 'fcrepo.dynamic.test.port', fcrepoWebPort
+    systemProperty 'fcrepo.dynamic.jms.port', fcrepoJmsPort
+    systemProperty 'fcrepo.dynamic.stomp.port', fcrepoStompPort
+}
+
+test {
+    systemProperty 'karaf.version', karafVersion
+
+    systemProperty 'karaf.ssh.port', randomPort()
+    systemProperty 'karaf.rmiServer.port', randomPort()
+    systemProperty 'karaf.rmiRegistry.port', randomPort()
+    systemProperty 'karaf.template.port', randomPort()
+    systemProperty 'karaf.metadata.port', randomPort()
+    systemProperty 'karaf.pcdm.port', randomPort()
+    systemProperty 'karaf.jsonld.port', randomPort()
+    systemProperty 'karaf.image.port', randomPort()
+    systemProperty 'karaf.idiomatic.port', randomPort()
+    systemProperty 'karaf.fits.port', randomPort()
+
+    systemProperty 'fcrepo.dynamic.test.port', fcrepoWebPort
+    systemProperty 'fcrepo.dynamic.jms.port', fcrepoJmsPort
+    systemProperty 'fcrepo.dynamic.stomp.port', fcrepoStompPort
+}
+
+farm {
+    port = fcrepoWebPort
+    integrationTestTask = 'integrationTest'
+    systemProperty 'fcrepo.home', 'build/tmp/fcrepo-data'
+    systemProperty 'fcrepo.modeshape.configuration', 'classpath:/config/minimal-default/repository.json'
+    systemProperty 'fcrepo.dynamic.test.port', fcrepoWebPort
+    systemProperty 'fcrepo.dynamic.jms.port', fcrepoJmsPort
+    systemProperty 'fcrepo.dynamic.stomp.port', fcrepoStompPort
+    systemProperty 'FUSEKI_BASE', 'build/fuseki_home'
+    webapp "org.fcrepo:fcrepo-webapp:${fcrepoVersion}@war", contextPath: '/fcrepo'
+    webapp "org.apache.jena:jena-fuseki-war:${fusekiVersion}@war", contextPath: '/fuseki'
+}
+
+processTestResources.dependsOn copyTestResources
+tasks.test.dependsOn tasks.generateDependsFile
+
+project.afterEvaluate {
+    tasks.test.dependsOn tasks.farmIntegrationTest
+    tasks.test.mustRunAfter farmBeforeIntegrationTest
+    tasks.farmAfterIntegrationTest.mustRunAfter tasks.test
+}
+
+rootProject.childProjects.findAll { n, p -> p != project }.each { n, p ->
+    tasks.test.dependsOn p.tasks.publishToMavenLocal
+}

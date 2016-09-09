@@ -56,9 +56,13 @@ sets of related bundles in an OSGi container.
 Building
 --------
 
-To build this project use
+To build, test and install this project use either
 
-    ./gradlew build
+    gradle check install
+
+or (in the top level directory):
+
+    ./gradlew check install
 
 Deploying in OSGi
 -----------------

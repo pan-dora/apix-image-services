@@ -19,7 +19,7 @@ Building
 
 To build this project use
 
-    mvn install
+    gradle install
 
 Deploying in OSGi
 -----------------

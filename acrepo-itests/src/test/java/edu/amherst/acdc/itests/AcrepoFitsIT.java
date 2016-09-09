@@ -66,7 +66,7 @@ public class AcrepoFitsIT extends AbstractOSGiIT {
         return new Option[] {
             karafDistributionConfiguration()
                 .frameworkUrl(maven().groupId("org.apache.karaf").artifactId("apache-karaf")
-                        .versionAsInProject().type("zip"))
+                        .version(cm.getProperty("karaf.version")).type("zip"))
                 .unpackDirectory(new File("target", "exam"))
                 .useDeployFolder(false),
             logLevel(LogLevel.WARN),

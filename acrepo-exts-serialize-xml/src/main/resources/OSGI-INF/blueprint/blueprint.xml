@@ -14,7 +14,7 @@
        <cm:property name="rest.host" value="localhost"/>
        <cm:property name="mods.xslt" value="edu/amherst/acdc/exts/serialize/xml/rdf2mods.xsl"/>
        <cm:property name="dc.xslt" value="edu/amherst/acdc/exts/serialize/xml/rdf2dc.xsl"/>
-       <cm:property name="fcrepo.baseUrl" value="localhost:8080/fcrepo/rest"/>
+       <cm:property name="fcrepo.baseUrl" value="http://localhost:8080/fcrepo/rest"/>
      </cm:default-properties>
    </cm:property-placeholder>
 
