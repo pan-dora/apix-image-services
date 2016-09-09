@@ -10,10 +10,12 @@ dependencies {
     testCompile group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
 }
 
+task buildMainClasses {
+    file('build/classes/main').mkdirs()
+}
+
 jar {
-    dependsOn {
-        file('build/java/main').mkdirs()
-    }
+    dependsOn buildMainClasses
     manifest {
         description project.description
         docURL project.docURL
