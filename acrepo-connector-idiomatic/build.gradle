@@ -38,3 +38,6 @@ artifacts {
     }
 }
 
+test {
+    systemProperty 'derby.stream.error.file', 'build/tmp/derby.log'
+}

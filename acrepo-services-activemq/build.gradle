@@ -10,11 +10,13 @@ dependencies {
     testCompile group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
 }
 
-jar {
-    manifest {
-        /* There is probably a better way to do this */
-        classesDir = file('build/resources/main/OSGI-INF')
+task buildMainClasses {
+    file('build/classes/main').mkdirs()
+}
 
+jar {
+    dependsOn buildMainClasses
+    manifest {
         description project.description
         docURL project.docURL
         vendor project.vendor
