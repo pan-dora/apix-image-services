@@ -174,5 +174,6 @@ project.afterEvaluate {
 }
 
 rootProject.childProjects.findAll { n, p -> p != project }.each { n, p ->
-    tasks.test.dependsOn p.tasks.publishToMavenLocal
+    tasks.test.dependsOn p.tasks.install
 }
+

@@ -62,9 +62,9 @@ public class AcrepoActiveMQIT extends AbstractOSGiIT {
             karafDistributionConfiguration()
                 .frameworkUrl(maven().groupId("org.apache.karaf").artifactId("apache-karaf")
                         .version(cm.getProperty("karaf.version")).type("zip"))
-                .unpackDirectory(new File("target", "exam"))
+                .unpackDirectory(new File("build", "exam"))
                 .useDeployFolder(false),
-            logLevel(LogLevel.WARN),
+            logLevel(LogLevel.INFO),
             keepRuntimeFolder(),
             configureConsole().ignoreLocalConsole(),
 
