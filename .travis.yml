@@ -4,5 +4,5 @@ jdk:
   - oraclejdk8
 before_install:
  - "echo $JAVA_OPTS"
- - "export JAVA_OPTS=-Xmx512m"
+ - "export JAVA_OPTS=-Xmx1024m"
 
