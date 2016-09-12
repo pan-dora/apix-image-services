@@ -70,10 +70,10 @@ public class AcrepoJsonLDIT extends AbstractOSGiIT {
         return new Option[] {
             karafDistributionConfiguration()
                 .frameworkUrl(maven().groupId("org.apache.karaf").artifactId("apache-karaf")
-                        .versionAsInProject().type("zip"))
-                .unpackDirectory(new File("target", "exam"))
+                        .version(cm.getProperty("karaf.version")).type("zip"))
+                .unpackDirectory(new File("build", "exam"))
                 .useDeployFolder(false),
-            logLevel(LogLevel.WARN),
+            logLevel(LogLevel.INFO),
             keepRuntimeFolder(),
             configureConsole().ignoreLocalConsole(),
             features(maven().groupId("org.apache.karaf.features").artifactId("standard")
@@ -128,7 +128,6 @@ public class AcrepoJsonLDIT extends AbstractOSGiIT {
                 assertNotNull(obj.get("hasParent"));
                 assertNotNull(obj.get("lastModified"));
                 assertNotNull(obj.get("lastModifiedBy"));
-                assertNotNull(obj.get("numberOfChildren"));
                 assertNotNull(obj.get("writable"));
             } catch (final Exception ex) {
                 throw new RuntimeException(ex);

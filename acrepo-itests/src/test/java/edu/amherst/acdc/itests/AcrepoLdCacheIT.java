@@ -58,7 +58,7 @@ public class AcrepoLdCacheIT extends AbstractOSGiIT {
     private static final String OFFICIAL_NAME = "http://www.geonames.org/ontology#officialName";
 
     private static final Logger LOGGER = getLogger(AcrepoLdCacheIT.class);
-    private static final LDCacheService svc = new LDCacheServiceImpl(createBackend("target/ldcache"), 100000);
+    private static final LDCacheService svc = new LDCacheServiceImpl(createBackend("build/ldcache"), 100000);
 
     @Configuration
     public Option[] config() {
@@ -72,10 +72,10 @@ public class AcrepoLdCacheIT extends AbstractOSGiIT {
         return new Option[] {
             karafDistributionConfiguration()
                 .frameworkUrl(maven().groupId("org.apache.karaf").artifactId("apache-karaf")
-                        .versionAsInProject().type("zip"))
-                .unpackDirectory(new File("target", "exam"))
+                        .version(cm.getProperty("karaf.version")).type("zip"))
+                .unpackDirectory(new File("build", "exam"))
                 .useDeployFolder(false),
-            logLevel(LogLevel.WARN),
+            logLevel(LogLevel.INFO),
             keepRuntimeFolder(),
             configureConsole().ignoreLocalConsole(),
             features(maven().groupId("org.apache.karaf.features").artifactId("standard")

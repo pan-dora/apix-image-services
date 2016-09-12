@@ -16,6 +16,7 @@ include ':acrepo-services-ldcache'
 include ':acrepo-services-ldcache-file'
 include ':acrepo-services-mint'
 include ':acrepo-services-pcdm'
+include ':acrepo-itests'
 
 project(':acrepo-connector-broadcast').projectDir = "$rootDir/acrepo-connector-broadcast" as File
 project(':acrepo-connector-idiomatic').projectDir = "$rootDir/acrepo-connector-idiomatic" as File
@@ -34,3 +35,4 @@ project(':acrepo-services-ldcache').projectDir = "$rootDir/acrepo-services-ldcac
 project(':acrepo-services-ldcache-file').projectDir = "$rootDir/acrepo-services-ldcache-file" as File
 project(':acrepo-services-mint').projectDir = "$rootDir/acrepo-services-mint" as File
 project(':acrepo-services-pcdm').projectDir = "$rootDir/acrepo-services-pcdm" as File
+project(':acrepo-itests').projectDir = "$rootDir/acrepo-itests" as File

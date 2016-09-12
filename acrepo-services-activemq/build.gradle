@@ -11,7 +11,11 @@ dependencies {
 }
 
 task buildMainClasses {
-    file('build/classes/main').mkdirs()
+    ext.destDir = file('build/classes/main')
+    outputs.dir destDir
+    doLast {
+        destDir.mkdirs()
+    }
 }
 
 jar {

@@ -45,25 +45,27 @@ subprojects {
         license = 'Apache 2'
 
         /* Dependencies */
-        camelVersion = '2.17.3'
         activemqVersion = '5.14.0'
-        commonsLangVersion = '3.4'
+        camelVersion = '2.17.3'
         commonsIoVersion = '2.5'
+        commonsLangVersion = '3.4'
         derbyVersion = '10.12.1.1'
         fcrepoCamelVersion = '4.4.3'
         hk2Version = '2.4.0'
+        httpclientVersion = '4.5.2'
+        httpcoreVersion = '4.4.5'
+        jacksonVersion = '2.7.5'
+        jenaVersion = '3.1.0'
         junitVersion = '4.12'
         jsonldVersion = '0.8.3'
         logbackVersion = '1.1.7'
+        marmottaVersion = '3.3.0'
         postgresqlVersion = '9.4.1208'
         saxonVersion = '9.6.0-7'
         slf4jVersion = '1.7.21'
         springVersion = '4.1.7.RELEASE'
         woodstoxVersion = '4.4.1'
         xercesVersion = '2.11.0'
-        jenaVersion = '3.1.0'
-        jacksonVersion = '2.7.5'
-        marmottaVersion = '3.3.0'
 
         /* Transitive deps */
         cal10nVersion = '0.8.1'
@@ -77,10 +79,8 @@ subprojects {
         dexxVersion = '0.6'
         fluentHcVersion = '4.5.2'
         httpclientCacheVersion = '4.3.5'
-        httpclientVersion = '4.5.2'
         httpmimeVersion = '4.5.2'
         httpcoreNioVersion = '4.4.4'
-        httpcoreVersion = '4.4.5'
         jaxenVersion = '1.1.6'
         jdom2Version = '2.0.5'
         jodaTimeVersion = '2.5'
@@ -89,6 +89,13 @@ subprojects {
         sesameVersion = '2.7.13'
         thriftVersion = '0.9.2'
         wrappedBundleLocation = 'http://www.ats.amherst.edu/bundles'
+
+        /* Testing */
+        paxExamVersion = '4.9.1'
+        karafVersion = '4.0.5'
+        fcrepoVersion = '4.6.0'
+        fusekiVersion = '2.3.1'
+        osgiVersion = '4.3.1'
 
         /* OSGi */
         defaultOsgiImports = 'org.osgi.service.blueprint;version="[1,2)",*'
