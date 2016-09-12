@@ -155,6 +155,7 @@ subprojects {
     }
 
     githubPages {
+        repoUri = 'git@gitlab.amherst.edu:acdc/repository-extension-services.git'
         pages {
             from javadoc
             into "docs/${version}"
