@@ -6,6 +6,3 @@ before_install:
  - "echo $JAVA_OPTS"
  - "export JAVA_OPTS=-Xmx1024m"
 
-script:
- - ./gradlew check --info
-
