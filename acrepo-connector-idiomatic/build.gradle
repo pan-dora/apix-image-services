@@ -26,7 +26,7 @@ jar {
         docURL project.docURL
         vendor project.vendor
         license project.license
-        instruction 'Import-Package', "org.apache.camel,javax.sql,${defaultOsgiImports}"
+        instruction 'Import-Package', "org.apache.camel,org.apache.camel.component.sql,javax.sql,${defaultOsgiImports}"
         instruction 'Export-Package', "edu.amherst.acdc.connector.idiomatic;version=${projectOsgiVersion}"
     }
 }
