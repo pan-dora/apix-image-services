@@ -1,4 +1,4 @@
-Amherst College ID Mapping Service (PostgreSQL)
+Amherst College ID Mapping Service (MySQL)
 ===============================================
 
 This service implements a database backend for the ID Mapping Service
@@ -18,7 +18,7 @@ This project can be deployed in an OSGi container. For example using
 command from its shell:
 
     feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
-    feature:install acrepo-connector-idiomatic-pgsql
+    feature:install acrepo-connector-idiomatic-mysql
 
 Configuration
 -------------
@@ -37,7 +37,7 @@ The hostname for the database server
 
 The port for the database server
 
-    portNumber=5432
+    portNumber=3306
 
 The username for connecting to the database
 

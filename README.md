@@ -40,6 +40,7 @@ These modules listen to repository events and react accordingly.
 
 * [`acrepo-connector-broadcast`](acrepo-connector-broadcast): ActiveMQ Message Broadcast Service:  This rebroadcasts messages from one queue/topic to every queue/topic in a specified list
 * [`acrepo-connector-idiomatic`](acrepo-connector-idiomatic): Id Mapping Service: This maps a public ID to a (internal and typically much longer) Fedora URI
+* [`acrepo-connector-idiomatic-mysql`](acrepo-connector-idiomatic-mysql): Id Mapping Service Database: This exposes a MySQL datastore for use with the Id Mapping service
 * [`acrepo-connector-idiomatic-pgsql`](acrepo-connector-idiomatic-pgsql): Id Mapping Service Database: This exposes a Postgres datastore for use with the Id Mapping service
 
 Other OSGi Features
@@ -76,6 +77,7 @@ command from its shell:
 
     feature:install acrepo-connector-broadcast
     feature:install acrepo-connector-idiomatic
+    feature:install acrepo-connector-idiomatic-mysql
     feature:install acrepo-connector-idiomatic-pgsql
 
     feature:install acrepo-exts-fits

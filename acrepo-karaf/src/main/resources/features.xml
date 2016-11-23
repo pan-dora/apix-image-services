@@ -24,8 +24,21 @@
     <configfile finalname="/etc/edu.amherst.acdc.connector.idiomatic.cfg">mvn:edu.amherst.acdc/acrepo-connector-idiomatic/${project.version}/cfg/configuration</configfile>
   </feature>
 
+  <feature name="acrepo-connector-idiomatic-mysql" version="${project.version}">
+    <details>Installs the id mapping service database (MySQL)</details>
+
+    <feature>jdbc</feature>
+    <feature>jndi</feature>
+    <feature>transaction</feature>
+    <feature>pax-jdbc-config</feature>
+    <feature>pax-jdbc-mysql</feature>
+    <feature>pax-jdbc-pool-dbcp2</feature>
+
+    <configfile finalname="/etc/org.ops4j.datasource-idiomatic.cfg">mvn:edu.amherst.acdc/acrepo-connector-idiomatic-mysql/${project.version}/cfg/configuration</configfile>
+  </feature>
+
   <feature name="acrepo-connector-idiomatic-pgsql" version="${project.version}">
-    <details>Installs the id mapping service database</details>
+    <details>Installs the id mapping service database (PostgreSQL)</details>
 
     <feature>jdbc</feature>
     <feature>jndi</feature>

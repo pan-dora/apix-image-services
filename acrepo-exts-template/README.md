@@ -26,7 +26,7 @@ This project can be deployed in an OSGi container. For example using
 [Apache Karaf](http://karaf.apache.org) version 4.x and above, you can run the following
 command from its shell:
 
-    feature:repo-add mvn:edu.amherst.acdc/repository-services/LATEST/xml/features
+    feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
     feature:install acrepo-exts-template
 
 Configuration
