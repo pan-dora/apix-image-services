@@ -242,7 +242,7 @@ configurations {
 }
 
 dependencies {
-    buildToolsConfig "edu.amherst.acdc:acrepo-build-tools:0.0.4"
+    buildToolsConfig "edu.amherst.acdc:acrepo-build-tools:0.1.0"
 }
 
 task processBuildTools(type: Copy) {
