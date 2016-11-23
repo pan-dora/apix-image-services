@@ -2,6 +2,7 @@ Amherst College Repository Services
 ===================================
 
 [![Build Status](https://travis-ci.org/acoburn/repository-extension-services.png?branch=master)](https://travis-ci.org/acoburn/repository-extension-services)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/edu.amherst.acdc/acrepo-karaf/badge.svg)](https://maven-badges.herokuapp.com/maven-central/edu.amherst.acdc/acrepo-karaf/)
 
 This is a collection of OSGi services that extend the functionality of a [Fedora4](https://wiki.duraspace.org/display/FF/Fedora+Repository+Home) repository.
 
