@@ -2,6 +2,7 @@
 description = 'Karaf Provisioning Features for repository services'
 
 processResources {
+    outputs.upToDateWhen { false }
     expand project.properties
 }
 
