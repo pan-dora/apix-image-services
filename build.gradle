@@ -1,7 +1,6 @@
 plugins {
     id 'com.github.hierynomus.license' version '0.13.1'
     id 'net.researchgate.release' version '2.4.0'
-    id 'org.ajoberstar.github-pages' version '1.5.1'
 }
 
 allprojects  {
@@ -113,6 +112,7 @@ subprojects {
         from sourceSets.main.allSource
     }
 
+
     task javadocJar(type: Jar) {
         classifier 'javadoc'
         from javadoc
@@ -152,14 +152,6 @@ subprojects {
     signing {
         required { !version.endsWith("SNAPSHOT") && gradle.taskGraph.hasTask("uploadArchives") }
         sign configurations.archives
-    }
-
-    githubPages {
-        repoUri = 'git@gitlab.amherst.edu:acdc/repository-extension-services.git'
-        pages {
-            from javadoc
-            into "docs/${version}/${project.name}"
-        }
     }
 
     uploadArchives {
@@ -233,13 +225,13 @@ subprojects {
 
     if (project.name != 'acrepo-itests') {
         afterReleaseBuild.dependsOn uploadArchives
-        afterReleaseBuild.dependsOn publishGhPages
     }
 }
 
 configurations {
     buildToolsConfig
 }
+
 
 dependencies {
     buildToolsConfig "edu.amherst.acdc:acrepo-build-tools:0.1.0"
@@ -257,5 +249,12 @@ task processBuildTools(type: Copy) {
     into 'build'
 }
 
+task docs(type: Javadoc) {
+    source subprojects.collect {project -> project.sourceSets.main.allJava }
+    classpath = files(subprojects.collect {project -> project.sourceSets.main.compileClasspath})
+    destinationDir = new File(projectDir, "docs/${version}")
+}
+
 check.dependsOn processBuildTools
+afterReleaseBuild.dependsOn docs
 
