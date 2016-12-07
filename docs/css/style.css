@@ -1,0 +1,223 @@
+/* ===
+Basic styles for Amherst College's internal and business apps. 
+Ask us for SASS sheet and style guide. 
+=== */
+
+/* LINKS - basic, if you can't customize much */
+
+a {
+	color: #7800a0; /* $purple-bright, used only for links */
+}
+a:hover {
+	color: #614486;  /* $purple-medium */
+}
+
+/* LINKS - more elegant */
+
+a {
+	color: #7800a0; /* $purple-bright, used only for links */
+	text-decoration: none;
+	padding-bottom: .125em;
+	border-bottom: 1px solid #DFBFFF; 
+}
+a:hover {
+	color: #4D2F71; /* $purple */
+	border-bottom: 1px solid #4D2F71; 
+}
+
+/* COLORS */
+
+/* Main Purple $purple */
+.purple {
+	background: #4D2F71;
+}
+/* Medium Purple $purple-medium */
+.purple-medium {
+	background: #614486;
+}
+/* Dark Purple $purple-dark */
+.purple-dark {
+	background: #34204D;
+}
+/* Light Purple $purple-light */
+.purple-light {
+	background: #80699E;
+}
+/* Mint $mint */
+.mint {
+	background: #2db995;
+}
+/* Teal $teal */
+.teal {
+	background: #1C9375;
+}
+/* Red $red */
+.red {
+	background: #BA3A1D;
+}
+/* Bright Red $red-bright */
+.red-bright {
+	background: #D74C4C;
+}
+
+/* PAGE */
+
+body {
+	margin: 0;
+	padding: 0;
+	font-size: 1rem;
+	font-family: Lato, Helvetica, Arial, sans-serif;
+	line-height: 150%;
+	color: #555;
+	box-sizing: border-box;
+}
+header, footer {
+	background-color: #4D2F71; /* $purple */; 
+	color: white;
+	font-size: .9em;
+}
+header {
+	background: #4D2F71 no-repeat 40px 40px url(../img/AmherstCollege-750x80.png);
+	background-size: 375px;
+	min-height: 120px;
+	position: relative;
+}
+header div {
+	position: absolute;
+	left: 40px;
+	bottom: 20px;
+}
+header div a {
+	color: white;
+	text-decoration: none;
+	margin-right: 1em;
+}
+header div a:hover {
+	color: white;
+	text-decoration: underline;
+}
+footer {
+	padding: 2em;
+	text-align: center;
+	min-height: 2em;
+}
+footer a, header a {
+	color: white;
+	text-decoration: none;
+	border: 0;
+}
+footer a:hover, header a:hover {
+	text-decoration: underline;
+	border: 0;
+}
+main {
+	padding: 2em 4em;
+	max-width: 1140px;
+	margin: 0 auto;
+	background: white;
+}
+@media screen and (max-width: 800px) {
+	footer, main {
+	padding: 1em;
+	}
+	header {
+		background-size: 90%;
+		background-position: 18px 20px;
+		min-height: 80px;
+	}
+	header div {
+		display: none;
+	}
+}
+
+/* TYPOGRAPHY */
+
+h1, h2, h3, h4, h5, h6 {
+	color: #34204D; /* $purple-dark */
+	line-height: 130%;
+}
+h1 {
+  	font-size: 2.6rem;
+  	letter-spacing: -.02em;
+	font-weight: 400;
+	margin-top: 0;
+}
+h2 {
+  	font-size: 2rem;
+  	letter-spacing: -.02em;
+}
+h3 {
+  	font-size: 1.6rem;
+	font-weight: 400;
+	letter-spacing: -.02em;
+}
+h4 {
+  	font-size: 1rem;
+	text-transform: uppercase;
+	letter-spacing: .03em;
+}
+h5 {
+  	font-size: 1.1rem;
+}
+p, ul, ol {
+	line-height: 160%;
+}
+
+/* BUTTONS */
+
+button {
+	font-size: 1.1em;
+	padding: .5em 1em;
+	border: 0;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+/* Green button */
+button.primary {
+	background: #2db995; /* $mint */
+	color: white;
+}
+button.primary:hover {
+	background: #1C9375; /* $teal */
+}
+
+/* Purple button */
+button.secondary {
+	background: #614486; /* $purple-medium */
+	color: white;
+}
+button.secondary:hover {
+	background: #34204D; /* $purple-dark */
+}
+
+/* Red button */
+button.warning-button {
+	background: #D74C4C; /* $red-bright */
+	color: white;
+}
+button.warning-button:hover {
+	background: #8E3124; /* $red */
+}
+
+/* OTHER */
+
+hr {
+	border: 1px solid #ccc;
+	border-bottom-width: 0;
+	clear: both;
+}
+.swatch {
+	color: white;
+	float: left;
+	padding: 1em;
+	width: 150px;
+	height: 150px;
+	margin: .5em 1em 2em 0;
+}
+.warning-message {
+	background: #D74C4C; /* $red-bright */
+	color: white;
+	padding: 1em 2em;
+	margin: 2em 0 2.5em;
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <title>Amherst College Repository Extension Services</title>
+</head>
+<body>
+  <header id="banner"></header>
+  <main>
+    <h1>Repository Extension Services</h1>
+		<p>This is a collection of OSGi services that extend the functionality of a Fedora repository.</p>
+
+    <h2>Javadocs</h2>
+    <p>General documentation can be found on in the git repository README files. Javadocs can be found here:</p>
+    <ul>
+      <li>1.0.x series:
+        <a href="1.0.1/">1.0.1</a> /
+        <a href="1.0.2/">1.0.2</a> /
+        <a href="1.0.3/">1.0.3</a> /
+        <a href="1.0.4/">1.0.4</a> /
+        <a href="1.0.5/">1.0.5</a> /
+        <a href="1.0.6/">1.0.6</a> /
+        <a href="1.0.7/">1.0.7</a>
+      </li>
+    </ul>
+		<h2>Extensions</h2>
+		<p>These modules extend the behavior of Fedora resources. Specifically, they connect Fedora Resources to specific services by making available a REST-based HTTP interface. The intention is that these extensions will be compatible with the Fedora API Extension architecture.</p>
+
+    <ul>
+      <li>acrepo-exts-fits: This service will return FITS information associated with a Fedora Binary, in XML format</li>
+      <li>acrepo-exts-image: An image manipulation service</li>
+      <li>acrepo-exts-jsonld: This module exposes an HTTP endpoint for creating compact JSON-LD documents from a Fedora repository using a pluggable context document</li>
+      <li>acrepo-exts-pcdm: This constructs a complete PCDM object graph for Fedora resources</li>
+      <li>acrepo-exts-serialize-xml: This service translates Fedora RDF documents into MODS/XML or DC/XML</li>
+      <li>acrepo-exts-template: A module for converting Fedora resources into some other form, using a mustache template.</li>
+    </ul>
+
+    <h2>Services</h2>
+    <p>These modules provide particular services, independent of Fedora Resources.</p>
+    <ul>
+      <li>acrepo-services-activemq: This service creates a ActiveMQ connection for other modules to use</li>
+      <li>acrepo-services-inference: An OSGi-based structural typing service using owl inference</li>
+      <li>acrepo-services-jsonld: This service creates expanded or compact JSON-LD representations of input documents</li>
+      <li>acrepo-services-ldcache: This service dereferences and caches URIs, retrieving the object of particular triples on demand</li>
+      <li>acrepo-services-ldcache-file: A file-based backend for the acrepo-services-ldcache service</li>
+      <li>acrepo-services-mint: This mints random (public) URIs for use with Fedora resources</li>
+      <li>acrepo-services-pcdm: This makes it easy to work with PCDM objects</li>
+    </ul>
+
+    <h2>Connectors</h2>
+    <p>These modules listen to repository events and react accordingly.</p>
+    <ul>
+      <li>acrepo-connector-broadcast: ActiveMQ Message Broadcast Service: This rebroadcasts messages from one queue/topic to every queue/topic in a specified list</li>
+      <li>acrepo-connector-idiomatic: Id Mapping Service: This maps a public ID to a (internal and typically much longer) Fedora URI</li>
+      <li>acrepo-connector-idiomatic-mysql: Id Mapping Service Database: This exposes a MySQL datastore for use with the Id Mapping service</li>
+      <li>acrepo-connector-idiomatic-pgsql: Id Mapping Service Database: This exposes a Postgres datastore for use with the Id Mapping service</li>
+    </ul>
+
+
+</main>
+<footer><a href="amherst.edu">Amherst College</a> • 220 South Pleasant Street, Amherst, MA 01002 • (413) 542-2000 • <a href="amherst.edu">Amherst.edu</a></footer>
+
+</body>
+</html>
+
