@@ -13,6 +13,7 @@ dependencies {
     compile group: 'org.codehaus.woodstox', name: 'woodstox-core-asl', version: woodstoxVersion
 
     testCompile project(':acrepo-services-mint')
+    testCompile group: 'xerces', name: 'xercesImpl', version: xercesVersion
     testCompile group: 'junit', name: 'junit', version: junitVersion
     testCompile group: 'org.apache.derby', name: 'derby', version: derbyVersion
     testCompile group: 'org.apache.camel', name: 'camel-test-blueprint', version: camelVersion

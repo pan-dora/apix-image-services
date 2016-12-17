@@ -77,6 +77,7 @@ public class RouteTest extends CamelBlueprintTestSupport {
         final Map<String, String> namespaces = new HashMap<>();
         namespaces.put("oai_dc", "http://www.openarchives.org/OAI/2.0/oai_dc/");
         namespaces.put("dc", "http://purl.org/dc/elements/1.1/");
+        namespaces.put("xsi", "http://www.w3.org/2001/XMLSchema-instance");
 
         final XPathExpression hasDescription = new XPathExpression(
             "/oai_dc:dc/dc:description[@xsi:type='http://www.w3.org/2001/XMLSchema#string' and " +

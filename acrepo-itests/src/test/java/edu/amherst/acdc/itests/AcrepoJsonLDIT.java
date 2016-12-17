@@ -64,7 +64,7 @@ public class AcrepoJsonLDIT extends AbstractOSGiIT {
         final String jsonldServicePort = cm.getProperty("karaf.jsonld.port");
         final String rmiRegistryPort = cm.getProperty("karaf.rmiRegistry.port");
         final String rmiServerPort = cm.getProperty("karaf.rmiServer.port");
-        final String fcrepoBaseUrl = "localhost:" + fcrepoPort + "/fcrepo/rest";
+        final String fcrepoBaseUrl = "http://localhost:" + fcrepoPort + "/fcrepo/rest";
         final String sshPort = cm.getProperty("karaf.ssh.port");
 
         return new Option[] {
@@ -78,6 +78,8 @@ public class AcrepoJsonLDIT extends AbstractOSGiIT {
             configureConsole().ignoreLocalConsole(),
             features(maven().groupId("org.apache.karaf.features").artifactId("standard")
                         .versionAsInProject().classifier("features").type("xml"), "scr"),
+            features(maven().groupId("org.apache.camel.karaf").artifactId("apache-camel")
+                        .type("xml").classifier("features").versionAsInProject()),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(),
                     "acrepo-exts-jsonld", "acrepo-services-jsonld"),
@@ -119,7 +121,10 @@ public class AcrepoJsonLDIT extends AbstractOSGiIT {
         rangeClosed(1, 3).mapToObj(x -> post(baseUrl).replace(baseUrl, "")).forEach(id -> {
             final ObjectMapper mapper = new ObjectMapper();
             try {
-                final JsonNode obj = mapper.readTree(get(baseSvcUrl + id));
+                final String resp = get(baseSvcUrl + id);
+                System.out.println(resp);
+                final JsonNode obj = mapper.readTree(resp);
+                //final JsonNode obj = mapper.readTree(get(baseSvcUrl + id));
                 assertNotNull(obj.get("id"));
                 assertEquals(obj.get("id").asText(), baseUrl + id);
                 assertNotNull(obj.get("type"));

@@ -1,0 +1,14 @@
+[
+    {
+        "@id":"http://localhost/foo/bar",
+        "@type":[
+            "http://www.w3.org/ns/ldp#RDFSource",
+            "http://www.w3.org/ns/ldp#Container",
+            "http://fedora.info/definitions/v4/repository#Container"
+        ],
+        "http://purl.org/dc/elements/1.1/identifier":[
+            "http://example.org/object/1",
+            "http://example.org/object/2"
+        ]
+    }
+]

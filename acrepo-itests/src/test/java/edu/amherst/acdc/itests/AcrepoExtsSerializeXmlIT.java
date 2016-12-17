@@ -16,7 +16,6 @@
 package edu.amherst.acdc.itests;
 
 import static javax.xml.parsers.DocumentBuilderFactory.newInstance;
-import static javax.xml.xpath.XPathConstants.NODESET;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -34,14 +33,11 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import javax.xml.namespace.NamespaceContext;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathFactory;
 import org.apache.camel.CamelContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -85,6 +81,8 @@ public class AcrepoExtsSerializeXmlIT extends AbstractOSGiIT {
             configureConsole().ignoreLocalConsole(),
             features(maven().groupId("org.apache.karaf.features").artifactId("standard")
                         .versionAsInProject().classifier("features").type("xml"), "scr"),
+            features(maven().groupId("org.apache.camel.karaf").artifactId("apache-camel")
+                        .type("xml").classifier("features").versionAsInProject()),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(),
                     "acrepo-exts-serialize-xml"),
@@ -124,33 +122,18 @@ public class AcrepoExtsSerializeXmlIT extends AbstractOSGiIT {
 
         final InputStream input = new ByteArrayInputStream(get(baseSvcUrl + id).getBytes("UTF-8"));
         final Document doc = newInstance().newDocumentBuilder().parse(input);
-        final XPath xpath = XPathFactory.newInstance().newXPath();
-        xpath.setNamespaceContext(new NamespaceContext() {
-            public String getNamespaceURI(final String prefix) {
-                if (prefix.equals("oai_dc")) {
-                    return "http://www.openarchives.org/OAI/2.0/oai_dc/";
-                } else if (prefix.equals("dc")) {
-                    return "http://purl.org/dc/elements/1.1/";
-                } else if (prefix.equals("xsi")) {
-                    return "http://www.w3.org/2001/XMLSchema-instance";
-                } else {
-                    return null;
-                }
-            }
-            public Iterator getPrefixes(final String val) {
-                return null;
-            }
-            public String getPrefix(final String uri) {
-                return null;
-            }
-        });
 
-        final NodeList nodes = (NodeList)xpath.evaluate("/oai_dc:dc/dc:type", doc, NODESET);
+        final NodeList root = doc.getChildNodes();
 
-        assertEquals(3, nodes.getLength());
+        assertEquals(1, root.getLength());
+        final NodeList properties = root.item(0).getChildNodes();
+
         final List<String> types = new ArrayList<>();
-        for (int i = 0; i < nodes.getLength(); i++) {
-            types.add(nodes.item(i).getTextContent());
+        for (int i = 0; i < properties.getLength(); i++) {
+            final Node node = properties.item(i);
+            if (node.getNodeName().equals("dc:type")) {
+                types.add(node.getTextContent());
+            }
         }
 
         assertTrue(types.contains("http://id.loc.gov/vocabulary/resourceTypes/txt"));
