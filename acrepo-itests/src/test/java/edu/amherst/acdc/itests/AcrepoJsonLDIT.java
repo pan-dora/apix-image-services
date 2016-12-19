@@ -121,10 +121,7 @@ public class AcrepoJsonLDIT extends AbstractOSGiIT {
         rangeClosed(1, 3).mapToObj(x -> post(baseUrl).replace(baseUrl, "")).forEach(id -> {
             final ObjectMapper mapper = new ObjectMapper();
             try {
-                final String resp = get(baseSvcUrl + id);
-                System.out.println(resp);
-                final JsonNode obj = mapper.readTree(resp);
-                //final JsonNode obj = mapper.readTree(get(baseSvcUrl + id));
+                final JsonNode obj = mapper.readTree(get(baseSvcUrl + id));
                 assertNotNull(obj.get("id"));
                 assertEquals(obj.get("id").asText(), baseUrl + id);
                 assertNotNull(obj.get("type"));
