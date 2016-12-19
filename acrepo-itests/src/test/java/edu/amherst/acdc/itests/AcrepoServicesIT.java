@@ -77,6 +77,8 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
                         .type("xml").classifier("features").versionAsInProject(), "camel-blueprint"),
             features(maven().groupId("org.apache.activemq").artifactId("activemq-karaf")
                         .type("xml").classifier("features").versionAsInProject(), "activemq-camel"),
+            features(maven().groupId("org.apache.camel.karaf").artifactId("apache-camel")
+                        .type("xml").classifier("features").versionAsInProject()),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(),
                     "acrepo-connector-broadcast",

@@ -47,11 +47,7 @@ The camel URI for the incoming message stream.
 
 The RDF property used to identify external IDs
 
-    id.property=dc:identifier
-
-The full namespace for the `id.property` property
-
-    id.namespace=http://purl.org/dc/elements/1.1/
+    id.property=http://purl.org/dc/elements/1.1/identifier
 
 By editing this file, any currently running routes will be immediately redeployed
 with the new values.

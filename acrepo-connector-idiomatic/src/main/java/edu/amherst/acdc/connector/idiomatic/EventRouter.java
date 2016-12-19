@@ -17,15 +17,16 @@ package edu.amherst.acdc.connector.idiomatic;
 
 import static edu.amherst.acdc.connector.idiomatic.IdiomaticHeaders.FEDORA;
 import static edu.amherst.acdc.connector.idiomatic.IdiomaticHeaders.ID;
+import static org.apache.camel.Exchange.HTTP_RESPONSE_CODE;
 import static org.apache.camel.builder.PredicateBuilder.not;
-import static org.fcrepo.camel.JmsHeaders.IDENTIFIER;
+import static org.apache.camel.model.dataformat.JsonLibrary.Jackson;
+import static org.fcrepo.camel.FcrepoHeaders.FCREPO_URI;
 
-import org.apache.camel.Exchange;
+import java.util.List;
+
 import org.apache.camel.LoggingLevel;
-import org.apache.camel.Processor;
-import org.apache.camel.RuntimeCamelException;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.builder.xml.Namespaces;
+import org.fcrepo.camel.processor.EventProcessor;
 
 /**
  * A content router for handling JMS events.
@@ -39,20 +40,6 @@ public class EventRouter extends RouteBuilder {
      */
     public void configure() throws Exception {
 
-        final String idPrefix;
-        final Namespaces ns = new Namespaces("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-
-        try {
-            idPrefix = getContext().resolvePropertyPlaceholders("{{id.prefix}}");
-            final String property = getContext().resolvePropertyPlaceholders("{{id.property}}");
-            final String namespace = getContext().resolvePropertyPlaceholders("{{id.namespace}}");
-            final String prefix = property.substring(0, property.indexOf(":"));
-            ns.add(prefix, namespace);
-
-        } catch (final Exception ex) {
-            throw new RuntimeCamelException("Could not resolve property placeholders", ex);
-        }
-
         /**
          * A generic error handler (specific to this RouteBuilder)
          */
@@ -63,22 +50,18 @@ public class EventRouter extends RouteBuilder {
         /**
          * Process a message via JMS
          */
-        from("{{input.stream}}")
-            .routeId("IdMappingRouter")
-            .to("direct:event");
-
-        from("direct:event")
-            .routeId("IdMappingEventRouter")
-            .log(LoggingLevel.INFO, "IdMapping Event: ${headers[org.fcrepo.jms.identifier]}")
-            .to("fcrepo:{{fcrepo.baseUrl}}?preferOmit=PreferContainment")
-            .split().xtokenize("//{{id.property}}", 'i', ns)
-              .setHeader(ID).xpath("/{{id.property}}/@rdf:resource | /{{id.property}}/text()", String.class, ns)
-              .process(new Processor() {
-                  public void process(final Exchange ex) throws Exception {
-                      ex.getIn().setHeader(ID, ex.getIn().getHeader(ID, String.class).replaceAll("^" + idPrefix, ""));
-                  }})
-              .transform().header(IDENTIFIER)
-              .to("direct:update");
+        from("{{input.stream}}").routeId("IdMappingRouter")
+            .process(new EventProcessor())
+            .log(LoggingLevel.INFO, "IdMapping Event: ${headers[CamelFcrepoUri]}")
+            .to("fcrepo:{{fcrepo.baseUrl}}?preferOmit=PreferContainment&accept=application/ld+json")
+            .unmarshal().json(Jackson, List.class)
+            .split(simple("${body}"))
+            .filter(simple("${body[@id]} == ${header.CamelFcrepoUri}"))
+              .filter(simple("${body[{{id.property}}]} != null"))
+                .split(simple("${body[{{id.property}}]}"))
+                  .setHeader(ID).simple("${body}")
+                  .transform().header(FCREPO_URI)
+                  .to("direct:update");
 
         /**
          * REST routing
@@ -95,11 +78,11 @@ public class EventRouter extends RouteBuilder {
         from("direct:update")
             .routeId("IdMappingUpdateRouter")
             .setHeader(FEDORA).body()
-            .setHeader(Exchange.HTTP_RESPONSE_CODE).constant(400)
+            .setHeader(HTTP_RESPONSE_CODE).constant(400)
             .filter(header(FEDORA))
               .log(LoggingLevel.INFO, "Updating ${headers[" + ID + "]} with ${headers[" + FEDORA + "]}")
               .to("sql:UPDATE uris SET fedora=:#" + FEDORA + " WHERE public=:#" + ID)
-              .setHeader(Exchange.HTTP_RESPONSE_CODE).constant(204)
+              .setHeader(HTTP_RESPONSE_CODE).constant(204)
               .choice()
                 .when(header("CamelSqlUpdateCount").isEqualTo("0"))
                   .to("sql:INSERT INTO uris (fedora, public) VALUES (:#" + FEDORA + ", :#" + ID + ")").end()
@@ -111,14 +94,14 @@ public class EventRouter extends RouteBuilder {
             .to("sql:SELECT fedora FROM uris WHERE public=:#" + ID + "?outputType=SelectOne")
             .removeHeader(ID)
             .filter(not(header("CamelSqlRowCount").isEqualTo(1)))
-                .setHeader(Exchange.HTTP_RESPONSE_CODE).constant(404);
+                .setHeader(HTTP_RESPONSE_CODE).constant(404);
 
         from("direct:delete")
             .routeId("IdMappingDeleteRouter")
             .log(LoggingLevel.INFO, "Deleting ${headers[" + ID + "]}")
             .to("sql:DELETE FROM uris WHERE public=:#" + ID)
             .removeHeader(ID)
-            .setHeader(Exchange.HTTP_RESPONSE_CODE).constant(204);
+            .setHeader(HTTP_RESPONSE_CODE).constant(204);
 
     }
 }

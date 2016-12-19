@@ -15,11 +15,11 @@
  */
 package edu.amherst.acdc.connector.idiomatic;
 
+import static org.fcrepo.camel.FcrepoHeaders.FCREPO_URI;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -37,9 +37,8 @@ import org.apache.camel.component.seda.SedaComponent;
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
 import org.apache.camel.util.KeyValueHolder;
 import org.apache.camel.util.ObjectHelper;
-import org.apache.commons.io.IOUtils;
 import org.apache.derby.jdbc.EmbeddedDataSource;
-import org.fcrepo.camel.JmsHeaders;
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 /**
@@ -78,7 +77,7 @@ public class RouteTest extends CamelBlueprintTestSupport {
          final Properties props = new Properties();
          props.put("input.stream", "seda:foo");
          props.put("rest.port", "9999");
-         props.put("id.prefix", "http://example.org/object/");
+         props.put("id.property", "http://purl.org/dc/elements/1.1/identifier");
          return props;
     }
 
@@ -130,12 +129,6 @@ public class RouteTest extends CamelBlueprintTestSupport {
             @Override
             public void configure() throws Exception {
                 replaceFromWith("direct:start");
-            }
-        });
-
-        context.getRouteDefinition("IdMappingEventRouter").adviceWith(context, new AdviceWithRouteBuilder() {
-            @Override
-            public void configure() throws Exception {
                 mockEndpointsAndSkip("fcrepo*");
                 mockEndpoints("direct:update");
             }
@@ -149,17 +142,16 @@ public class RouteTest extends CamelBlueprintTestSupport {
             }
         });
 
-
         context.start();
 
         resultEndpoint.expectedMessageCount(2);
-        getMockEndpoint("mock:direct:update").expectedBodiesReceived("/foo/bar", "/foo/bar");
-        getMockEndpoint("mock:direct:update").expectedHeaderValuesReceivedInAnyOrder(IdiomaticHeaders.ID, "1", "2");
-        final Map<String, Object> headers = new HashMap<>();
-        headers.put(JmsHeaders.IDENTIFIER, "/foo/bar");
-        template.sendBodyAndHeaders(
-                IOUtils.toString(ObjectHelper.loadResourceAsStream("indexable.rdf"),
-                "UTF-8"), headers);
+        getMockEndpoint("mock:direct:update").expectedBodiesReceived(
+                "http://localhost/foo/bar", "http://localhost/foo/bar");
+        getMockEndpoint("mock:direct:update").expectedHeaderValuesReceivedInAnyOrder(IdiomaticHeaders.ID,
+                "http://example.org/object/1", "http://example.org/object/2");
+        template.sendBodyAndHeader(
+                IOUtils.toString(ObjectHelper.loadResourceAsStream("indexable.json"),
+                "UTF-8"), FCREPO_URI, "http://localhost/foo/bar");
 
         assertMockEndpointsSatisfied();
     }

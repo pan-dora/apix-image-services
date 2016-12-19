@@ -71,7 +71,9 @@ public class AcrepoActiveMQIT extends AbstractOSGiIT {
             features(maven().groupId("org.apache.karaf.features").artifactId("standard")
                         .versionAsInProject().classifier("features").type("xml"), "scr"),
             features(maven().groupId("org.apache.activemq").artifactId("activemq-karaf")
-                        .type("xml").classifier("features").versionAsInProject(), "activemq-camel"),
+                        .type("xml").classifier("features").versionAsInProject()),
+            features(maven().groupId("org.apache.camel.karaf").artifactId("apache-camel")
+                        .type("xml").classifier("features").versionAsInProject()),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(),
                         "acrepo-services-activemq"),

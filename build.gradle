@@ -44,18 +44,21 @@ subprojects {
         docURL = 'https://acdc.amherst.edu/wiki'
         license = 'Apache 2'
 
+        camelVersionRange = '[2.18,3)'
+        activemqVersionRange = '[5.14,6)'
+
         /* Dependencies */
-        activemqVersion = '5.14.0'
-        camelVersion = '2.17.3'
+        activemqVersion = '5.14.1'
+        camelVersion = '2.18.0'
         commonsIoVersion = '2.5'
         commonsLangVersion = '3.4'
         derbyVersion = '10.12.1.1'
-        fcrepoCamelVersion = '4.4.3'
+        fcrepoCamelVersion = '4.5.0'
         hk2Version = '2.4.0'
         httpclientVersion = '4.5.2'
         httpcoreVersion = '4.4.5'
         jacksonVersion = '2.7.5'
-        jenaVersion = '3.1.0'
+        jenaVersion = '3.1.1'
         junitVersion = '4.12'
         jsonldVersion = '0.8.3'
         logbackVersion = '1.1.7'
@@ -95,6 +98,7 @@ subprojects {
         karafVersion = '4.0.5'
         fcrepoVersion = '4.6.0'
         fusekiVersion = '2.3.1'
+        xercesVersion = '2.11.0'
         osgiVersion = '4.3.1'
 
         /* OSGi */

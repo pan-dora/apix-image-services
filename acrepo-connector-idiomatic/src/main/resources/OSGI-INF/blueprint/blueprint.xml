@@ -15,10 +15,8 @@
        <cm:property name="rest.host" value="localhost"/>
        <cm:property name="rest.prefix" value="/idiomatic"/>
        <cm:property name="rest.port" value="9101"/>
-       <cm:property name="id.property" value="dc:identifier"/>
-       <cm:property name="id.namespace" value="http://purl.org/dc/elements/1.1/"/>
-       <cm:property name="id.prefix" value=""/>
-       <cm:property name="fcrepo.baseUrl" value="localhost:8080/fcrepo/rest"/>
+       <cm:property name="id.property" value="http://purl.org/dc/elements/1.1/identifier"/>
+       <cm:property name="fcrepo.baseUrl" value="http://localhost:8080/fcrepo/rest"/>
      </cm:default-properties>
    </cm:property-placeholder>
 
