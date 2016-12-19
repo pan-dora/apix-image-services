@@ -28,8 +28,6 @@ These modules provide particular services, independent of Fedora Resources.
 * [`acrepo-services-activemq`](acrepo-services-activemq): This service creates a ActiveMQ connection for other modules to use
 * [`acrepo-services-inference`](acrepo-services-inference): An OSGi-based structural typing service using owl inference
 * [`acrepo-services-jsonld`](acrepo-services-jsonld): This service creates expanded or compact JSON-LD representations of input documents
-* [`acrepo-services-ldcache`](acrepo-services-ldcache): This service dereferences and caches URIs, retrieving the `object` of particular triples on demand
-* [`acrepo-services-ldcache-file`](acrepo-services-ldcache-file): A file-based backend for the `acrepo-services-ldcache` service
 * [`acrepo-services-mint`](acrepo-services-mint): This mints random (public) URIs for use with Fedora resources
 * [`acrepo-services-pcdm`](acrepo-services-pcdm): This makes it easy to work with PCDM objects
 
@@ -52,8 +50,6 @@ sets of related bundles in an OSGi container.
 * `acrepo-libs-jackson`: The [Jackson](http://wiki.fasterxml.com/JacksonHome) JSON libraries
 * `acrepo-libs-jena`: The [Jena 3.x](http://jena.apache.org/) libraries
 * `acrepo-libs-jsonld`: The [JSON-LD](https://github.com/jsonld-java/jsonld-java) libraries
-* `acrepo-libs-marmotta`: The [Marmotta](http://marmotta.apache.org) libraries
-* `acrepo-libs-sesame`: The [Sesame 2.x](http://rdf4j.org/) libraries
 
 Building
 --------
@@ -89,8 +85,6 @@ command from its shell:
 
     feature:install acrepo-services-inference
     feature:install acrepo-services-jsonld
-    feature:install acrepo-services-ldcache
-    feature:install acrepo-services-ldcache-file
     feature:install acrepo-services-mint
     feature:install acrepo-services-pcdm
 
