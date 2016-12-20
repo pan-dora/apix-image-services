@@ -51,8 +51,6 @@ dependencies {
     testCompile project(':acrepo-services-activemq')
     testCompile project(':acrepo-services-inference')
     testCompile project(':acrepo-services-jsonld')
-    testCompile project(':acrepo-services-ldcache-file')
-    testCompile project(':acrepo-services-ldcache')
     testCompile project(':acrepo-services-mint')
     testCompile project(':acrepo-services-pcdm')
     testCompile project(':acrepo-exts-jsonld')

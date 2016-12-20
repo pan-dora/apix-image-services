@@ -13,8 +13,6 @@ include ':acrepo-karaf'
 include ':acrepo-services-activemq'
 include ':acrepo-services-inference'
 include ':acrepo-services-jsonld'
-include ':acrepo-services-ldcache'
-include ':acrepo-services-ldcache-file'
 include ':acrepo-services-mint'
 include ':acrepo-services-pcdm'
 include ':acrepo-itests'
@@ -33,8 +31,6 @@ project(':acrepo-karaf').projectDir = "$rootDir/acrepo-karaf" as File
 project(':acrepo-services-activemq').projectDir = "$rootDir/acrepo-services-activemq" as File
 project(':acrepo-services-inference').projectDir = "$rootDir/acrepo-services-inference" as File
 project(':acrepo-services-jsonld').projectDir = "$rootDir/acrepo-services-jsonld" as File
-project(':acrepo-services-ldcache').projectDir = "$rootDir/acrepo-services-ldcache" as File
-project(':acrepo-services-ldcache-file').projectDir = "$rootDir/acrepo-services-ldcache-file" as File
 project(':acrepo-services-mint').projectDir = "$rootDir/acrepo-services-mint" as File
 project(':acrepo-services-pcdm').projectDir = "$rootDir/acrepo-services-pcdm" as File
 project(':acrepo-itests').projectDir = "$rootDir/acrepo-itests" as File
