@@ -88,7 +88,7 @@ public class RouteTest extends CamelBlueprintTestSupport {
         services.put(Supplier.class.getName(),
                 asService(new MinterService(MINT_LENGTH), "osgi.jndi.service.name", "acrepo/Minter"));
         services.put(Component.class.getName(),
-                asService(new SedaComponent(), "osgi.jndi.service.name", "acrepo/Broker"));
+                asService(new SedaComponent(), "osgi.jndi.service.name", "fcrepo/Broker"));
     }
 
     @Test

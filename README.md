@@ -26,7 +26,6 @@ Services
 
 These modules provide particular services, independent of Fedora Resources.
 
-* [`acrepo-services-activemq`](acrepo-services-activemq): This service creates a ActiveMQ connection for other modules to use
 * [`acrepo-services-inference`](acrepo-services-inference): An OSGi-based structural typing service using owl inference
 * [`acrepo-services-jsonld`](acrepo-services-jsonld): This service creates expanded or compact JSON-LD representations of input documents
 * [`acrepo-services-mint`](acrepo-services-mint): This mints random (public) URIs for use with Fedora resources
@@ -37,7 +36,7 @@ Connectors
 
 These modules listen to repository events and react accordingly.
 
-* [`acrepo-connector-broadcast`](acrepo-connector-broadcast): ActiveMQ Message Broadcast Service:  This rebroadcasts messages from one queue/topic to every queue/topic in a specified list
+* [`acrepo-connector-broadcast`](acrepo-connector-broadcast): Message Broadcast Service:  This rebroadcasts messages from one queue/topic to every queue/topic in a specified list
 * [`acrepo-connector-idiomatic`](acrepo-connector-idiomatic): Id Mapping Service: This maps a public ID to a (internal and typically much longer) Fedora URI
 * [`acrepo-connector-idiomatic-mysql`](acrepo-connector-idiomatic-mysql): Id Mapping Service Database: This exposes a MySQL datastore for use with the Id Mapping service
 * [`acrepo-connector-idiomatic-pgsql`](acrepo-connector-idiomatic-pgsql): Id Mapping Service Database: This exposes a Postgres datastore for use with the Id Mapping service

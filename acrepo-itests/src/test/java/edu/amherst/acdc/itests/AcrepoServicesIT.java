@@ -83,7 +83,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
             features(maven().groupId("org.fcrepo.camel").artifactId("fcrepo-camel")
                         .type("xml").classifier("features").versionAsInProject()),
             features(maven().groupId("org.fcrepo.camel").artifactId("toolbox-features")
-                        .type("xml").classifier("features").versionAsInProject()),
+                        .type("xml").classifier("features").versionAsInProject(), "fcrepo-service-activemq"),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(),
                     "acrepo-connector-broadcast",
@@ -100,7 +100,6 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
                     "acrepo-libs-jsonld",
                     "acrepo-libs-jackson",
 
-                    "acrepo-services-activemq",
                     "acrepo-services-inference",
                     "acrepo-services-jsonld",
                     "acrepo-services-mint",
@@ -123,6 +122,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
     public void testInstallation() throws Exception {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("camel-core")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("fcrepo-camel")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("fcrepo-service-activemq")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-connector-broadcast")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-fits")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-image")));
@@ -134,7 +134,6 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-jackson")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-jena")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-libs-jsonld")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-activemq")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-inference")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-jsonld")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-mint")));
