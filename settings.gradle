@@ -5,6 +5,7 @@ include ':acrepo-connector-idiomatic-mysql'
 include ':acrepo-connector-idiomatic-pgsql'
 include ':acrepo-exts-fits'
 include ':acrepo-exts-image'
+include ':acrepo-exts-ldpath'
 include ':acrepo-exts-jsonld'
 include ':acrepo-exts-pcdm'
 include ':acrepo-exts-serialize-xml'
@@ -23,6 +24,7 @@ project(':acrepo-connector-idiomatic-mysql').projectDir = "$rootDir/acrepo-conne
 project(':acrepo-connector-idiomatic-pgsql').projectDir = "$rootDir/acrepo-connector-idiomatic-pgsql" as File
 project(':acrepo-exts-fits').projectDir = "$rootDir/acrepo-exts-fits" as File
 project(':acrepo-exts-image').projectDir = "$rootDir/acrepo-exts-image" as File
+project(':acrepo-exts-ldpath').projectDir = "$rootDir/acrepo-exts-ldpath" as File
 project(':acrepo-exts-jsonld').projectDir = "$rootDir/acrepo-exts-jsonld" as File
 project(':acrepo-exts-pcdm').projectDir = "$rootDir/acrepo-exts-pcdm" as File
 project(':acrepo-exts-serialize-xml').projectDir = "$rootDir/acrepo-exts-serialize-xml" as File

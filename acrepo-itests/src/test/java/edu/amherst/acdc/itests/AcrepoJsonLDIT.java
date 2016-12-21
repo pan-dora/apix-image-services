@@ -80,6 +80,8 @@ public class AcrepoJsonLDIT extends AbstractOSGiIT {
                         .versionAsInProject().classifier("features").type("xml"), "scr"),
             features(maven().groupId("org.apache.camel.karaf").artifactId("apache-camel")
                         .type("xml").classifier("features").versionAsInProject()),
+            features(maven().groupId("org.fcrepo.camel").artifactId("fcrepo-camel")
+                        .type("xml").classifier("features").versionAsInProject()),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(),
                     "acrepo-exts-jsonld", "acrepo-services-jsonld"),

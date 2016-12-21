@@ -60,6 +60,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
         final String jsonldPort = cm.getProperty("karaf.jsonld.port");
         final String pcdmPort = cm.getProperty("karaf.pcdm.port");
         final String imagePort = cm.getProperty("karaf.image.port");
+        final String ldpathPort = cm.getProperty("karaf.ldpath.port");
         final String fitsPort = cm.getProperty("karaf.fits.port");
 
         return new Option[] {
@@ -79,21 +80,35 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
                         .type("xml").classifier("features").versionAsInProject(), "activemq-camel"),
             features(maven().groupId("org.apache.camel.karaf").artifactId("apache-camel")
                         .type("xml").classifier("features").versionAsInProject()),
+            features(maven().groupId("org.fcrepo.camel").artifactId("fcrepo-camel")
+                        .type("xml").classifier("features").versionAsInProject()),
+            features(maven().groupId("org.fcrepo.camel").artifactId("toolbox-features")
+                        .type("xml").classifier("features").versionAsInProject()),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(),
                     "acrepo-connector-broadcast",
 
-                    "acrepo-exts-fits", "acrepo-exts-image", "acrepo-exts-jsonld", "acrepo-exts-pcdm",
-                    "acrepo-exts-serialize-xml", "acrepo-exts-template",
+                    "acrepo-exts-fits",
+                    "acrepo-exts-image",
+                    "acrepo-exts-jsonld",
+                    "acrepo-exts-ldpath",
+                    "acrepo-exts-pcdm",
+                    "acrepo-exts-serialize-xml",
+                    "acrepo-exts-template",
 
-                    "acrepo-libs-jena", "acrepo-libs-sesame", "acrepo-libs-jsonld",
-                    "acrepo-libs-jackson", "acrepo-libs-marmotta",
+                    "acrepo-libs-jena",
+                    "acrepo-libs-jsonld",
+                    "acrepo-libs-jackson",
 
-                    "acrepo-services-activemq", "acrepo-services-inference", "acrepo-services-jsonld",
-                    "acrepo-services-mint", "acrepo-services-pcdm"),
+                    "acrepo-services-activemq",
+                    "acrepo-services-inference",
+                    "acrepo-services-jsonld",
+                    "acrepo-services-mint",
+                    "acrepo-services-pcdm"),
 
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.fits.cfg", "rest.port", fitsPort),
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.image.cfg", "rest.port", imagePort),
+            editConfigurationFilePut("etc/edu.amherst.acdc.exts.ldpath.cfg", "rest.port", ldpathPort),
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.jsonld.cfg", "rest.port", jsonldPort),
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.pcdm.cfg", "rest.port", pcdmPort),
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.serialize.xml.cfg", "rest.port", metadataPort),
@@ -112,6 +127,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-fits")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-image")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-jsonld")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-ldpath")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-pcdm")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-serialize-xml")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-template")));

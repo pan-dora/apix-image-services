@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.3.0" name="amherst-repo-services-${project.version}">
-  <repository>mvn:org.fcrepo.camel/fcrepo-camel/${fcrepoCamelVersion}/xml/features</repository>
-
   <feature name="acrepo-connector-idiomatic" version="${project.version}">
     <details>Installs the id mapping service</details>
 
@@ -13,7 +11,7 @@
     <feature version="${camelVersionRange}">camel-jetty9</feature>
     <feature version="${camelVersionRange}">camel-jackson</feature>
     <feature version="${camelVersionRange}">camel-sql</feature>
-    <feature version="${fcrepoCamelVersion}">fcrepo-camel</feature>
+    <feature version="${fcrepoCamelVersionRange}">fcrepo-camel</feature>
 
     <bundle dependency="true">mvn:org.codehaus.woodstox/woodstox-core-asl/${woodstoxVersion}</bundle>
 
@@ -62,13 +60,24 @@
     <configfile finalname="/etc/edu.amherst.acdc.exts.image.cfg">mvn:edu.amherst.acdc/acrepo-exts-image/${project.version}/cfg/configuration</configfile>
   </feature>
 
+  <feature name="acrepo-exts-ldpath" version="${project.version}">
+    <details>Installs the Amherst customizations to fcrepo-ldpath</details>
+
+    <feature version="${fcrepoCamelToolboxVersionRange}">fcrepo-ldpath-core</feature>
+    <feature version="${fcrepoCamelToolboxVersionRange}">fcrepo-service-ldcache-file</feature>
+
+    <bundle>mvn:edu.amherst.acdc/acrepo-exts-ldpath/${project.version}</bundle>
+
+    <configfile finalname="/etc/edu.amherst.acdc.exts.ldpath.cfg">mvn:edu.amherst.acdc/acrepo-exts-ldpath/${project.version}/cfg/configuration</configfile>
+  </feature>
+
   <feature name="acrepo-exts-pcdm" version="${project.version}">
     <details>Installs the image service</details>
 
     <feature version="${camelVersionRange}">camel</feature>
     <feature version="${camelVersionRange}">camel-blueprint</feature>
     <feature version="${camelVersionRange}">camel-jetty9</feature>
-    <feature version="${fcrepoCamelVersion}">fcrepo-camel</feature>
+    <feature version="${fcrepoCamelVersionRange}">fcrepo-camel</feature>
     <feature version="${project.version}">acrepo-services-pcdm</feature>
     <feature version="${project.version}">acrepo-libs-jena</feature>
 
@@ -123,7 +132,7 @@
     <feature version="${camelVersionRange}">camel-blueprint</feature>
     <feature version="${camelVersionRange}">camel-jetty9</feature>
     <feature version="${camelVersionRange}">camel-saxon</feature>
-    <feature version="${fcrepoCamelVersion}">fcrepo-camel</feature>
+    <feature version="${fcrepoCamelVersionRange}">fcrepo-camel</feature>
 
     <bundle>mvn:edu.amherst.acdc/acrepo-exts-serialize-xml/${project.version}</bundle>
 
@@ -144,7 +153,7 @@
     <feature version="${camelVersionRange}">camel</feature>
     <feature version="${camelVersionRange}">camel-blueprint</feature>
     <feature version="${camelVersionRange}">camel-jetty9</feature>
-    <feature version="${fcrepoCamelVersion}">fcrepo-camel</feature>
+    <feature version="${fcrepoCamelVersionRange}">fcrepo-camel</feature>
     <feature version="${project.version}">acrepo-services-jsonld</feature>
 
     <bundle>mvn:edu.amherst.acdc/acrepo-exts-jsonld/${project.version}</bundle>
@@ -161,7 +170,7 @@
     <feature version="${camelVersionRange}">camel-jetty9</feature>
     <feature version="${camelVersionRange}">camel-jackson</feature>
     <feature version="${camelVersionRange}">camel-http4</feature>
-    <feature version="${fcrepoCamelVersion}">fcrepo-camel</feature>
+    <feature version="${fcrepoCamelVersionRange}">fcrepo-camel</feature>
     <feature version="${project.version}">acrepo-services-jsonld</feature>
 
     <bundle>mvn:edu.amherst.acdc/acrepo-exts-template/${project.version}</bundle>
