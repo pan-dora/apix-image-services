@@ -25,8 +25,6 @@ command from its shell:
 Configuration
 -------------
 
-## Configuration
-
 The application can be configured by creating a file in
 `$KARAF_HOME/etc/edu.amherst.acdc.exts.ldpath.cfg`. The following
 values are available for configuration:
