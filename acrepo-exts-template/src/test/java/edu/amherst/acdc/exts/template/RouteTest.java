@@ -15,19 +15,17 @@
  */
 package edu.amherst.acdc.exts.template;
 
-import java.util.Dictionary;
-import java.util.Map;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.util.Properties;
 
-import edu.amherst.acdc.services.jsonld.JsonLdService;
-import edu.amherst.acdc.services.jsonld.JsonLdServiceImpl;
-
+import org.apache.camel.RuntimeCamelException;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
-import org.apache.camel.util.KeyValueHolder;
 
 import org.junit.Test;
 
@@ -58,9 +56,15 @@ public class RouteTest extends CamelBlueprintTestSupport {
     }
 
     @Override
-    protected void addServicesOnStartup(final Map<String, KeyValueHolder<Object, Dictionary>> services) {
-      services.put(JsonLdService.class.getName(), asService(new JsonLdServiceImpl(),
-            "osgi.jndi.service.name", "acrepo/JsonLD"));
+    protected Properties useOverridePropertiesWithPropertiesComponent() {
+        final Properties props = new Properties();
+        try {
+            final ServerSocket s = new ServerSocket(0);
+            props.put("rest.port", Integer.toString(s.getLocalPort()));
+        } catch (final IOException ex) {
+            throw new RuntimeCamelException(ex);
+        }
+        return props;
     }
 
     @Test
@@ -80,7 +84,7 @@ public class RouteTest extends CamelBlueprintTestSupport {
         resultEndpoint.allMessages().body().contains("Fedora Template Service: Foo");
         resultEndpoint.allMessages().body().contains("<p>sample description</p>");
 
-        template.sendBody("{\"title\" : \"Foo\", \"description\" : \"sample description\"}");
+        template.sendBody("[{\"title\" : [\"Foo\"], \"description\" : [\"sample description\"]}]");
 
         // assert expectations
         assertMockEndpointsSatisfied();
@@ -105,7 +109,7 @@ public class RouteTest extends CamelBlueprintTestSupport {
         resultEndpoint.allMessages().body().contains("<p>sample description</p>");
 
         template.sendBodyAndHeader(
-            "{\"title\" : \"Foo\", \"description\" : \"sample description\", \"date\" : \"Sometime 2016\"}",
+            "[{\"title\" : [\"Foo\"], \"description\" : [\"sample description\"], \"date\" : [\"Sometime 2016\"]}]",
             "templateUri", "/edu/amherst/acdc/exts/template/template2.mustache");
 
         // assert expectations

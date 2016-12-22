@@ -11,8 +11,8 @@ dependencies {
     compile(group: 'org.fcrepo.camel', name: 'fcrepo-camel', version: fcrepoCamelVersion) {
         exclude(module: 'slf4j-log4j12')
     }
-    compile project(':acrepo-services-jsonld')
     compile group: 'org.slf4j', name: 'slf4j-api', version: slf4jVersion
+    testCompile group: 'xerces', name: 'xercesImpl', version: xercesVersion
     testCompile group: 'junit', name: 'junit', version: junitVersion
     testCompile group: 'org.apache.camel', name: 'camel-test-blueprint', version: camelVersion
     testCompile group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
@@ -25,7 +25,7 @@ jar {
         vendor project.vendor
         license project.license
 
-        instruction 'Import-Package', "org.apache.camel,edu.amherst.acdc.services.jsonld,${defaultOsgiImports}"
+        instruction 'Import-Package', "org.apache.camel,${defaultOsgiImports}"
         instruction 'Export-Package', "edu.amherst.acdc.exts.template;version=${projectOsgiVersion}"
     }
 }

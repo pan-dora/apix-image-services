@@ -59,7 +59,8 @@ public class AcrepoTemplateIT extends AbstractOSGiIT {
         final String templateServicePort = cm.getProperty("karaf.template.port");
         final String rmiRegistryPort = cm.getProperty("karaf.rmiRegistry.port");
         final String rmiServerPort = cm.getProperty("karaf.rmiServer.port");
-        final String fcrepoBaseUrl = "localhost:" + fcrepoPort + "/fcrepo/rest";
+        final String fcrepoBaseUrl = "http://localhost:" + fcrepoPort + "/fcrepo/rest";
+        final String ldpathPort = cm.getProperty("karaf.ldpath.port");
         final String sshPort = cm.getProperty("karaf.ssh.port");
 
         return new Option[] {
@@ -77,9 +78,11 @@ public class AcrepoTemplateIT extends AbstractOSGiIT {
                         .type("xml").classifier("features").versionAsInProject()),
             features(maven().groupId("org.fcrepo.camel").artifactId("fcrepo-camel")
                         .type("xml").classifier("features").versionAsInProject()),
+            features(maven().groupId("org.fcrepo.camel").artifactId("toolbox-features")
+                        .type("xml").classifier("features").versionAsInProject()),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(),
-                    "acrepo-exts-template", "acrepo-services-jsonld"),
+                    "acrepo-exts-template", "acrepo-exts-ldpath"),
 
             systemProperty("karaf.template.port").value(templateServicePort),
             systemProperty("fcrepo.port").value(fcrepoPort),
@@ -87,8 +90,11 @@ public class AcrepoTemplateIT extends AbstractOSGiIT {
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", rmiRegistryPort),
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", rmiServerPort),
             editConfigurationFilePut("etc/org.apache.karaf.shell.cfg", "sshPort", sshPort),
+            editConfigurationFilePut("etc/edu.amherst.acdc.exts.ldpath.cfg", "rest.port", ldpathPort),
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.template.cfg", "fcrepo.baseUrl", fcrepoBaseUrl),
-            editConfigurationFilePut("etc/edu.amherst.acdc.exts.template.cfg", "rest.port", templateServicePort)
+            editConfigurationFilePut("etc/edu.amherst.acdc.exts.template.cfg", "rest.port", templateServicePort),
+            editConfigurationFilePut("etc/edu.amherst.acdc.exts.template.cfg", "ldpath.serviceUrl",
+                    "http://localhost:" + ldpathPort + "/ldpath")
        };
     }
 
@@ -97,15 +103,14 @@ public class AcrepoTemplateIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("camel-core")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("fcrepo-camel")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-template")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-jsonld")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-ldpath")));
     }
 
     @Test
-    public void testJsonLdService() throws Exception {
+    public void testTemplateService() throws Exception {
         // make sure that the camel context has started up.
-        final CamelContext ctx = getOsgiService(CamelContext.class, "(camel.context.name=AcrepoTemplateService)",
-                10000);
-        assertNotNull(ctx);
+        assertNotNull(getOsgiService(CamelContext.class, "(camel.context.name=AcrepoTemplateService)", 10000));
+        assertNotNull(getOsgiService(CamelContext.class, "(camel.context.name=AcrepoLDPathContext)", 10000));
 
         final String baseUrl = "http://localhost:" + System.getProperty("fcrepo.port") + "/fcrepo/rest";
         final String baseSvcUrl = "http://localhost:" + System.getProperty("karaf.template.port") + "/template";
