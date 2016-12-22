@@ -96,7 +96,8 @@ public class AcrepoExtsSerializeXmlIT extends AbstractOSGiIT {
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", rmiServerPort),
             editConfigurationFilePut("etc/org.apache.karaf.shell.cfg", "sshPort", sshPort),
             editConfigurationFilePut("etc/edu.amherst.acdc.exts.serialize.xml.cfg", "fcrepo.baseUrl", fcrepoBaseUrl),
-            editConfigurationFilePut("etc/edu.amherst.acdc.exts.serialize.xml.cfg", "rest.port", metadataServicePort)
+            editConfigurationFilePut("etc/edu.amherst.acdc.exts.serialize.xml.cfg", "rest.port", metadataServicePort),
+            editConfigurationFilePut("etc/edu.amherst.acdc.exts.serialize.xml.cfg", "extension.load", "false")
        };
     }
 
@@ -115,14 +116,14 @@ public class AcrepoExtsSerializeXmlIT extends AbstractOSGiIT {
         assertNotNull(ctx);
 
         final String baseUrl = "http://localhost:" + System.getProperty("fcrepo.port") + "/fcrepo/rest";
-        final String baseSvcUrl = "http://localhost:" + System.getProperty("karaf.metadata.port") + "/dc";
+        final String baseSvcUrl = "http://localhost:" + System.getProperty("karaf.metadata.port") + "/xml";
 
-        assertTrue(options(baseSvcUrl).contains("apix:bindsTo pcdm:Object"));
+        assertTrue(options(baseSvcUrl).contains("apix:bindsTo fedora:Resource"));
 
         final String id = post(baseUrl, getClass().getResourceAsStream("/resource.ttl"), "text/turtle")
                 .replace(baseUrl, "");
 
-        final InputStream input = new ByteArrayInputStream(get(baseSvcUrl + id).getBytes("UTF-8"));
+        final InputStream input = new ByteArrayInputStream(get(baseSvcUrl + "/dc" + id).getBytes("UTF-8"));
         final Document doc = newInstance().newDocumentBuilder().parse(input);
 
         final NodeList root = doc.getChildNodes();

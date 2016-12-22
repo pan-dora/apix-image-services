@@ -35,23 +35,18 @@ public class EventRouter extends RouteBuilder {
      */
     public void configure() throws Exception {
 
-        from("jetty:http://{{rest.host}}:{{rest.port}}/dc?" +
+        from("jetty:http://{{rest.host}}:{{rest.port}}{{rest.prefix}}?" +
                 "matchOnUriPrefix=true&httpMethodRestrict=GET,OPTIONS&sendServerVersion=false")
-            .routeId("XmlDcTransformation")
+            .routeId("XmlAccept")
             .choice()
-                .when(header(HTTP_METHOD).isEqualTo("GET"))
+                .when(header(HTTP_METHOD).isEqualTo("OPTIONS"))
+                    .to("direct:options")
+                .when(header(HTTP_PATH).contains("dc"))
                     .to("direct:dc")
-                .when(header(HTTP_METHOD).isEqualTo("OPTIONS"))
-                    .to("direct:options");
-
-        from("jetty:http://{{rest.host}}:{{rest.port}}/mods?" +
-                "matchOnUriPrefix=true&httpMethodRestrict=GET,OPTIONS&sendServerVersion=false")
-            .routeId("XmlModsTransformation")
-            .choice()
-                .when(header(HTTP_METHOD).isEqualTo("GET"))
+                .when(header(HTTP_PATH).contains("mods"))
                     .to("direct:mods")
-                .when(header(HTTP_METHOD).isEqualTo("OPTIONS"))
-                    .to("direct:options");
+                .otherwise()
+                    .to("direct:choice");
 
         from("direct:dc")
             .routeId("XmlDcXslt")
@@ -77,12 +72,20 @@ public class EventRouter extends RouteBuilder {
             .setHeader("Allow").constant("GET,OPTIONS")
             .to("language:simple:resource:classpath:options.ttl");
 
+        from("direct:choice")
+            .routeId("ChooseFormat")
+            .setHeader(CONTENT_TYPE).constant("text/html")
+            .setHeader("Allow").constant("GET,OPTIONS")
+            .to("language:simple:resource:classpath:index.html");
+
         from("direct:getResource")
             .routeId("XmlTransformationCommon")
             .removeHeader("breadcrumbId")
             .removeHeader("Accept")
             .removeHeader("User-Agent")
-            .setHeader(FCREPO_IDENTIFIER).header(HTTP_PATH)
+            .process(e -> e.getIn().setHeader(FCREPO_IDENTIFIER,
+                    e.getIn().getHeader("Apix-Ldp-Resource-Path",
+                            e.getIn().getHeader(HTTP_PATH, "", String.class).replaceFirst("^/.+?/", "/"))))
             .setHeader(FCREPO_BASE_URL).simple("{{fcrepo.baseUrl}}")
             .to("fcrepo:{{fcrepo.baseUrl}}?throwExceptionOnFailure=false");
 

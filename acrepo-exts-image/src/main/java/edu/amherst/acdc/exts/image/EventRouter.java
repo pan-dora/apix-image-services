@@ -28,7 +28,10 @@ import static org.fcrepo.camel.FcrepoHeaders.FCREPO_IDENTIFIER;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.io.InputStream;
+import java.util.Collection;
+import java.util.HashSet;
 
+import org.apache.camel.Exchange;
 import org.apache.camel.RuntimeCamelException;
 import org.apache.camel.builder.RouteBuilder;
 import org.slf4j.Logger;
@@ -40,11 +43,11 @@ import org.slf4j.Logger;
  */
 public class EventRouter extends RouteBuilder {
 
-    private final String IMAGE_OUTPUT = "CamelImageOutput";
-    private final String IMAGE_INPUT = "CamelImageInput";
-    private final String HTTP_ACCEPT = "Accept";
-    private final String DEFAULT_OUTPUT_FORMAT = "jpeg";
-    private final String HTTP_QUERY_OPTIONS = "options";
+    private static final String IMAGE_OUTPUT = "CamelImageOutput";
+    private static final String IMAGE_INPUT = "CamelImageInput";
+    private static final String HTTP_ACCEPT = "Accept";
+    private static final String DEFAULT_OUTPUT_FORMAT = "jpeg";
+    private static final String HTTP_QUERY_OPTIONS = "options";
 
     private static final Logger LOGGER = getLogger(EventRouter.class);
 
@@ -56,12 +59,13 @@ public class EventRouter extends RouteBuilder {
         from("jetty:http://{{rest.host}}:{{rest.port}}{{rest.prefix}}?" +
               "matchOnUriPrefix=true&sendServerVersion=false&httpMethodRestrict=GET,OPTIONS")
           .routeId("ImageRouter")
-          .setHeader(FCREPO_IDENTIFIER).header(HTTP_PATH)
+          .process(e -> e.getIn().setHeader(FCREPO_IDENTIFIER,
+                  e.getIn().getHeader("Apix-Ldp-Resource-Path",
+                          e.getIn().getHeader(HTTP_PATH))))
           .setHeader(IMAGE_OUTPUT).header(HTTP_ACCEPT)
           .removeHeaders(HTTP_ACCEPT)
           .choice()
             .when(header(HTTP_METHOD).isEqualTo("GET"))
-              .setHeader(FCREPO_IDENTIFIER).header(HTTP_PATH)
               .to("direct:get")
             .when(header(HTTP_METHOD).isEqualTo("OPTIONS"))
               .setHeader(CONTENT_TYPE).constant("text/turtle")
@@ -70,6 +74,7 @@ public class EventRouter extends RouteBuilder {
 
         from("direct:get")
           .routeId("ImageGet")
+          .setHeader(HTTP_PATH, header(FCREPO_IDENTIFIER))
           .setHeader(HTTP_METHOD).constant("HEAD")
           .setHeader(HTTP_URI).simple("http://{{fcrepo.baseUrl}}")
           .to("http4://{{fcrepo.baseUrl}}?authUsername={{fcrepo.authUsername}}" +
@@ -120,7 +125,7 @@ public class EventRouter extends RouteBuilder {
               if (valid) {
                   exchange.getIn().setHeader(IMAGE_OUTPUT, "image/" + fmt);
                   exchange.getIn().setHeader(EXEC_COMMAND_ARGS,
-                      " - " + exchange.getIn().getHeader(HTTP_QUERY_OPTIONS, "", String.class) + " " + fmt + ":-");
+                      " - " + cmdOptions(exchange) + " " + fmt + ":-");
               } else {
                   throw new RuntimeCamelException("Invalid format: " + fmt);
               }
@@ -131,5 +136,18 @@ public class EventRouter extends RouteBuilder {
           .process(exchange -> {
               exchange.getOut().setBody(exchange.getIn().getBody(InputStream.class));
           });
+    }
+
+    // Hack - cmdline options are often an array of repeated elements.  Fix that
+    @SuppressWarnings("unchecked")
+    static final String cmdOptions(final Exchange e) {
+        final Object optHdr = e.getIn().getHeader(HTTP_QUERY_OPTIONS);
+
+        if (optHdr instanceof Collection) {
+            return String.join(" ",  new HashSet<>((Collection<String>) optHdr));
+        } else if (optHdr != null) {
+            return (String) optHdr;
+        }
+        return "";
     }
 }

@@ -15,7 +15,6 @@
  */
 package edu.amherst.acdc.exts.serialize.xml;
 
-import static org.apache.camel.Exchange.HTTP_PATH;
 import static org.apache.camel.Exchange.HTTP_RESPONSE_CODE;
 import static org.apache.camel.util.ObjectHelper.loadResourceAsStream;
 import static org.apache.camel.builder.PredicateBuilder.and;
@@ -133,7 +132,7 @@ public class RouteTest extends CamelBlueprintTestSupport {
 
         final Map<String, Object> headers = new HashMap<>();
         headers.put(HTTP_RESPONSE_CODE, 200);
-        headers.put(HTTP_PATH, "/acdc/manuscript");
+        headers.put("Apix-Ldp-Resource-Path", "/acdc/manuscript");
         template.sendBodyAndHeaders("direct:start", loadResourceAsStream("resource.rdf"), headers);
 
         assertMockEndpointsSatisfied();

@@ -17,6 +17,9 @@
         <cm:property name="rest.host" value="localhost"/>
         <cm:property name="rest.port" value="9106"/>
         <cm:property name="fits.endpoint" value="localhost:8080/fits/examine"/>
+        <cm:property name="extension.load" value="true" />
+        <cm:property name="extension.load.uri" value="http://apix/services//apix:load" />
+        <cm:property name="extension.load.maximumRediveries" value="60" />
     </cm:default-properties>
   </cm:property-placeholder>
 
@@ -24,6 +27,31 @@
 
     <package>edu.amherst.acdc.exts.fits</package>
 
+    <!-- Self-register the loader service as an extension -->
+    <route id="load-extension">
+      <from uri="timer:register?repeatCount=1" />
+      <onException>
+        <exception>java.lang.Exception</exception>
+        <redeliveryPolicy maximumRedeliveries="{{extension.load.maximumRediveries}}"
+          logRetryAttempted="true" retryAttemptedLogLevel="INFO" />
+      </onException>
+      <setHeader headerName="Content-Type">
+        <constant>text/plain</constant>
+      </setHeader>
+      <setHeader headerName="CamelHttpMethod">
+        <constant>POST</constant>
+      </setHeader>
+      <setBody>
+        <simple>http://{{rest.host}}:{{rest.port}}{{rest.prefix}}</simple>
+      </setBody>
+      <choice>
+        <when>
+          <simple>{{extension.load}}</simple>
+          <to
+            uri="jetty:{{extension.load.uri}}?okStatusCodeRange=200-399" />
+        </when>
+      </choice>
+    </route>
   </camelContext>
 
 

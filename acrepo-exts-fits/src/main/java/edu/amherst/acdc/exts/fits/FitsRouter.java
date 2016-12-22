@@ -51,8 +51,10 @@ public class FitsRouter extends RouteBuilder {
           .routeId("AcrepoFitsRest")
           .routeDescription(
               "FITS service to gather technical information about a binary located in a Fedora repository.")
+          .process(e -> e.getIn().setHeader(FEDORA_PATH,
+                  e.getIn().getHeader("Apix-Ldp-Resource-Path",
+                          e.getIn().getHeader(HTTP_PATH))))
           .log(INFO, LOGGER, "Received request for Fits data for: ${headers[CamelHttpPath]}")
-          .setHeader(FEDORA_PATH).header(HTTP_PATH)
           .choice()
               .when(header(HTTP_METHOD).isEqualTo("GET"))
                   .to("direct:fitsService")
@@ -66,6 +68,7 @@ public class FitsRouter extends RouteBuilder {
           .log(INFO, LOGGER, "FitsFedoraLookup - fetching ${headers[CamelHttpPath]}")
           .setHeader(HTTP_METHOD).constant("HEAD")
           .setHeader(HTTP_URI).simple("http://{{fcrepo.baseUrl}}")
+          .setHeader(HTTP_PATH, header(FEDORA_PATH))
           .to("http4://{{fcrepo.baseUrl}}?authUsername={{fcrepo.authUsername}}" +
               "&authPassword={{fcrepo.authPassword}}&throwExceptionOnFailure=false")
           .choice()

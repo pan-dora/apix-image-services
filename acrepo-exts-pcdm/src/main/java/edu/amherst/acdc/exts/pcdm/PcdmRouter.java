@@ -51,7 +51,6 @@ public class PcdmRouter extends RouteBuilder {
           .removeHeader("User-Agent")
           .choice()
             .when(header(HTTP_METHOD).isEqualTo("GET"))
-              .log("Building PCDM Object ${headers[CamelHttpPath]}")
               .to("direct:get")
             .when(header(HTTP_METHOD).isEqualTo("OPTIONS"))
               .setHeader(CONTENT_TYPE).constant("text/turtle")
@@ -61,7 +60,10 @@ public class PcdmRouter extends RouteBuilder {
         from("direct:get")
           .routeId("PcdmGet")
           .setHeader(PCDM_ACCEPT, header("Accept"))
-          .setBody(header(HTTP_PATH))
+          .process(e -> e.getIn().setBody(
+                  e.getIn().getHeader("Apix-Ldp-Resource-Path",
+                          e.getIn().getHeader(HTTP_PATH))))
+          .log("Building PCDM Object ${body}")
           .setHeader(FCREPO_BASE_URL).simple("{{fcrepo.baseUrl}}")
           .to("seda:recurse")
           .removeHeader("breadcrumbId")

@@ -7,5 +7,5 @@
     rdfs:label "JSON-LD Compaction Service";
     rdfs:comment "A service that transforms RDFSource documents to compact JSON-LD";
     apix:exposesService registry:JsonLDService;
-    apix:exposesServiceAt "/svc:compact";
+    apix:exposesServiceAt "svc:compact";
     apix:bindsTo fedora:Resource .

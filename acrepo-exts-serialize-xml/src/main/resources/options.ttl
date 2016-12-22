@@ -2,11 +2,11 @@
 @prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> .
 @prefix fedora: <http://fedora.info/definitions/v4/repository#> .
 @prefix registry: <http://acdc.amherst.edu/extensions#> .
-@prefix apix: <urn:apix#> .
+@prefix apix:<http://fedora.info/definitions/v4/api-extension#> .
 
-<#Extension> a apix:Extension ;
+<> a apix:Extension ;
     rdfs:label "XML Metadata Service" ;
     rdfs:comment "A service that transforms RDFSource documents to plain XML (not RDF/XML)" ;
     apix:exposesService registry:XmlMetadataService ;
-    apix:exposesServiceAtURI "svc:xmlmetadata" ;
-    apix:bindsTo pcdm:Object .
+    apix:exposesServiceAt "svc:xmlmetadata/" ;
+    apix:bindsTo fedora:Resource .

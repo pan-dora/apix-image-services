@@ -42,12 +42,18 @@ public class EventRouter extends RouteBuilder {
           .choice()
             .when(header(HTTP_METHOD).isEqualTo("GET"))
               .log("JSONLD Processing ${headers[CamelHttpPath]}")
-              .setHeader(FCREPO_IDENTIFIER).header(HTTP_PATH)
+              .process(e -> e.getIn().setHeader(FCREPO_IDENTIFIER,
+                      e.getIn().getHeader("Apix-Ldp-Resource-Path",
+                              e.getIn().getHeader(HTTP_PATH))))
               .to("direct:get")
             .when(header(HTTP_METHOD).isEqualTo("OPTIONS"))
               .setHeader(CONTENT_TYPE).constant("text/turtle")
               .setHeader("Allow").constant("GET,OPTIONS")
-              .to("language:simple:resource:classpath:options.ttl");
+              .choice()
+                .when(header("apix.scope").isEqualTo("resource"))
+                  .to("language:simple:resource:classpath:options_resource.ttl")
+                .otherwise()
+                  .to("language:simple:resource:classpath:options.ttl");
 
         from("direct:get")
           .routeId("JsonLdGet")

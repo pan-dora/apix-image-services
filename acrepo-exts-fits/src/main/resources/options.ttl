@@ -1,4 +1,8 @@
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix fedora: <http://fedora.info/definitions/v4/repository#> .
+@prefix apix:<http://fedora.info/definitions/v4/api-extension#> .
+@prefix fedora:<http://fedora.info/definitions/v4/repository#> .
+@prefix registry:<http://acdc.amherst.edu/extensions#> .
 
-[ owl:equivalentClass fedora:Binary ] .
+<> a apix:Extension;
+    apix:exposesService registry:fits;
+    apix:exposesServiceAt "svc:fits";
+    apix:bindsTo fedora:Binary .
