@@ -49,13 +49,13 @@ public class PcdmServiceTest {
             "<" + uri + "> a fedora:Binary , fedora:Resource , ldp:NonRDFSource, pcdm:File ;\n" +
             "premis:hasSize \"1565421\"^^<http://www.w3.org/2001/XMLSchema#long> ;\n" +
             "premis:hasMessageDigest <urn:sha1:c9790c378f3589bfcfe092f834d212685f44fff9> ;\n" +
-            "ebucore:hasMimeType \"image/jpeg\"^^<http://www.w3.org/2001/XMLSchema#string> ;\n" +
-            "ebucore:filename \"image.jpg\"^^<http://www.w3.org/2001/XMLSchema#string> ;\n" +
+            "ebucore:hasMimeType \"image/jpeg\" ;\n" +
+            "ebucore:filename \"image.jpg\" ;\n" +
             "iana:describedby <" + uri + "/fcr:metadata> ;\n" +
-            "fedora:createdBy \"bypassAdmin\"^^<http://www.w3.org/2001/XMLSchema#string> ;\n" +
+            "fedora:createdBy \"bypassAdmin\" ;\n" +
             "fedora:created \"2016-06-28T00:21:22.621Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;\n" +
             "fedora:lastModified \"2016-06-28T00:21:22.621Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;\n" +
-            "fedora:lastModifiedBy \"bypassAdmin\"^^<http://www.w3.org/2001/XMLSchema#string> ;\n" +
+            "fedora:lastModifiedBy \"bypassAdmin\" ;\n" +
             "fedora:writable \"true\"^^<http://www.w3.org/2001/XMLSchema#boolean> ;\n" +
             "fedora:hasParent <http://localhost:8080/fcrepo/rest/> ;\n" +
             "fedora:numberOfChildren \"0\"^^<http://www.w3.org/2001/XMLSchema#long> ;\n" +
@@ -64,18 +64,13 @@ public class PcdmServiceTest {
     }
 
     private static InputStream getPcdmObject(final String uri, final List<String> members, final List<String> files) {
-        final StringJoiner joiner = new StringJoiner("", "@prefix premis: <http://www.loc.gov/premis/rdf/v1#> .\n" +
+        final StringJoiner joiner = new StringJoiner("",
             "@prefix pcdm: <http://pcdm.org/models#> .\n" +
-            "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n" +
-            "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n" +
             "@prefix fedora: <http://fedora.info/definitions/v4/repository#> .\n" +
-            "@prefix ebucore: <http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#> .\n" +
             "@prefix ldp: <http://www.w3.org/ns/ldp#> .\n" +
-            "@prefix iana: <http://www.iana.org/assignments/relation/> .\n" +
-            "@prefix dc: <http://purl.org/dc/elements/1.1/> .\n" +
             "<" + uri + "> a fedora:Container , fedora:Resource , pcdm:Object , ldp:RDFSource , ldp:Container ;\n" +
-            "fedora:lastModifiedBy \"bypassAdmin\"^^<http://www.w3.org/2001/XMLSchema#string> ;\n" +
-            "fedora:createdBy \"bypassAdmin\"^^<http://www.w3.org/2001/XMLSchema#string> ;\n" +
+            "fedora:lastModifiedBy \"bypassAdmin\" ;\n" +
+            "fedora:createdBy \"bypassAdmin\" ;\n" +
             "fedora:created \"2016-06-28T00:14:06.677Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;\n" +
             "fedora:lastModified \"2016-06-28T00:16:25.55Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;\n" +
             "fedora:writable \"true\"^^<http://www.w3.org/2001/XMLSchema#boolean> ;\n" +
@@ -93,18 +88,13 @@ public class PcdmServiceTest {
     }
 
     private static InputStream getPcdmCollection(final String uri, final List<String> members) {
-        final StringJoiner joiner = new StringJoiner("", "@prefix premis: <http://www.loc.gov/premis/rdf/v1#> .\n" +
+        final StringJoiner joiner = new StringJoiner("",
             "@prefix pcdm: <http://pcdm.org/models#> .\n" +
-            "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n" +
-            "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n" +
             "@prefix fedora: <http://fedora.info/definitions/v4/repository#> .\n" +
-            "@prefix ebucore: <http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#> .\n" +
             "@prefix ldp: <http://www.w3.org/ns/ldp#> .\n" +
-            "@prefix iana: <http://www.iana.org/assignments/relation/> .\n" +
-            "@prefix dc: <http://purl.org/dc/elements/1.1/> .\n" +
             "<" + uri + "> a fedora:Container , fedora:Resource , pcdm:Collection , ldp:RDFSource , ldp:Container ;\n" +
-            "fedora:lastModifiedBy \"bypassAdmin\"^^<http://www.w3.org/2001/XMLSchema#string> ;\n" +
-            "fedora:createdBy \"bypassAdmin\"^^<http://www.w3.org/2001/XMLSchema#string> ;\n" +
+            "fedora:lastModifiedBy \"bypassAdmin\" ;\n" +
+            "fedora:createdBy \"bypassAdmin\" ;\n" +
             "fedora:created \"2016-06-28T00:14:06.677Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;\n" +
             "fedora:lastModified \"2016-06-28T00:16:25.55Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;\n" +
             "fedora:writable \"true\"^^<http://www.w3.org/2001/XMLSchema#boolean> ;\n" +
