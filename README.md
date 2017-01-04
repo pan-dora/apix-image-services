@@ -15,7 +15,6 @@ by making available a REST-based HTTP interface. The intention is that these ext
 
 * [`acrepo-exts-fits`](acrepo-exts-fits): This service will return FITS information associated with a Fedora Binary, in XML format
 * [`acrepo-exts-image`](acrepo-exts-image): An image manipulation service
-* [`acrepo-exts-jsonld`](acrepo-exts-jsonld): This module exposes an HTTP endpoint for creating compact JSON-LD documents from a Fedora repository using a pluggable context document
 * [`acrepo-exts-ldpath`](acrepo-exts-ldpath): This module extends `fcrepo-ldpath` to support additional Linked Data endpoints (e.g. Getty)
 * [`acrepo-exts-pcdm`](acrepo-exts-pcdm): This constructs a complete PCDM object graph for Fedora resources
 * [`acrepo-exts-serialize-xml`](acrepo-exts-serialize-xml): This service translates Fedora RDF documents into MODS/XML or DC/XML
@@ -27,7 +26,6 @@ Services
 These modules provide particular services, independent of Fedora Resources.
 
 * [`acrepo-services-inference`](acrepo-services-inference): An OSGi-based structural typing service using owl inference
-* [`acrepo-services-jsonld`](acrepo-services-jsonld): This service creates expanded or compact JSON-LD representations of input documents
 * [`acrepo-services-mint`](acrepo-services-mint): This mints random (public) URIs for use with Fedora resources
 * [`acrepo-services-pcdm`](acrepo-services-pcdm): This makes it easy to work with PCDM objects
 
@@ -78,14 +76,12 @@ command from its shell:
 
     feature:install acrepo-exts-fits
     feature:install acrepo-exts-image
-    feature:install acrepo-exts-jsonld
     feature:install acrepo-exts-ldpath
     feature:install acrepo-exts-pcdm
     feature:install acrepo-exts-serialize-xml
     feature:install acrepo-exts-template
 
     feature:install acrepo-services-inference
-    feature:install acrepo-services-jsonld
     feature:install acrepo-services-mint
     feature:install acrepo-services-pcdm
 
