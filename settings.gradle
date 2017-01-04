@@ -11,7 +11,6 @@ include ':acrepo-exts-pcdm'
 include ':acrepo-exts-serialize-xml'
 include ':acrepo-exts-template'
 include ':acrepo-karaf'
-include ':acrepo-services-activemq'
 include ':acrepo-services-inference'
 include ':acrepo-services-jsonld'
 include ':acrepo-services-mint'
@@ -30,7 +29,6 @@ project(':acrepo-exts-pcdm').projectDir = "$rootDir/acrepo-exts-pcdm" as File
 project(':acrepo-exts-serialize-xml').projectDir = "$rootDir/acrepo-exts-serialize-xml" as File
 project(':acrepo-exts-template').projectDir = "$rootDir/acrepo-exts-template" as File
 project(':acrepo-karaf').projectDir = "$rootDir/acrepo-karaf" as File
-project(':acrepo-services-activemq').projectDir = "$rootDir/acrepo-services-activemq" as File
 project(':acrepo-services-inference').projectDir = "$rootDir/acrepo-services-inference" as File
 project(':acrepo-services-jsonld').projectDir = "$rootDir/acrepo-services-jsonld" as File
 project(':acrepo-services-mint').projectDir = "$rootDir/acrepo-services-mint" as File

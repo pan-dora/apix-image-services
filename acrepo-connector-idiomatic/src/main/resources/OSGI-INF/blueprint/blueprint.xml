@@ -24,7 +24,7 @@
 
   <reference id="minterService" interface="java.util.function.Supplier" filter="(osgi.jndi.service.name=acrepo/Minter)"/>
 
-  <reference id="broker" interface="org.apache.camel.Component" filter="(osgi.jndi.service.name=acrepo/Broker)"/>
+  <reference id="broker" interface="org.apache.camel.Component" filter="(osgi.jndi.service.name=fcrepo/Broker)"/>
 
   <!-- component-wide configuration of jdbc -->
   <bean id="sql" class="org.apache.camel.component.sql.SqlComponent">

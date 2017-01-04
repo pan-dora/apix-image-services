@@ -86,9 +86,11 @@ public class AcrepoBroadcastIT extends AbstractOSGiIT {
                         .type("xml").classifier("features").versionAsInProject()),
             features(maven().groupId("org.apache.camel.karaf").artifactId("apache-camel")
                         .type("xml").classifier("features").versionAsInProject()),
+            features(maven().groupId("org.fcrepo.camel").artifactId("toolbox-features")
+                        .type("xml").classifier("features").versionAsInProject(), "fcrepo-service-activemq"),
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(),
-                        "acrepo-services-activemq", "acrepo-connector-broadcast"),
+                        "acrepo-connector-broadcast"),
 
             mavenBundle().groupId("org.apache.httpcomponents").artifactId("httpclient-osgi").versionAsInProject(),
             mavenBundle().groupId("org.apache.httpcomponents").artifactId("httpcore-osgi").versionAsInProject(),
@@ -98,7 +100,7 @@ public class AcrepoBroadcastIT extends AbstractOSGiIT {
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", rmiRegistryPort),
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", rmiServerPort),
             editConfigurationFilePut("etc/org.apache.karaf.shell.cfg", "sshPort", sshPort),
-            editConfigurationFilePut("etc/edu.amherst.acdc.services.activemq.cfg", "jms.brokerUrl", brokerUrl),
+            editConfigurationFilePut("etc/org.fcrepo.camel.service.activemq.cfg", "jms.brokerUrl", brokerUrl),
             editConfigurationFilePut("etc/edu.amherst.acdc.connector.broadcast.cfg", "input.stream", inputStream),
             editConfigurationFilePut("etc/edu.amherst.acdc.connector.broadcast.cfg", "message.recipients",
                                      messageRecipients)
@@ -123,7 +125,7 @@ public class AcrepoBroadcastIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("camel-core")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("camel-blueprint")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("activemq-camel")));
-        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-services-activemq")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("fcrepo-service-activemq")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-connector-broadcast")));
     }
 

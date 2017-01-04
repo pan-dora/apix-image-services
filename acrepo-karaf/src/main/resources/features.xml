@@ -86,19 +86,6 @@
     <configfile finalname="/etc/edu.amherst.acdc.exts.pcdm.cfg">mvn:edu.amherst.acdc/acrepo-exts-pcdm/${project.version}/cfg/configuration</configfile>
   </feature>
 
-  <feature name="acrepo-services-activemq" version="${project.version}">
-    <details>Installs the ActiveMQ service</details>
-
-    <feature version="${camelVersionRange}">camel</feature>
-    <feature version="${camelVersionRange}">camel-blueprint</feature>
-    <feature version="${camelVersionRange}">camel-jms</feature>
-    <feature version="${activemqVersionRange}">activemq-camel</feature>
-
-    <bundle>mvn:edu.amherst.acdc/acrepo-services-activemq/${project.version}</bundle>
-
-    <configfile finalname="/etc/edu.amherst.acdc.services.activemq.cfg">mvn:edu.amherst.acdc/acrepo-services-activemq/${project.version}/cfg/configuration</configfile>
-  </feature>
-
   <feature name="acrepo-services-mint" version="${project.version}">
     <details>Installs the id minter</details>
 

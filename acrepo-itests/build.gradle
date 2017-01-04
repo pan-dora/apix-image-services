@@ -48,7 +48,6 @@ dependencies {
     testCompile project(':acrepo-connector-broadcast')
     testCompile project(':acrepo-connector-idiomatic')
     testCompile project(':acrepo-connector-idiomatic-pgsql')
-    testCompile project(':acrepo-services-activemq')
     testCompile project(':acrepo-services-inference')
     testCompile project(':acrepo-services-jsonld')
     testCompile project(':acrepo-services-mint')
