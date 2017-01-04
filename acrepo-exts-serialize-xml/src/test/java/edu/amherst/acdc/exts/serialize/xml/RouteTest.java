@@ -79,18 +79,15 @@ public class RouteTest extends CamelBlueprintTestSupport {
         namespaces.put("xsi", "http://www.w3.org/2001/XMLSchema-instance");
 
         final XPathExpression hasDescription = new XPathExpression(
-            "/oai_dc:dc/dc:description[@xsi:type='http://www.w3.org/2001/XMLSchema#string' and " +
-                "text()='First this, then that']");
+            "/oai_dc:dc/dc:description[text()='First this, then that']");
         hasDescription.setNamespaces(namespaces);
 
         final XPathExpression hasFormat1 = new XPathExpression(
-            "/oai_dc:dc/dc:format[@xsi:type='http://www.w3.org/2001/XMLSchema#string' and " +
-                "text()='1 volume (420 pages): photographs']");
+            "/oai_dc:dc/dc:format[text()='1 volume (420 pages): photographs']");
         hasFormat1.setNamespaces(namespaces);
 
         final XPathExpression hasFormat2 = new XPathExpression(
-            "/oai_dc:dc/dc:format[@xsi:type='http://www.w3.org/2001/XMLSchema#string' and " +
-                "text()='Pen and ink on linen']");
+            "/oai_dc:dc/dc:format[text()='Pen and ink on linen']");
         hasFormat2.setNamespaces(namespaces);
 
         final XPathExpression hasFormat3 = new XPathExpression(
@@ -102,7 +99,7 @@ public class RouteTest extends CamelBlueprintTestSupport {
         hasRights.setNamespaces(namespaces);
 
         final XPathExpression hasTitle = new XPathExpression(
-            "/oai_dc:dc/dc:title[@xsi:type='http://www.w3.org/2001/XMLSchema#string' and text()='Manuscript Title']");
+            "/oai_dc:dc/dc:title[text()='Manuscript Title']");
         hasTitle.setNamespaces(namespaces);
 
         final XPathExpression hasSubject = new XPathExpression(
