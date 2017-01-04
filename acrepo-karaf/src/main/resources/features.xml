@@ -126,28 +126,6 @@
     <configfile finalname="/etc/edu.amherst.acdc.exts.serialize.xml.cfg">mvn:edu.amherst.acdc/acrepo-exts-serialize-xml/${project.version}/cfg/configuration</configfile>
   </feature>
 
-  <feature name="acrepo-services-jsonld" version="${project.version}">
-    <details>Installs the JSON-LD transformation OSGi service</details>
-
-    <feature version="${project.version}">acrepo-libs-jsonld</feature>
-
-    <bundle>mvn:edu.amherst.acdc/acrepo-services-jsonld/${project.version}</bundle>
-  </feature>
-
-  <feature name="acrepo-exts-jsonld" version="${project.version}">
-    <details>Installs a sample JSON-LD transformation workflow</details>
-
-    <feature version="${camelVersionRange}">camel</feature>
-    <feature version="${camelVersionRange}">camel-blueprint</feature>
-    <feature version="${camelVersionRange}">camel-jetty9</feature>
-    <feature version="${fcrepoCamelVersionRange}">fcrepo-camel</feature>
-    <feature version="${project.version}">acrepo-services-jsonld</feature>
-
-    <bundle>mvn:edu.amherst.acdc/acrepo-exts-jsonld/${project.version}</bundle>
-
-    <configfile finalname="/etc/edu.amherst.acdc.exts.jsonld.cfg">mvn:edu.amherst.acdc/acrepo-exts-jsonld/${project.version}/cfg/configuration</configfile>
-  </feature>
-
   <feature name="acrepo-exts-template" version="${project.version}">
     <details>Installs a sample JSON-based template rendering service</details>
 
