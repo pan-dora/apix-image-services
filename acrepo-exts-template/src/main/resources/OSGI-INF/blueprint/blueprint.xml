@@ -14,31 +14,19 @@
        <cm:property name="rest.host" value="localhost"/>
        <cm:property name="rest.port" value="9103"/>
        <cm:property name="rest.prefix" value="/template"/>
-       <cm:property name="fcrepo.baseUrl" value="localhost:8080/fcrepo/rest"/>
+       <cm:property name="fcrepo.baseUrl" value="http://localhost:8080/fcrepo/rest"/>
        <cm:property name="mustache.templateUri" value="edu/amherst/acdc/exts/template/template.mustache"/>
        <cm:property name="mustache.contentType" value="text/html"/>
-       <cm:property name="jsonld.context" value="https://acdc.amherst.edu/jsonld/models.json"/>
+       <cm:property name="ldpath.serviceUrl" value="http://localhost:9086/ldpath"/>
        <cm:property name="extension.load" value="true" />
        <cm:property name="extension.load.uri" value="http://apix/services//apix:load" />
        <cm:property name="extension.load.maximumRediveries" value="60" />
      </cm:default-properties>
    </cm:property-placeholder>
 
-   <reference id="jsonldService" interface="edu.amherst.acdc.services.jsonld.JsonLdService" filter="(osgi.jndi.service.name=acrepo/JsonLD)" />
-
   <camelContext id="AcrepoTemplateService" xmlns="http://camel.apache.org/schema/blueprint" streamCache="false">
     <package>edu.amherst.acdc.exts.template</package>
 
-    <route id="JsonLdCompaction">
-      <from uri="direct:compact"/>
-      <setHeader headerName="JsonLdContext">
-        <simple>{{jsonld.context}}</simple>
-      </setHeader>
-      <setBody>
-        <method ref="jsonldService" method="compact(${body}, ${header[JsonLdContext]})"/>
-      </setBody>
-    </route>
-    
         <!-- Self-register the loader service as an extension -->
     <route id="load-extension">
       <from uri="timer:register?repeatCount=1" />

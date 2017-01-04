@@ -19,17 +19,25 @@ import static org.apache.camel.component.mustache.MustacheConstants.MUSTACHE_RES
 import static org.apache.camel.Exchange.CONTENT_TYPE;
 import static org.apache.camel.Exchange.HTTP_METHOD;
 import static org.apache.camel.Exchange.HTTP_PATH;
+import static org.apache.camel.Exchange.HTTP_QUERY;
+import static org.apache.camel.Exchange.HTTP_URI;
 import static org.apache.camel.Exchange.HTTP_RESPONSE_CODE;
+import static org.apache.camel.LoggingLevel.INFO;
+import static org.apache.camel.model.dataformat.JsonLibrary.Jackson;
 import static org.fcrepo.camel.FcrepoHeaders.FCREPO_IDENTIFIER;
-import java.util.Map;
+import static org.slf4j.LoggerFactory.getLogger;
 
-import org.apache.camel.model.dataformat.JsonLibrary;
+import java.util.List;
+
 import org.apache.camel.builder.RouteBuilder;
+import org.slf4j.Logger;
 
 /**
  * @author Aaron Coburn
  */
 public class EventRouter extends RouteBuilder {
+
+    private static final Logger LOGGER = getLogger(EventRouter.class);
 
     /**
      * Configure the message route workflow.
@@ -51,7 +59,7 @@ public class EventRouter extends RouteBuilder {
                     .process(e -> e.getIn().setHeader(FCREPO_IDENTIFIER,
                             e.getIn().getHeader("Apix-Ldp-Resource-Path",
                                     e.getIn().getHeader(HTTP_PATH))))
-                    .log("PATH: ${headers[CamelFcrepoIdentifier]}")
+                    .log(INFO, LOGGER, "PATH: ${headers[CamelFcrepoIdentifier]}")
                     .removeHeader("breadcrumbId")
                     .removeHeader("Accept")
                     .removeHeader("User-Agent")
@@ -63,16 +71,20 @@ public class EventRouter extends RouteBuilder {
 
         from("direct:getFromFedora")
             .routeId("FetchFromRepository")
-            .to("fcrepo:{{fcrepo.baseUrl}}?accept=application/ld+json&throwExceptionOnFailure=false")
+            .removeHeaders("CamelHttp*")
+            .setHeader(HTTP_URI).simple("{{ldpath.serviceUrl}}")
+            .setHeader(HTTP_QUERY).simple("context={{fcrepo.baseUrl}}${headers[CamelFcrepoIdentifier]}")
+            .setHeader(HTTP_METHOD).constant("GET")
+            .to("http4://localhost")
             .filter(header(HTTP_RESPONSE_CODE).isEqualTo(200))
-              .to("direct:compact")
               .to("direct:template");
 
 
         from("direct:template")
             .routeId("TemplateRoute")
             .setHeader(CONTENT_TYPE).simple("{{mustache.contentType}}")
-            .unmarshal().json(JsonLibrary.Jackson, Map.class)
+            .unmarshal().json(Jackson, List.class)
+            .setBody(simple("${body[0]}"))
             .choice()
                .when(header("templateUri").isNull())
                    .to("direct:defaultTemplate")

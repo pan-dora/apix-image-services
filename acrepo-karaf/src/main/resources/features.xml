@@ -149,7 +149,7 @@
   </feature>
 
   <feature name="acrepo-exts-template" version="${project.version}">
-    <details>Installs a sample JSON-LD-based template rendering service</details>
+    <details>Installs a sample JSON-based template rendering service</details>
 
     <feature version="${camelVersionRange}">camel</feature>
     <feature version="${camelVersionRange}">camel-blueprint</feature>
@@ -158,7 +158,6 @@
     <feature version="${camelVersionRange}">camel-jackson</feature>
     <feature version="${camelVersionRange}">camel-http4</feature>
     <feature version="${fcrepoCamelVersionRange}">fcrepo-camel</feature>
-    <feature version="${project.version}">acrepo-services-jsonld</feature>
 
     <bundle>mvn:edu.amherst.acdc/acrepo-exts-template/${project.version}</bundle>
 
