@@ -115,6 +115,9 @@ public class AcrepoTemplateIT extends AbstractOSGiIT {
         final String baseUrl = "http://localhost:" + System.getProperty("fcrepo.port") + "/fcrepo/rest";
         final String baseSvcUrl = "http://localhost:" + System.getProperty("karaf.template.port") + "/template";
 
+        // Wait 10 seconds
+        Thread.sleep(10000);
+
         assertTrue(options(baseSvcUrl).contains("apix:bindsTo fedora:Resource"));
 
         range(1, 2).mapToObj(x -> post(baseUrl)).forEach(url -> {
