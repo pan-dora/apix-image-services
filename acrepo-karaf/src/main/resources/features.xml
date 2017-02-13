@@ -66,6 +66,11 @@
     <feature version="${fcrepoCamelToolboxVersionRange}">fcrepo-ldpath-core</feature>
     <feature version="${fcrepoCamelToolboxVersionRange}">fcrepo-service-ldcache-file</feature>
 
+    <bundle dependency="true">mvn:org.fcrepo.client/fcrepo-java-client/${fcrepoClientVersion}</bundle>
+    <bundle dependency="true">mvn:org.apache.commons/commons-lang3/${commonsLangVersion}</bundle>
+    <bundle dependency="true">mvn:org.apache.httpcomponents/httpclient-osgi/${httpclientVersion}</bundle>
+    <bundle dependency="true">mvn:org.apache.httpcomponents/httpcore-osgi/${httpcoreVersion}</bundle>
+
     <bundle>mvn:edu.amherst.acdc/acrepo-exts-ldpath/${project.version}</bundle>
 
     <configfile finalname="/etc/edu.amherst.acdc.exts.ldpath.cfg">mvn:edu.amherst.acdc/acrepo-exts-ldpath/${project.version}/cfg/configuration</configfile>

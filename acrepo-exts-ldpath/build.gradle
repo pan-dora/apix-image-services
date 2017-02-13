@@ -48,6 +48,7 @@ jar {
             org.apache.marmotta.ldclient.endpoint.rdf,
             org.apache.marmotta.ldclient.provider.rdf,
             org.apache.marmotta.ldpath.backend.linkeddata,
+            org.fcrepo.client,
             org.fcrepo.camel.ldpath,
             ${defaultOsgiImports}"""
         instruction 'Export-Package', "edu.amherst.acdc.exts.ldpath;version=${projectOsgiVersion}"
