@@ -17,7 +17,7 @@
        <cm:property name="fcrepo.baseUrl" value="http://localhost:8080/fcrepo/rest"/>
        <cm:property name="extension.load" value="true" />
        <cm:property name="extension.load.uri" value="http://apix/services//apix:load" />
-       <cm:property name="extension.load.maximumRediveries" value="60" />
+       <cm:property name="extension.load.maximumRedeliveries" value="60" />
      </cm:default-properties>
    </cm:property-placeholder>
 
@@ -66,7 +66,7 @@
       <from uri="timer:register?repeatCount=1" />
       <onException>
         <exception>java.lang.Exception</exception>
-        <redeliveryPolicy maximumRedeliveries="{{extension.load.maximumRediveries}}"
+        <redeliveryPolicy maximumRedeliveries="{{extension.load.maximumRedeliveries}}"
           logRetryAttempted="true" retryAttemptedLogLevel="INFO" />
       </onException>
       <setHeader headerName="Content-Type">
