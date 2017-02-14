@@ -22,6 +22,9 @@
       <cm:property name="rest.host" value="localhost"/>
       <cm:property name="rest.port" value="9086"/>
       <cm:property name="cache.timeout" value="86400"/>
+      <cm:property name="extension.load" value="true" />
+      <cm:property name="extension.load.uri" value="http://apix/services//apix:load" />
+      <cm:property name="extension.load.maximumRedeliveries" value="60" />
     </cm:default-properties>
   </cm:property-placeholder>
 
@@ -93,6 +96,31 @@
       <setBody>
         <method ref="ldpath" method="programQuery(${headers.context}, ${body})"/>
       </setBody>
+    </route>
+
+    <!-- Self-register the ldpath service as an API-X extension -->
+    <route id="load-extension">
+      <from uri="timer:register?repeatCount=1" />
+      <onException>
+        <exception>java.lang.Exception</exception>
+        <redeliveryPolicy maximumRedeliveries="{{extension.load.maximumRedeliveries}}"
+          logRetryAttempted="true" retryAttemptedLogLevel="INFO" />
+      </onException>
+      <setHeader headerName="Content-Type">
+        <constant>text/plain</constant>
+      </setHeader>
+      <setHeader headerName="CamelHttpMethod">
+        <constant>POST</constant>
+      </setHeader>
+      <setBody>
+        <simple>http://{{rest.host}}:{{rest.port}}{{rest.prefix}}</simple>
+      </setBody>
+      <choice>
+        <when>
+          <simple>{{extension.load}}</simple>
+          <to uri="jetty:{{extension.load.uri}}?okStatusCodeRange=200-399" />
+        </when>
+      </choice>
     </route>
   </camelContext>
 </blueprint>
