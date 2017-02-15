@@ -31,6 +31,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 import java.io.File;
 
 import org.apache.camel.CamelContext;
+import org.apache.marmotta.ldcache.api.LDCachingBackend;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.Configuration;
@@ -111,12 +112,10 @@ public class AcrepoTemplateIT extends AbstractOSGiIT {
         // make sure that the camel context has started up.
         assertNotNull(getOsgiService(CamelContext.class, "(camel.context.name=AcrepoTemplateService)", 10000));
         assertNotNull(getOsgiService(CamelContext.class, "(camel.context.name=AcrepoLDPathContext)", 10000));
+        assertNotNull(getOsgiService(LDCachingBackend.class, "(osgi.jndi.service.name=fcrepo/LDCacheBackend)", 20000));
 
         final String baseUrl = "http://localhost:" + System.getProperty("fcrepo.port") + "/fcrepo/rest";
         final String baseSvcUrl = "http://localhost:" + System.getProperty("karaf.template.port") + "/template";
-
-        // Wait 10 seconds
-        Thread.sleep(10000);
 
         assertTrue(options(baseSvcUrl).contains("apix:bindsTo fedora:Resource"));
 
