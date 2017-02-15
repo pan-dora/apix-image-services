@@ -1,0 +1,11 @@
+edu.amherst.acdc.connector.broadcast
+edu.amherst.acdc.connector.idiomatic
+edu.amherst.acdc.exts.fits
+edu.amherst.acdc.exts.image
+edu.amherst.acdc.exts.ldpath
+edu.amherst.acdc.exts.pcdm
+edu.amherst.acdc.exts.serialize.xml
+edu.amherst.acdc.exts.template
+edu.amherst.acdc.services.inference
+edu.amherst.acdc.services.mint
+edu.amherst.acdc.services.pcdm
