@@ -70,6 +70,7 @@ dependencies {
     testCompile group: 'org.ops4j.pax.exam', name: 'pax-exam-junit4', version: paxExamVersion
     testCompile group: 'org.ops4j.pax.exam', name: 'pax-exam-container-karaf', version: paxExamVersion
     testCompile group: 'org.apache.karaf.features', name: 'org.apache.karaf.features.core', version: karafVersion
+    testCompile group: 'org.apache.marmotta', name: 'ldcache-api', version: marmottaVersion
     testCompile(group: 'org.fcrepo.camel', name: 'fcrepo-camel', version: fcrepoCamelVersion) {
         exclude(module: 'slf4j-log4j12')
     }
