@@ -194,6 +194,19 @@
     <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/${jacksonVersion}</bundle>
   </feature>
 
+  <feature name="acrepo-connector-triplestore" version="${project.version}">
+    <details>Installs the triplestore indexing service</details>
+
+    <feature version="${camelVersionRange}">camel</feature>
+    <feature version="${camelVersionRange}">camel-blueprint</feature>
+    <feature version="${camelVersionRange}">camel-http4</feature>
+    <feature version="${fcrepoCamelVersionRange}">fcrepo-camel</feature>
+
+    <bundle>mvn:edu.amherst.acdc/acrepo-connector-triplestore/${project.version}</bundle>
+
+    <configfile finalname="/etc/edu.amherst.acdc.connector.triplestore.cfg">mvn:edu.amherst.acdc/acrepo-connector-triplestore/${project.version}/cfg/configuration</configfile>
+  </feature>
+
   <feature name="acrepo-connector-broadcast" version="${project.version}">
     <details>Installs the message broadcasting service</details>
 
