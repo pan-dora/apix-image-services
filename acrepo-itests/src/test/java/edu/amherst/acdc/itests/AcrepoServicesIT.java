@@ -86,6 +86,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
             features(maven().groupId("edu.amherst.acdc").artifactId("acrepo-karaf")
                         .type("xml").classifier("features").versionAsInProject(),
                     "acrepo-connector-broadcast",
+                    "acrepo-connector-triplestore",
 
                     "acrepo-exts-fits",
                     "acrepo-exts-image",
@@ -120,6 +121,7 @@ public class AcrepoServicesIT extends AbstractOSGiIT {
         assertTrue(featuresService.isInstalled(featuresService.getFeature("fcrepo-camel")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("fcrepo-service-activemq")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-connector-broadcast")));
+        assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-connector-triplestore")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-fits")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-image")));
         assertTrue(featuresService.isInstalled(featuresService.getFeature("acrepo-exts-ldpath")));

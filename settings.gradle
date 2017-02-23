@@ -3,6 +3,7 @@ include ':acrepo-connector-broadcast'
 include ':acrepo-connector-idiomatic'
 include ':acrepo-connector-idiomatic-mysql'
 include ':acrepo-connector-idiomatic-pgsql'
+include ':acrepo-connector-triplestore'
 include ':acrepo-exts-fits'
 include ':acrepo-exts-image'
 include ':acrepo-exts-ldpath'
@@ -19,6 +20,7 @@ project(':acrepo-connector-broadcast').projectDir = "$rootDir/acrepo-connector-b
 project(':acrepo-connector-idiomatic').projectDir = "$rootDir/acrepo-connector-idiomatic" as File
 project(':acrepo-connector-idiomatic-mysql').projectDir = "$rootDir/acrepo-connector-idiomatic-mysql" as File
 project(':acrepo-connector-idiomatic-pgsql').projectDir = "$rootDir/acrepo-connector-idiomatic-pgsql" as File
+project(':acrepo-connector-triplestore').projectDir = "$rootDir/acrepo-connector-triplestore" as File
 project(':acrepo-exts-fits').projectDir = "$rootDir/acrepo-exts-fits" as File
 project(':acrepo-exts-image').projectDir = "$rootDir/acrepo-exts-image" as File
 project(':acrepo-exts-ldpath').projectDir = "$rootDir/acrepo-exts-ldpath" as File
