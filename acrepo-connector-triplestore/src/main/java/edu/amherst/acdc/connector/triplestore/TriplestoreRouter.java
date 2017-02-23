@@ -66,8 +66,7 @@ public class TriplestoreRouter extends RouteBuilder {
          * route a message to the proper queue, based on whether
          * it is a DELETE or UPDATE operation.
          */
-        from("{{input.stream}}")
-            .routeId("FcrepoTriplestoreRouter")
+        from("{{input.stream}}").routeId("AcrepoTriplestoreRouter")
             .process(new EventProcessor())
             .setHeader(FCREPO_NAMED_GRAPH).header(FCREPO_URI)
             .choice()
@@ -80,16 +79,14 @@ public class TriplestoreRouter extends RouteBuilder {
         /**
          * Handle re-index events
          */
-        from("{{triplestore.reindex.stream}}")
-            .routeId("FcrepoTriplestoreReindex")
+        from("{{triplestore.reindex.stream}}").routeId("AcrepoTriplestoreReindex")
             .setHeader(FCREPO_NAMED_GRAPH).header(FCREPO_URI)
             .to("direct:index.triplestore");
 
         /**
          * Based on an item's metadata, determine if it is indexable.
          */
-        from("direct:index.triplestore")
-            .routeId("FcrepoTriplestoreIndexer")
+        from("direct:index.triplestore").routeId("AcrepoTriplestoreIndexer")
             .filter(not(in(tokenizePropertyPlaceholder(getContext(), "{{filter.containers}}", ",").stream()
                         .map(uri -> or(
                             header(FCREPO_URI).startsWith(constant(uri + "/")),
@@ -101,8 +98,7 @@ public class TriplestoreRouter extends RouteBuilder {
         /**
          * Remove an item from the triplestore index.
          */
-        from("direct:delete.triplestore")
-            .routeId("FcrepoTriplestoreDeleter")
+        from("direct:delete.triplestore").routeId("AcrepoTriplestoreDeleter")
             .log(LoggingLevel.INFO, LOGGER,
                     "Deleting Triplestore Graph ${headers[CamelFcrepoUri]}")
             .setHeader(HTTP_METHOD).constant("POST")
@@ -113,8 +109,7 @@ public class TriplestoreRouter extends RouteBuilder {
         /**
          * Perform the sparql update.
          */
-        from("direct:update.triplestore")
-            .routeId("FcrepoTriplestoreUpdater")
+        from("direct:update.triplestore").routeId("AcrepoTriplestoreUpdater")
             .to("fcrepo:{{fcrepo.baseUrl}}?accept=application/n-triples" +
                     "&preferOmit={{prefer.omit}}&preferInclude={{prefer.include}}")
             .process(new SparqlUpdateProcessor())
