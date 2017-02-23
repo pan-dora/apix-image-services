@@ -56,14 +56,14 @@ The base URL of the triplestore being used.
 
 The Fedora configuration.
 
-    fcrepo.baseUrl=http://localhost:8080/fcrepo/linkeddata
+    fcrepo.baseUrl=http://localhost:8080/fcrepo/rest
     fcrepo.authUsername=
     fcrepo.authPassword=
 
 A comma-delimited list of URIs to filter. That is, any Fedora resource that either matches or is contained in one of
 the URIs listed will not be processed by the application.
 
-    filter.containers=http://localhost:8080/fcrepo/linkeddata/test
+    filter.containers=http://localhost:8080/fcrepo/rest/test
 
 By editing this file, any currently running routes in this service will be immediately redeployed
 with the new values.
