@@ -81,14 +81,14 @@ public class TriplestoreRouter extends RouteBuilder {
                         .to("direct:update.triplestore");
 
         /*
-         * Handle re-index events
+         * Handle re-index events.
          */
         from("{{triplestore.reindex.stream}}").routeId("AcrepoTriplestoreReindex")
             .setHeader(FCREPO_NAMED_GRAPH).header(FCREPO_URI)
             .to("direct:update.triplestore");
 
         /*
-         * Remove the triples from a named graph from the triplestore index.
+         * Remove the triples from a named graph.
          */
         from("direct:delete.triplestore").routeId("AcrepoTriplestoreDeleter")
             .log(LoggingLevel.INFO, LOGGER, "Deleting Triplestore Graph ${headers[CamelFcrepoUri]}")
