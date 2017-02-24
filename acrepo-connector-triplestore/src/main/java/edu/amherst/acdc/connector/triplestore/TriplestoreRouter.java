@@ -34,8 +34,8 @@ import java.io.UncheckedIOException;
 
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.jena.util.URIref;
 import org.fcrepo.camel.processor.EventProcessor;
-import org.fcrepo.camel.processor.SparqlUpdateProcessor;
 import org.slf4j.Logger;
 
 /**
@@ -69,12 +69,13 @@ public class TriplestoreRouter extends RouteBuilder {
         from("{{input.stream}}").routeId("AcrepoTriplestoreRouter")
             .process(new EventProcessor())
             .setHeader(FCREPO_NAMED_GRAPH).header(FCREPO_URI)
-            .choice()
-                .when(or(header(FCREPO_EVENT_TYPE).contains(RESOURCE_DELETION),
+            .filter(not(header(FCREPO_URI).contains("#")))
+                .choice()
+                    .when(or(header(FCREPO_EVENT_TYPE).contains(RESOURCE_DELETION),
                             header(FCREPO_EVENT_TYPE).contains(DELETE)))
-                    .to("direct:delete.triplestore")
-                .when(not(header(FCREPO_URI).contains("#")))
-                    .to("direct:index.triplestore");
+                        .to("direct:delete.triplestore")
+                    .otherwise()
+                        .to("direct:index.triplestore");
 
         /**
          * Handle re-index events
@@ -92,15 +93,13 @@ public class TriplestoreRouter extends RouteBuilder {
                             header(FCREPO_URI).startsWith(constant(uri + "/")),
                             header(FCREPO_URI).isEqualTo(constant(uri))))
                         .collect(toList()))))
-            .removeHeaders("CamelHttp*")
-            .to("direct:update.triplestore");
+                .to("direct:update.triplestore");
 
         /**
          * Remove an item from the triplestore index.
          */
         from("direct:delete.triplestore").routeId("AcrepoTriplestoreDeleter")
-            .log(LoggingLevel.INFO, LOGGER,
-                    "Deleting Triplestore Graph ${headers[CamelFcrepoUri]}")
+            .log(LoggingLevel.INFO, LOGGER, "Deleting Triplestore Graph ${headers[CamelFcrepoUri]}")
             .setHeader(HTTP_METHOD).constant("POST")
             .setHeader(CONTENT_TYPE).constant("application/x-www-form-urlencoded; charset=utf-8")
             .process(e -> e.getIn().setBody(sparqlUpdate(deleteAll(getMandatoryHeader(e, FCREPO_URI, String.class)))))
@@ -110,16 +109,23 @@ public class TriplestoreRouter extends RouteBuilder {
          * Perform the sparql update.
          */
         from("direct:update.triplestore").routeId("AcrepoTriplestoreUpdater")
+            .removeHeaders("CamelHttp*")
             .to("fcrepo:{{fcrepo.baseUrl}}?accept=application/n-triples" +
                     "&preferOmit={{prefer.omit}}&preferInclude={{prefer.include}}")
-            .process(new SparqlUpdateProcessor())
-            .log(LoggingLevel.INFO, LOGGER,
-                    "Indexing Triplestore Object ${headers[CamelFcrepoUri]}")
+            .log(LoggingLevel.INFO, LOGGER, "Indexing Triplestore Object ${headers[CamelFcrepoUri]}")
+            .setHeader(HTTP_METHOD).constant("POST")
+            .setHeader(CONTENT_TYPE).constant("application/x-www-form-urlencoded; charset=utf-8")
+            .process(e -> {
+                final String graphName = getMandatoryHeader(e, FCREPO_URI, String.class);
+                e.getIn().setBody(sparqlUpdate(deleteAll(graphName) +
+                            "INSERT DATA { GRAPH <" + URIref.encode(graphName) + "> {" +
+                            e.getIn().getBody(String.class) + "} };"));
+                })
             .to("{{triplestore.baseUrl}}?useSystemProperties=true");
     }
 
     private static String deleteAll(final String graphName) {
-        return "DELETE WHERE { GRAPH <" + graphName + "> { ?s ?p ?o } }";
+        return "DELETE WHERE { GRAPH <" + URIref.encode(graphName) + "> { ?s ?p ?o } };";
     }
 
     private static String sparqlUpdate(final String command) {
