@@ -32,7 +32,9 @@ import static org.slf4j.LoggerFactory.getLogger;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 
+import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
+import org.apache.camel.NoSuchHeaderException;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.jena.util.URIref;
 import org.fcrepo.camel.processor.EventProcessor;
@@ -55,77 +57,73 @@ public class TriplestoreRouter extends RouteBuilder {
      */
     public void configure() throws Exception {
 
-        /**
+        /*
          * A generic error handler (specific to this RouteBuilder)
          */
         onException(Exception.class)
             .maximumRedeliveries("{{error.maxRedeliveries}}")
             .log("Index Routing Error: ${routeId}");
 
-        /**
-         * route a message to the proper queue, based on whether
-         * it is a DELETE or UPDATE operation.
+        /*
+         * Route a message to the proper handler, based on whether it is a DELETE or UPDATE operation.
+         * Messages with a URI containing a # are omitted entirely; these are extra messages emitted
+         * by Fedora that should be ignored.
          */
         from("{{input.stream}}").routeId("AcrepoTriplestoreRouter")
             .process(new EventProcessor())
-            .setHeader(FCREPO_NAMED_GRAPH).header(FCREPO_URI)
             .filter(not(header(FCREPO_URI).contains("#")))
+            .setHeader(FCREPO_NAMED_GRAPH).header(FCREPO_URI)
                 .choice()
                     .when(or(header(FCREPO_EVENT_TYPE).contains(RESOURCE_DELETION),
                             header(FCREPO_EVENT_TYPE).contains(DELETE)))
                         .to("direct:delete.triplestore")
                     .otherwise()
-                        .to("direct:index.triplestore");
+                        .to("direct:update.triplestore");
 
-        /**
+        /*
          * Handle re-index events
          */
         from("{{triplestore.reindex.stream}}").routeId("AcrepoTriplestoreReindex")
             .setHeader(FCREPO_NAMED_GRAPH).header(FCREPO_URI)
-            .to("direct:index.triplestore");
+            .to("direct:update.triplestore");
 
-        /**
-         * Based on an item's metadata, determine if it is indexable.
-         */
-        from("direct:index.triplestore").routeId("AcrepoTriplestoreIndexer")
-            .filter(not(in(tokenizePropertyPlaceholder(getContext(), "{{filter.containers}}", ",").stream()
-                        .map(uri -> or(
-                            header(FCREPO_URI).startsWith(constant(uri + "/")),
-                            header(FCREPO_URI).isEqualTo(constant(uri))))
-                        .collect(toList()))))
-                .to("direct:update.triplestore");
-
-        /**
-         * Remove an item from the triplestore index.
+        /*
+         * Remove the triples from a named graph from the triplestore index.
          */
         from("direct:delete.triplestore").routeId("AcrepoTriplestoreDeleter")
             .log(LoggingLevel.INFO, LOGGER, "Deleting Triplestore Graph ${headers[CamelFcrepoUri]}")
             .setHeader(HTTP_METHOD).constant("POST")
             .setHeader(CONTENT_TYPE).constant("application/x-www-form-urlencoded; charset=utf-8")
-            .process(e -> e.getIn().setBody(sparqlUpdate(deleteAll(getMandatoryHeader(e, FCREPO_URI, String.class)))))
+            .process(e -> e.getIn().setBody(sparqlUpdate(deleteAll(graph(e)))))
             .to("{{triplestore.baseUrl}}?useSystemProperties=true");
 
-        /**
-         * Perform the sparql update.
+        /*
+         * Add or update the triples for a named graph.
          */
         from("direct:update.triplestore").routeId("AcrepoTriplestoreUpdater")
-            .removeHeaders("CamelHttp*")
-            .to("fcrepo:{{fcrepo.baseUrl}}?accept=application/n-triples" +
-                    "&preferOmit={{prefer.omit}}&preferInclude={{prefer.include}}")
-            .log(LoggingLevel.INFO, LOGGER, "Indexing Triplestore Object ${headers[CamelFcrepoUri]}")
-            .setHeader(HTTP_METHOD).constant("POST")
-            .setHeader(CONTENT_TYPE).constant("application/x-www-form-urlencoded; charset=utf-8")
-            .process(e -> {
-                final String graphName = getMandatoryHeader(e, FCREPO_URI, String.class);
-                e.getIn().setBody(sparqlUpdate(deleteAll(graphName) +
-                            "INSERT DATA { GRAPH <" + URIref.encode(graphName) + "> {" +
-                            e.getIn().getBody(String.class) + "} };"));
-                })
-            .to("{{triplestore.baseUrl}}?useSystemProperties=true");
+            .filter(not(in(tokenizePropertyPlaceholder(getContext(), "{{filter.containers}}", ",").stream()
+                        .map(uri -> or(
+                            header(FCREPO_URI).startsWith(constant(uri + "/")),
+                            header(FCREPO_URI).isEqualTo(constant(uri))))
+                        .collect(toList()))))
+                .removeHeaders("CamelHttp*")
+                .to("fcrepo:{{fcrepo.baseUrl}}?accept=application/n-triples" +
+                        "&preferOmit={{prefer.omit}}&preferInclude={{prefer.include}}")
+                .log(LoggingLevel.INFO, LOGGER, "Indexing Triplestore Object ${headers[CamelFcrepoUri]}")
+                .setHeader(HTTP_METHOD).constant("POST")
+                .setHeader(CONTENT_TYPE).constant("application/x-www-form-urlencoded; charset=utf-8")
+                .process(e -> e.getIn().setBody(sparqlUpdate(deleteAll(graph(e)) +
+                                "INSERT DATA { GRAPH <" + graph(e) + "> {" +
+                                e.getIn().getBody(String.class) + "} };")))
+                .to("{{triplestore.baseUrl}}?useSystemProperties=true");
     }
 
     private static String deleteAll(final String graphName) {
-        return "DELETE WHERE { GRAPH <" + URIref.encode(graphName) + "> { ?s ?p ?o } };";
+        return "DELETE WHERE { GRAPH <" + graphName + "> { ?s ?p ?o } };";
+    }
+
+    private static String graph(final Exchange ex) throws NoSuchHeaderException {
+        return URIref.encode(getMandatoryHeader(ex, FCREPO_URI, String.class));
     }
 
     private static String sparqlUpdate(final String command) {
