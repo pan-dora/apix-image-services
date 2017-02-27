@@ -1,9 +1,0 @@
-group = 'edu.amherst.acdc'
-description = 'ID Mapping MySQL Connector'
-
-artifacts {
-    archives (file('build/cfg/main/edu.amherst.acdc.connector.idiomatic.mysql.cfg')) {
-        classifier 'configuration'
-        type 'cfg'
-    }
-}

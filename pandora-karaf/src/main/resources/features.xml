@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.3.0" name="pandora-exts-${project.version}">
+  <feature name="pandora-exts-encoder" version="${project.version}">
+    <details>Installs the encoding service</details>
+
+    <feature version="${camelVersionRange}">camel</feature>
+    <feature version="${camelVersionRange}">camel-blueprint</feature>
+    <feature version="${camelVersionRange}">camel-jetty9</feature>
+    <feature version="${camelVersionRange}">camel-http4</feature>
+    <feature version="${camelVersionRange}">camel-exec</feature>
+
+    <bundle>mvn:cool.pandora/pandora-exts-encoder/${project.version}</bundle>
+
+    <configfile finalname="/etc/cool.pandora.exts.encoder.cfg">mvn:cool.pandora/pandora-exts-encoder/${project.version}/cfg/configuration</configfile>
+  </feature>
+</features>
