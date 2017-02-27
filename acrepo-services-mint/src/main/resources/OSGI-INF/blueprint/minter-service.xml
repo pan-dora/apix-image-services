@@ -7,13 +7,13 @@
   http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd"
   default-activation="lazy">
 
-  <cm:property-placeholder persistent-id="edu.amherst.acdc.services.mint" update-strategy="reload" >
+  <cm:property-placeholder persistent-id="cool.pandora.services.mint" update-strategy="reload" >
     <cm:default-properties>
       <cm:property name="minter.length" value="7"/>
     </cm:default-properties>
   </cm:property-placeholder>
 
-  <bean id="minterServiceBean" class="edu.amherst.acdc.services.mint.MinterService">
+  <bean id="minterServiceBean" class="cool.pandora.services.mint.MinterService">
     <argument value="${minter.length}"/>
   </bean>
 

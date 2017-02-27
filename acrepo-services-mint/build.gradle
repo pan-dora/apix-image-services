@@ -14,12 +14,12 @@ jar {
         license project.license
 
         instruction 'Import-Package', defaultOsgiImports
-        instruction 'Export-Package', "edu.amherst.acdc.services.mint;version=${projectOsgiVersion}"
+        instruction 'Export-Package', "cool.pandora.services.mint;version=${projectOsgiVersion}"
     }
 }
 
 artifacts {
-    archives (file('build/cfg/main/edu.amherst.acdc.services.mint.cfg')) {
+    archives (file('build/cfg/main/cool.pandora.services.mint.cfg')) {
         classifier 'configuration'
         type 'cfg'
     }

@@ -1,8 +1,8 @@
-group = 'edu.amherst.acdc'
+group = 'cool.pandora'
 description = 'ID Mapping Postgresql Connector'
 
 artifacts {
-    archives (file('build/cfg/main/edu.amherst.acdc.connector.idiomatic.pgsql.cfg')) {
+    archives (file('build/cfg/main/cool.pandora.connector.idiomatic.pgsql.cfg')) {
         classifier 'configuration'
         type 'cfg'
     }

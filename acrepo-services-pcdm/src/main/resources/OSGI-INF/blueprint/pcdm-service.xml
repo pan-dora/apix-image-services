@@ -7,9 +7,9 @@
   http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd"
   default-activation="lazy">
 
-  <bean id="pcdmServiceBean" class="edu.amherst.acdc.services.pcdm.PcdmServiceImpl"/>
+  <bean id="pcdmServiceBean" class="cool.pandora.services.pcdm.PcdmServiceImpl"/>
 
-  <service ref="pcdmServiceBean" interface="edu.amherst.acdc.services.pcdm.PcdmService">
+  <service ref="pcdmServiceBean" interface="cool.pandora.services.pcdm.PcdmService">
     <service-properties>
       <entry key="osgi.jndi.service.name" value="acrepo/Pcdm"/>
     </service-properties>

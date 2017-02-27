@@ -8,7 +8,7 @@
        http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
 
    <!-- OSGI blueprint property placeholder -->
-   <cm:property-placeholder persistent-id="edu.amherst.acdc.exts.pcdm" update-strategy="reload">
+   <cm:property-placeholder persistent-id="cool.pandora.exts.pcdm" update-strategy="reload">
      <cm:default-properties>
        <cm:property name="rest.port" value="9107"/>
        <cm:property name="rest.prefix" value="/pcdm"/>
@@ -21,10 +21,10 @@
      </cm:default-properties>
    </cm:property-placeholder>
 
-   <reference id="pcdmService" interface="edu.amherst.acdc.services.pcdm.PcdmService" filter="(osgi.jndi.service.name=acrepo/Pcdm)" />
+   <reference id="pcdmService" interface="cool.pandora.services.pcdm.PcdmService" filter="(osgi.jndi.service.name=acrepo/Pcdm)" />
 
   <camelContext id="AcrepoExtPcdm" xmlns="http://camel.apache.org/schema/blueprint">
-    <package>edu.amherst.acdc.exts.pcdm</package>
+    <package>cool.pandora.exts.pcdm</package>
 
     <route id="PcdmParser">
       <from uri="direct:parse"/>

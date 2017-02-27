@@ -51,12 +51,12 @@ jar {
             org.fcrepo.client,
             org.fcrepo.camel.ldpath,
             ${defaultOsgiImports}"""
-        instruction 'Export-Package', "edu.amherst.acdc.exts.ldpath;version=${projectOsgiVersion}"
+        instruction 'Export-Package', "cool.pandora.exts.ldpath;version=${projectOsgiVersion}"
     }
 }
 
 artifacts {
-    archives (file('build/cfg/main/edu.amherst.acdc.exts.ldpath.cfg')) {
+    archives (file('build/cfg/main/cool.pandora.exts.ldpath.cfg')) {
         classifier 'configuration'
         type 'cfg'
     }
