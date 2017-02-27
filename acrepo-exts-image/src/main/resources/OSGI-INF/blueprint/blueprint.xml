@@ -8,7 +8,7 @@
        http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
 
    <!-- OSGI blueprint property placeholder -->
-   <cm:property-placeholder persistent-id="edu.amherst.acdc.exts.image" update-strategy="reload">
+   <cm:property-placeholder persistent-id="cool.pandora.exts.image" update-strategy="reload">
      <cm:default-properties>
        <cm:property name="rest.port" value="9105"/>
        <cm:property name="rest.prefix" value="/image"/>
@@ -25,7 +25,7 @@
    </cm:property-placeholder>
 
   <camelContext id="AcrepoImageService" xmlns="http://camel.apache.org/schema/blueprint">
-    <package>edu.amherst.acdc.exts.image</package>
+    <package>cool.pandora.exts.image</package>
     
     <!-- Self-register the loader service as an extension -->
     <route id="load-extension">

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.amherst.acdc.exts.template;
+package cool.pandora.exts.template;
 
 import java.io.IOException;
 import java.net.ServerSocket;

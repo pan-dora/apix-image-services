@@ -28,12 +28,12 @@ jar {
         vendor project.vendor
         license project.license
         instruction 'Import-Package', "org.apache.camel,org.apache.camel.component.sql,javax.sql,${defaultOsgiImports}"
-        instruction 'Export-Package', "edu.amherst.acdc.connector.idiomatic;version=${projectOsgiVersion}"
+        instruction 'Export-Package', "cool.pandora.connector.idiomatic;version=${projectOsgiVersion}"
     }
 }
 
 artifacts {
-    archives (file('build/cfg/main/edu.amherst.acdc.connector.idiomatic.cfg')) {
+    archives (file('build/cfg/main/cool.pandora.connector.idiomatic.cfg')) {
         classifier 'configuration'
         type 'cfg'
     }

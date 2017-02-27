@@ -19,14 +19,14 @@ Each of these projects can be deployed in an OSGi container. For example using
 [Apache Karaf](http://karaf.apache.org) version 4.x and above, you can run the following
 command from its shell:
 
-    feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
+    feature:repo-add mvn:cool.pandora/acrepo-karaf/LATEST/xml/features
     feature:install acrepo-services-mint
 
 Configuration
 -------------
 
 The application can be configured by creating the following configuration
-file `$KARAF_HOME/etc/edu.amherst.acdc.services.mint.cfg`. The following values
+file `$KARAF_HOME/etc/cool.pandora.services.mint.cfg`. The following values
 are available for configuration:
 
 Set the length of the newly minted ID field

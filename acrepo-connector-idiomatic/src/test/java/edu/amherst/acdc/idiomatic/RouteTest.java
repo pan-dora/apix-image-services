@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.amherst.acdc.connector.idiomatic;
+package cool.pandora.connector.idiomatic;
 
 import static org.fcrepo.camel.FcrepoHeaders.FCREPO_URI;
 import static org.junit.Assert.assertEquals;
@@ -25,7 +25,7 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import edu.amherst.acdc.services.mint.MinterService;
+import cool.pandora.services.mint.MinterService;
 import java.util.function.Supplier;
 import org.apache.camel.Component;
 import org.apache.camel.EndpointInject;

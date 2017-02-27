@@ -19,14 +19,14 @@ This projects can be deployed in an OSGi container. For example using
 [Apache Karaf](http://karaf.apache.org) version 4.x or better, you can run the following
 command from its shell:
 
-    feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
+    feature:repo-add mvn:cool.pandora/acrepo-karaf/LATEST/xml/features
     feature:install acrepo-exts-ldpath
 
 Configuration
 -------------
 
 The application can be configured by creating a file in
-`$KARAF_HOME/etc/edu.amherst.acdc.exts.ldpath.cfg`. The following
+`$KARAF_HOME/etc/cool.pandora.exts.ldpath.cfg`. The following
 values are available for configuration:
 
 If the fedora repository requires authentication, the following values

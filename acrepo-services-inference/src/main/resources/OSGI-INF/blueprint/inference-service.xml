@@ -7,9 +7,9 @@
   http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd"
   default-activation="lazy">
 
-  <bean id="inferenceServiceBean" class="edu.amherst.acdc.services.inference.InferenceServiceImpl"/>
+  <bean id="inferenceServiceBean" class="cool.pandora.services.inference.InferenceServiceImpl"/>
 
-  <service ref="inferenceServiceBean" interface="edu.amherst.acdc.services.inference.InferenceService">
+  <service ref="inferenceServiceBean" interface="cool.pandora.services.inference.InferenceService">
     <service-properties>
       <entry key="osgi.jndi.service.name" value="acrepo/Inference"/>
     </service-properties>

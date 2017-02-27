@@ -1,34 +1,7 @@
-rootProject.name = 'repository-services'
-include ':acrepo-connector-broadcast'
-include ':acrepo-connector-idiomatic'
-include ':acrepo-connector-idiomatic-mysql'
-include ':acrepo-connector-idiomatic-pgsql'
-include ':acrepo-connector-triplestore'
-include ':acrepo-exts-fits'
+rootProject.name = 'apix-services'
 include ':acrepo-exts-image'
-include ':acrepo-exts-ldpath'
-include ':acrepo-exts-pcdm'
-include ':acrepo-exts-serialize-xml'
-include ':acrepo-exts-template'
 include ':acrepo-karaf'
-include ':acrepo-services-inference'
-include ':acrepo-services-mint'
-include ':acrepo-services-pcdm'
-include ':acrepo-itests'
 
-project(':acrepo-connector-broadcast').projectDir = "$rootDir/acrepo-connector-broadcast" as File
-project(':acrepo-connector-idiomatic').projectDir = "$rootDir/acrepo-connector-idiomatic" as File
-project(':acrepo-connector-idiomatic-mysql').projectDir = "$rootDir/acrepo-connector-idiomatic-mysql" as File
-project(':acrepo-connector-idiomatic-pgsql').projectDir = "$rootDir/acrepo-connector-idiomatic-pgsql" as File
-project(':acrepo-connector-triplestore').projectDir = "$rootDir/acrepo-connector-triplestore" as File
-project(':acrepo-exts-fits').projectDir = "$rootDir/acrepo-exts-fits" as File
 project(':acrepo-exts-image').projectDir = "$rootDir/acrepo-exts-image" as File
-project(':acrepo-exts-ldpath').projectDir = "$rootDir/acrepo-exts-ldpath" as File
-project(':acrepo-exts-pcdm').projectDir = "$rootDir/acrepo-exts-pcdm" as File
-project(':acrepo-exts-serialize-xml').projectDir = "$rootDir/acrepo-exts-serialize-xml" as File
-project(':acrepo-exts-template').projectDir = "$rootDir/acrepo-exts-template" as File
 project(':acrepo-karaf').projectDir = "$rootDir/acrepo-karaf" as File
-project(':acrepo-services-inference').projectDir = "$rootDir/acrepo-services-inference" as File
-project(':acrepo-services-mint').projectDir = "$rootDir/acrepo-services-mint" as File
-project(':acrepo-services-pcdm').projectDir = "$rootDir/acrepo-services-pcdm" as File
-project(':acrepo-itests').projectDir = "$rootDir/acrepo-itests" as File
+

@@ -7,7 +7,7 @@
   http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd" >
 
   <!-- OSGi blueprint property placeholder -->
-  <cm:property-placeholder id="properties" persistent-id="edu.amherst.acdc.exts.fits" update-strategy="reload">
+  <cm:property-placeholder id="properties" persistent-id="cool.pandora.exts.fits" update-strategy="reload">
     <cm:default-properties>
         <cm:property name="fcrepo.baseUrl" value="localhost:8080/fcrepo/rest"/>
         <cm:property name="fcrepo.authHost" value=""/>
@@ -25,7 +25,7 @@
 
   <camelContext id="FitsService" xmlns="http://camel.apache.org/schema/blueprint">
 
-    <package>edu.amherst.acdc.exts.fits</package>
+    <package>cool.pandora.exts.fits</package>
 
     <!-- Self-register the loader service as an extension -->
     <route id="load-extension">
