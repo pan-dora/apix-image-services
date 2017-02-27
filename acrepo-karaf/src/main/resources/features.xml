@@ -15,9 +15,9 @@
 
     <bundle dependency="true">mvn:org.codehaus.woodstox/woodstox-core-asl/${woodstoxVersion}</bundle>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-connector-idiomatic/${project.version}</bundle>
+    <bundle>mvn:cool.pandora/acrepo-connector-idiomatic/${project.version}</bundle>
 
-    <configfile finalname="/etc/edu.amherst.acdc.connector.idiomatic.cfg">mvn:edu.amherst.acdc/acrepo-connector-idiomatic/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/cool.pandora.connector.idiomatic.cfg">mvn:cool.pandora/acrepo-connector-idiomatic/${project.version}/cfg/configuration</configfile>
   </feature>
 
   <feature name="acrepo-connector-idiomatic-mysql" version="${project.version}">
@@ -30,7 +30,7 @@
     <feature>pax-jdbc-mysql</feature>
     <feature>pax-jdbc-pool-dbcp2</feature>
 
-    <configfile finalname="/etc/org.ops4j.datasource-idiomatic.cfg">mvn:edu.amherst.acdc/acrepo-connector-idiomatic-mysql/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/org.ops4j.datasource-idiomatic.cfg">mvn:cool.pandora/acrepo-connector-idiomatic-mysql/${project.version}/cfg/configuration</configfile>
   </feature>
 
   <feature name="acrepo-connector-idiomatic-pgsql" version="${project.version}">
@@ -43,7 +43,7 @@
     <feature>pax-jdbc-postgresql</feature>
     <feature>pax-jdbc-pool-dbcp2</feature>
 
-    <configfile finalname="/etc/org.ops4j.datasource-idiomatic.cfg">mvn:edu.amherst.acdc/acrepo-connector-idiomatic-pgsql/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/org.ops4j.datasource-idiomatic.cfg">mvn:cool.pandora/acrepo-connector-idiomatic-pgsql/${project.version}/cfg/configuration</configfile>
   </feature>
 
   <feature name="acrepo-exts-image" version="${project.version}">
@@ -55,9 +55,9 @@
     <feature version="${camelVersionRange}">camel-http4</feature>
     <feature version="${camelVersionRange}">camel-exec</feature>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-exts-image/${project.version}</bundle>
+    <bundle>mvn:cool.pandora/acrepo-exts-image/${project.version}</bundle>
 
-    <configfile finalname="/etc/edu.amherst.acdc.exts.image.cfg">mvn:edu.amherst.acdc/acrepo-exts-image/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/cool.pandora.exts.image.cfg">mvn:cool.pandora/acrepo-exts-image/${project.version}/cfg/configuration</configfile>
   </feature>
 
   <feature name="acrepo-exts-ldpath" version="${project.version}">
@@ -71,9 +71,9 @@
     <bundle dependency="true">mvn:org.apache.httpcomponents/httpclient-osgi/${httpclientVersion}</bundle>
     <bundle dependency="true">mvn:org.apache.httpcomponents/httpcore-osgi/${httpcoreVersion}</bundle>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-exts-ldpath/${project.version}</bundle>
+    <bundle>mvn:cool.pandora/acrepo-exts-ldpath/${project.version}</bundle>
 
-    <configfile finalname="/etc/edu.amherst.acdc.exts.ldpath.cfg">mvn:edu.amherst.acdc/acrepo-exts-ldpath/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/cool.pandora.exts.ldpath.cfg">mvn:cool.pandora/acrepo-exts-ldpath/${project.version}/cfg/configuration</configfile>
   </feature>
 
   <feature name="acrepo-exts-pcdm" version="${project.version}">
@@ -86,9 +86,9 @@
     <feature version="${project.version}">acrepo-services-pcdm</feature>
     <feature version="${project.version}">acrepo-libs-jena</feature>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-exts-pcdm/${project.version}</bundle>
+    <bundle>mvn:cool.pandora/acrepo-exts-pcdm/${project.version}</bundle>
 
-    <configfile finalname="/etc/edu.amherst.acdc.exts.pcdm.cfg">mvn:edu.amherst.acdc/acrepo-exts-pcdm/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/cool.pandora.exts.pcdm.cfg">mvn:cool.pandora/acrepo-exts-pcdm/${project.version}/cfg/configuration</configfile>
   </feature>
 
   <feature name="acrepo-services-mint" version="${project.version}">
@@ -96,9 +96,9 @@
 
     <bundle dependency="true">mvn:org.apache.commons/commons-lang3/${commonsLangVersion}</bundle>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-services-mint/${project.version}</bundle>
+    <bundle>mvn:cool.pandora/acrepo-services-mint/${project.version}</bundle>
 
-    <configfile finalname="/etc/edu.amherst.acdc.services.mint.cfg">mvn:edu.amherst.acdc/acrepo-services-mint/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/cool.pandora.services.mint.cfg">mvn:cool.pandora/acrepo-services-mint/${project.version}/cfg/configuration</configfile>
   </feature>
 
   <feature name="acrepo-services-pcdm" version="${project.version}">
@@ -106,7 +106,7 @@
 
     <feature version="${project.version}">acrepo-libs-jena</feature>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-services-pcdm/${project.version}</bundle>
+    <bundle>mvn:cool.pandora/acrepo-services-pcdm/${project.version}</bundle>
   </feature>
 
   <feature name="acrepo-services-inference" version="${project.version}">
@@ -114,7 +114,7 @@
 
     <feature version="${project.version}">acrepo-libs-jena</feature>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-services-inference/${project.version}</bundle>
+    <bundle>mvn:cool.pandora/acrepo-services-inference/${project.version}</bundle>
   </feature>
 
   <feature name="acrepo-exts-serialize-xml" version="${project.version}">
@@ -126,9 +126,9 @@
     <feature version="${camelVersionRange}">camel-saxon</feature>
     <feature version="${fcrepoCamelVersionRange}">fcrepo-camel</feature>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-exts-serialize-xml/${project.version}</bundle>
+    <bundle>mvn:cool.pandora/acrepo-exts-serialize-xml/${project.version}</bundle>
 
-    <configfile finalname="/etc/edu.amherst.acdc.exts.serialize.xml.cfg">mvn:edu.amherst.acdc/acrepo-exts-serialize-xml/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/cool.pandora.exts.serialize.xml.cfg">mvn:cool.pandora/acrepo-exts-serialize-xml/${project.version}/cfg/configuration</configfile>
   </feature>
 
   <feature name="acrepo-exts-template" version="${project.version}">
@@ -142,9 +142,9 @@
     <feature version="${camelVersionRange}">camel-http4</feature>
     <feature version="${fcrepoCamelVersionRange}">fcrepo-camel</feature>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-exts-template/${project.version}</bundle>
+    <bundle>mvn:cool.pandora/acrepo-exts-template/${project.version}</bundle>
 
-    <configfile finalname="/etc/edu.amherst.acdc.exts.template.cfg">mvn:edu.amherst.acdc/acrepo-exts-template/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/cool.pandora.exts.template.cfg">mvn:cool.pandora/acrepo-exts-template/${project.version}/cfg/configuration</configfile>
   </feature>
 
   <feature name="acrepo-exts-fits" version="${project.version}">
@@ -155,9 +155,9 @@
     <feature version="${camelVersionRange}">camel-jetty9</feature>
     <feature version="${camelVersionRange}">camel-http4</feature>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-exts-fits/${project.version}</bundle>
+    <bundle>mvn:cool.pandora/acrepo-exts-fits/${project.version}</bundle>
 
-    <configfile finalname="/etc/edu.amherst.acdc.exts.fits.cfg">mvn:edu.amherst.acdc/acrepo-exts-fits/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/cool.pandora.exts.fits.cfg">mvn:cool.pandora/acrepo-exts-fits/${project.version}/cfg/configuration</configfile>
   </feature>
 
   <feature name="acrepo-libs-jena" version="${project.version}">
@@ -202,9 +202,9 @@
     <feature version="${camelVersionRange}">camel-http4</feature>
     <feature version="${fcrepoCamelVersionRange}">fcrepo-camel</feature>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-connector-triplestore/${project.version}</bundle>
+    <bundle>mvn:cool.pandora/acrepo-connector-triplestore/${project.version}</bundle>
 
-    <configfile finalname="/etc/edu.amherst.acdc.connector.triplestore.cfg">mvn:edu.amherst.acdc/acrepo-connector-triplestore/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/cool.pandora.connector.triplestore.cfg">mvn:cool.pandora/acrepo-connector-triplestore/${project.version}/cfg/configuration</configfile>
   </feature>
 
   <feature name="acrepo-connector-broadcast" version="${project.version}">
@@ -213,9 +213,9 @@
     <feature version="${camelVersionRange}">camel</feature>
     <feature version="${camelVersionRange}">camel-blueprint</feature>
 
-    <bundle>mvn:edu.amherst.acdc/acrepo-connector-broadcast/${project.version}</bundle>
+    <bundle>mvn:cool.pandora/acrepo-connector-broadcast/${project.version}</bundle>
 
-    <configfile finalname="/etc/edu.amherst.acdc.connector.broadcast.cfg">mvn:edu.amherst.acdc/acrepo-connector-broadcast/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/cool.pandora.connector.broadcast.cfg">mvn:cool.pandora/acrepo-connector-broadcast/${project.version}/cfg/configuration</configfile>
   </feature>
 
 </features>

@@ -4,7 +4,7 @@ Amherst College Message Broadcaster
 The Message Broadcast service will take messages off one ActiveMQ queue or topic and broadcast the
 messages across any number of other queues specified in the config file.
 
-`edu.amherst.acdc.connector.broadcast.cfg` is the configuration file for this service.
+`cool.pandora.connector.broadcast.cfg` is the configuration file for this service.
 
 Deploying in OSGi
 -----------------
@@ -13,14 +13,14 @@ This project can be deployed in an OSGi container. For example using
 [Apache Karaf](http://karaf.apache.org) version 4.x and above, you can run the following
 command from its shell:
 
-    feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
+    feature:repo-add mvn:cool.pandora/acrepo-karaf/LATEST/xml/features
     feature:install acrepo-connector-broadcast
 
 Configuration
 -------------
 
 This application can be configured by creating the following configuration
-file `$KARAF_HOME/etc/edu.amherst.acdc.connector.broadcast.cfg`. The following
+file `$KARAF_HOME/etc/cool.pandora.connector.broadcast.cfg`. The following
 values are available for configuration:
 
 The Camel URI for the incoming message stream

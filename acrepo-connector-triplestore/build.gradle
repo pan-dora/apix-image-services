@@ -18,12 +18,12 @@ jar {
         license project.license
 
         instruction 'Import-Package', "org.apache.camel,org.fcrepo.camel,org.apache.camel.component.http4,${defaultOsgiImports}"
-        instruction 'Export-Package', "edu.amherst.acdc.connector.triplestore;version=${projectOsgiVersion}"
+        instruction 'Export-Package', "cool.pandora.connector.triplestore;version=${projectOsgiVersion}"
     }
 }
 
 artifacts {
-    archives (file('build/cfg/main/edu.amherst.acdc.connector.triplestore.cfg')) {
+    archives (file('build/cfg/main/cool.pandora.connector.triplestore.cfg')) {
         classifier 'configuration'
         type 'cfg'
     }

@@ -12,6 +12,6 @@ Each of these projects can be deployed in an OSGi container. For example using
 [Apache Karaf](http://karaf.apache.org), you can run the following
 command from its shell:
 
-    feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
+    feature:repo-add mvn:cool.pandora/acrepo-karaf/LATEST/xml/features
     feature:install <name of module>
 

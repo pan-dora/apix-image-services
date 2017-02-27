@@ -1,8 +1,8 @@
-group = 'edu.amherst.acdc'
+group = 'cool.pandora'
 description = 'ID Mapping MySQL Connector'
 
 artifacts {
-    archives (file('build/cfg/main/edu.amherst.acdc.connector.idiomatic.mysql.cfg')) {
+    archives (file('build/cfg/main/cool.pandora.connector.idiomatic.mysql.cfg')) {
         classifier 'configuration'
         type 'cfg'
     }

@@ -7,7 +7,7 @@
       http://www.osgi.org/xmlns/blueprint/v1.0.0
       http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
 
-  <cm:property-placeholder persistent-id="edu.amherst.acdc.connector.broadcast" update-strategy="reload">
+  <cm:property-placeholder persistent-id="cool.pandora.connector.broadcast" update-strategy="reload">
     <cm:default-properties>
       <cm:property name="input.stream" value="broker:topic:fedora" />
       <cm:property name="message.recipients" value="" />
@@ -17,6 +17,6 @@
   <reference id="broker" interface="org.apache.camel.Component" filter="(osgi.jndi.service.name=fcrepo/Broker)"/>
 
   <camelContext id="AcrepoConnectorBroadcast" xmlns="http://camel.apache.org/schema/blueprint">
-    <package>edu.amherst.acdc.connector.broadcast</package>
+    <package>cool.pandora.connector.broadcast</package>
   </camelContext>
 </blueprint>

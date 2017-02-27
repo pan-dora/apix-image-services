@@ -22,12 +22,12 @@ jar {
         license project.license
 
         instruction 'Import-Package', "org.apache.camel,${defaultOsgiImports}"
-        instruction 'Export-Package', "edu.amherst.acdc.exts.image;version=${projectOsgiVersion}"
+        instruction 'Export-Package', "cool.pandora.exts.image;version=${projectOsgiVersion}"
     }
 }
 
 artifacts {
-    archives (file('build/cfg/main/edu.amherst.acdc.exts.image.cfg')) {
+    archives (file('build/cfg/main/cool.pandora.exts.image.cfg')) {
         classifier 'configuration'
         type 'cfg'
     }

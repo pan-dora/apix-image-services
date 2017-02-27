@@ -17,7 +17,7 @@ jar {
         license project.license
 
         instruction 'Import-Package', "org.apache.camel,${defaultOsgiImports}"
-        instruction 'Export-Package', "edu.amherst.acdc.services.inference;version=${projectOsgiVersion}"
+        instruction 'Export-Package', "cool.pandora.services.inference;version=${projectOsgiVersion}"
     }
 }
 

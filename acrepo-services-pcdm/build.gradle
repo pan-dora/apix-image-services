@@ -16,7 +16,7 @@ jar {
         license project.license
 
         instruction 'Import-Package', defaultOsgiImports
-        instruction 'Export-Package', "edu.amherst.acdc.services.pcdm;version=${projectOsgiVersion}"
+        instruction 'Export-Package', "cool.pandora.services.pcdm;version=${projectOsgiVersion}"
     }
 }
 

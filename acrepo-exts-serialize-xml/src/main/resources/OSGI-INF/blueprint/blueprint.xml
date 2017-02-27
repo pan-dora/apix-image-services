@@ -8,7 +8,7 @@
        http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
 
    <!-- OSGI blueprint property placeholder -->
-   <cm:property-placeholder persistent-id="edu.amherst.acdc.exts.serialize.xml" update-strategy="reload">
+   <cm:property-placeholder persistent-id="cool.pandora.exts.serialize.xml" update-strategy="reload">
      <cm:default-properties>
        <cm:property name="rest.port" value="9104"/>
        <cm:property name="rest.host" value="localhost"/>
@@ -23,7 +23,7 @@
    </cm:property-placeholder>
 
   <camelContext id="AcrepoExtsSerializeXml" xmlns="http://camel.apache.org/schema/blueprint">
-    <package>edu.amherst.acdc.exts.serialize.xml</package>
+    <package>cool.pandora.exts.serialize.xml</package>
     
     <!-- Self-register the loader service as an extension -->
     <route id="load-extension">

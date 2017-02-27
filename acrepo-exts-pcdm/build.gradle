@@ -22,13 +22,13 @@ jar {
         vendor project.vendor
         license project.license
 
-        instruction 'Import-Package', "org.apache.camel,edu.amherst.acdc.services.pcdm,${defaultOsgiImports}"
-        instruction 'Export-Package', "edu.amherst.acdc.exts.pcdm;version=${projectOsgiVersion}"
+        instruction 'Import-Package', "org.apache.camel,cool.pandora.services.pcdm,${defaultOsgiImports}"
+        instruction 'Export-Package', "cool.pandora.exts.pcdm;version=${projectOsgiVersion}"
     }
 }
 
 artifacts {
-    archives (file('build/cfg/main/edu.amherst.acdc.exts.pcdm.cfg')) {
+    archives (file('build/cfg/main/cool.pandora.exts.pcdm.cfg')) {
         classifier 'configuration'
         type 'cfg'
     }

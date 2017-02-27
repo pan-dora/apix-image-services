@@ -5,7 +5,7 @@ The Triplestore indexer will index Fedora content into an external triplestore. 
 from the `fcrepo-indexer-triplestore` in that each resource is indexed into its own named
 graph.
 
-`edu.amherst.acdc.connector.triplestore.cfg` is the configuration file for this service.
+`cool.pandora.connector.triplestore.cfg` is the configuration file for this service.
 
 Deploying in OSGi
 -----------------
@@ -14,7 +14,7 @@ This project can be deployed in an OSGi container. For example using
 [Apache Karaf](http://karaf.apache.org) version 4.x and above, you can run the following
 command from its shell:
 
-    feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
+    feature:repo-add mvn:cool.pandora/acrepo-karaf/LATEST/xml/features
     feature:install fcrepo-service-activemq
     feature:install acrepo-connector-triplestore
 
@@ -22,7 +22,7 @@ Configuration
 -------------
 
 This application can be configured by creating the following configuration
-file `$KARAF_HOME/etc/edu.amherst.acdc.connector.triplestore.cfg`. The following
+file `$KARAF_HOME/etc/cool.pandora.connector.triplestore.cfg`. The following
 values are available for configuration:
 
 The Camel URI for the incoming message stream

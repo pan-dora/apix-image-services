@@ -19,12 +19,12 @@ jar {
         license project.license
 
         instruction 'Import-Package', "org.apache.camel,${defaultOsgiImports}"
-        instruction 'Export-Package', "edu.amherst.acdc.connector.broadcast;version=${projectOsgiVersion}"
+        instruction 'Export-Package', "cool.pandora.connector.broadcast;version=${projectOsgiVersion}"
     }
 }
 
 artifacts {
-    archives (file('build/cfg/main/edu.amherst.acdc.connector.broadcast.cfg')) {
+    archives (file('build/cfg/main/cool.pandora.connector.broadcast.cfg')) {
         classifier 'configuration'
         type 'cfg'
     }

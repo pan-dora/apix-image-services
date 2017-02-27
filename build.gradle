@@ -1,13 +1,27 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.1"
+        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+    }
+}
+
 plugins {
     id 'com.github.hierynomus.license' version '0.13.1'
     id 'net.researchgate.release' version '2.4.0'
     id 'org.sonarqube' version '2.2.1'
 }
 
+apply plugin: 'com.bmuschko.nexus'
+apply plugin: 'io.codearte.nexus-staging'
+
 allprojects  {
     apply plugin: 'maven'
 
-    group = 'edu.amherst.acdc'
+    group = 'cool.pandora'
 
     repositories {
         jcenter()
@@ -23,6 +37,16 @@ allprojects  {
 
     release {
         tagTemplate = '$name-$version'
+        scmAdapters = [
+                net.researchgate.release.GitAdapter
+        ]
+
+        git {
+            requireBranch = 'master'
+            pushToRemote = 'origin'
+            pushToBranchPrefix = ''
+            commitVersionFileOnly = false
+        }
     }
 
 }
@@ -164,7 +188,7 @@ subprojects {
     }
 
     signing {
-        required { !version.endsWith("SNAPSHOT") && gradle.taskGraph.hasTask("uploadArchives") }
+        required { gradle.taskGraph.hasTask("uploadArchives") }
         sign configurations.archives
     }
 
@@ -184,9 +208,9 @@ subprojects {
 
             pom.project {
                 packaging 'jar'
-                url 'https://acdc.amherst.edu/wiki'
-                inceptionYear '2015'
-                name 'Amherst College Repository Extension Services'
+                url 'https://pandora.cool'
+                inceptionYear '2017'
+                name 'API-X Services'
                 description 'Repository Extension Services'
 
                 organization {
@@ -217,12 +241,23 @@ subprojects {
                         }
                         timezone '-5'
                     }
+                    developer {
+                        id 'christopher-johnson'
+                        name 'Christopher Johnson'
+                        email 'chjohnson @ (domain of organization url)'
+                        organization ''
+                        organizationUrl ''
+                        roles {
+                            role 'developer'
+                        }
+                        timezone '+1'
+                    }
                 }
 
                 scm {
-                    connection 'scm:git:git://gitlab.amherst.edu/acdc/repository-extension-services.git'
-                    developerConnection 'scm:git:git@gitlab.amherst.edu:acdc/repository-extension-services.git'
-                    url 'https://gitlab.amherst.edu/acdc/repository-extension-services'
+                    connection 'scm:git:git://github.com/pan-dora/apix-services.git'
+                    developerConnection 'scm:git:git@github.com/pan-dora/apix-services.git'
+                    url 'https://github.com/pan-dora/apix-services/'
                     tag 'HEAD'
                 }
 
@@ -266,8 +301,23 @@ task processBuildTools(type: Copy) {
 sonarqube {
     properties {
         property "sonar.projectName", "Amherst College Repository Extension Services"
-        property "sonar.projectKey", "edu.amherst.acdc:repository-services"
+        property "sonar.projectKey", "cool.pandora:repository-services"
     }
+}
+
+nexusStaging {
+    packageGroup = "cool.pandora"
+    stagingProfileId = "4d5f13c386f543"
+}
+extraArchive {
+    sources = false
+    tests = false
+}
+
+nexus {
+    sign = true
+    repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+    snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
 }
 
 task docs(type: Javadoc) {

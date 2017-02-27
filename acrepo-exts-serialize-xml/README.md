@@ -28,14 +28,14 @@ This project can be deployed in an OSGi container. For example using
 [Apache Karaf](http://karaf.apache.org) version 4.x and above, you can run the following
 command from its shell:
 
-    feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/LATEST/xml/features
+    feature:repo-add mvn:cool.pandora/acrepo-karaf/LATEST/xml/features
     feature:install acrepo-exts-serialize-xml
 
 Configuration
 -------------
 
 The application can be configured by creating the following configuration
-file `$KARAF_HOME/etc/edu.amherst.acdc.exts.serialize.xml.cfg`. The following values
+file `$KARAF_HOME/etc/cool.pandora.exts.serialize.xml.cfg`. The following values
 are available for configuration:
 
 The location of the XSLT document for MODS. This can be a file path (using the `file:` prefix)
