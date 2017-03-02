@@ -1,6 +1,8 @@
 rootProject.name = 'apix-services'
 include ':pandora-karaf'
 include ':pandora-exts-encoder'
+include ':acrepo-exts-image'
 
 project(':pandora-karaf').projectDir = "$rootDir/pandora-karaf" as File
 project(':pandora-exts-encoder').projectDir = "$rootDir/pandora-exts-encoder" as File
+project(':acrepo-exts-image').projectDir = "$rootDir/acrepo-exts-image" as File
