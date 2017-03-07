@@ -3,55 +3,29 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
            xsi:schemaLocation="
-       http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
        http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd
+       http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
        http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
 
-    <!-- OSGI blueprint property placeholder -->
-    <cm:property-placeholder persistent-id="cool.pandora.exts.encoder" update-strategy="reload">
+    <!-- OSGi blueprint property placeholder -->
+    <cm:property-placeholder id="properties" persistent-id="cool.pandora.exts.encoder" update-strategy="reload">
         <cm:default-properties>
-            <cm:property name="rest.port" value="9105"/>
-            <cm:property name="rest.prefix" value="/encoder"/>
-            <cm:property name="rest.host" value="localhost"/>
-            <cm:property name="fcrepo.baseUrl" value="localhost:8080/fcrepo/rest"/>
-            <cm:property name="fcrepo.authUsername" value=""/>
-            <cm:property name="fcrepo.authPassword" value=""/>
-            <cm:property name="kdu_compress.path" value="kdu_compress"/>
-            <cm:property name="valid.formats" value="jpeg,jp2,tiff"/>
-            <cm:property name="extension.load" value="true"/>
-            <cm:property name="extension.load.uri" value="http://apix/services//apix:load"/>
-            <cm:property name="extension.load.maximumRedeliveries" value="60"/>
+            <cm:property name="error.maxRedeliveries" value="10"/>
+            <cm:property name="input.stream" value="broker:topic:fedora"/>
+            <cm:property name="reserialization.stream" value="broker:queue:encoder"/>
+            <cm:property name="filter.containers" value="http://localhost:8080/fcrepo/rest/audit"/>
+            <cm:property name="image.processor.uri" value="http://localhost/services"/>
+            <cm:property name="image.server.uri" value="http://loris:5004"/>
+            <cm:property name="serialization.binaries" value="/tmp/binaries"/>
+            <cm:property name="fcrepo.base.uri" value="http://localhost:8080/fcrepo/rest/collection/"/>
         </cm:default-properties>
     </cm:property-placeholder>
 
-    <camelContext id="PandoraImageService" xmlns="http://camel.apache.org/schema/blueprint">
-        <package>cool.pandora.exts.encoder</package>
+    <reference id="broker" interface="org.apache.camel.Component" filter="(osgi.jndi.service.name=fcrepo/Broker)"/>
+    <reference id="fcrepo" interface="org.apache.camel.Component" filter="(osgi.jndi.service.name=fcrepo/Camel)"/>
 
-        <!-- Self-register the loader service as an extension -->
-        <route id="load-extension">
-            <from uri="timer:register?repeatCount=1"/>
-            <onException>
-                <exception>java.lang.Exception</exception>
-                <redeliveryPolicy maximumRedeliveries="{{extension.load.maximumRedeliveries}}"
-                                  logRetryAttempted="true" retryAttemptedLogLevel="INFO"/>
-            </onException>
-            <setHeader headerName="Content-Type">
-                <constant>text/plain</constant>
-            </setHeader>
-            <setHeader headerName="CamelHttpMethod">
-                <constant>POST</constant>
-            </setHeader>
-            <setBody>
-                <simple>http://{{rest.host}}:{{rest.port}}{{rest.prefix}}</simple>
-            </setBody>
-            <choice>
-                <when>
-                    <simple>{{extension.load}}</simple>
-                    <to
-                            uri="jetty:{{extension.load.uri}}?okStatusCodeRange=200-399"/>
-                </when>
-            </choice>
-        </route>
+    <camelContext id="PandoraEncoder" xmlns="http://camel.apache.org/schema/blueprint">
+        <package>cool.pandora.exts.encoder</package>
     </camelContext>
 
 </blueprint>
