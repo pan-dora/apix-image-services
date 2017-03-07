@@ -1,0 +1,30 @@
+apply plugin: 'osgi'
+
+description = 'Triplestore Indexer'
+dependencies {
+    compile group: 'org.apache.camel', name: 'camel-core', version: camelVersion
+    compile group: 'org.apache.camel', name: 'camel-http4', version: camelVersion
+    compile group: 'org.apache.camel', name: 'camel-blueprint', version: camelVersion
+    compile(group: 'org.fcrepo.camel', name: 'fcrepo-camel', version: fcrepoCamelVersion) {
+        exclude(module: 'slf4j-log4j12')
+    }
+}
+
+jar {
+    manifest {
+        description project.description
+        docURL project.docURL
+        vendor project.vendor
+        license project.license
+
+        instruction 'Import-Package', "org.apache.camel,org.fcrepo.camel,org.apache.camel.component.http4,${defaultOsgiImports}"
+        instruction 'Export-Package', "edu.amherst.acdc.connector.triplestore;version=${projectOsgiVersion}"
+    }
+}
+
+artifacts {
+    archives (file('build/cfg/main/edu.amherst.acdc.connector.triplestore.cfg')) {
+        classifier 'configuration'
+        type 'cfg'
+    }
+}

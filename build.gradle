@@ -187,9 +187,9 @@ subprojects {
         }
     }
 
-    signing {
-        sign configurations.archives
-    }
+ //   signing {
+    //      sign configurations.archives
+    //   }
 
     uploadArchives {
         repositories.mavenDeployer {

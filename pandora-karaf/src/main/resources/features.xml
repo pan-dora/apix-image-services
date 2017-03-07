@@ -5,9 +5,10 @@
 
     <feature version="${camelVersionRange}">camel</feature>
     <feature version="${camelVersionRange}">camel-blueprint</feature>
-    <feature version="${camelVersionRange}">camel-jetty9</feature>
     <feature version="${camelVersionRange}">camel-http4</feature>
-    <feature version="${camelVersionRange}">camel-exec</feature>
+    <feature version="${fcrepoCamelVersionRange}">fcrepo-service-camel</feature>
+    <feature version="${fcrepoCamelVersionRange}">fcrepo-service-activemq</feature>
+    <feature version="${activemqVersionRange}">activemq-camel</feature>
 
     <bundle>mvn:cool.pandora/pandora-exts-encoder/${project.version}</bundle>
 

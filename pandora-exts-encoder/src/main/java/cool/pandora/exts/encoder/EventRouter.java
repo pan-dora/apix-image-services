@@ -15,142 +15,107 @@
  */
 package cool.pandora.exts.encoder;
 
-import static java.util.Arrays.stream;
-import static org.apache.camel.Exchange.CONTENT_TYPE;
-import static org.apache.camel.Exchange.HTTP_METHOD;
-import static org.apache.camel.Exchange.HTTP_PATH;
-import static org.apache.camel.Exchange.HTTP_RESPONSE_CODE;
+import static java.net.URI.create;
+import static java.util.stream.Collectors.toList;
+import static org.apache.camel.Exchange.*;
 import static org.apache.camel.Exchange.HTTP_URI;
 import static org.apache.camel.LoggingLevel.INFO;
-import static org.apache.camel.builder.PredicateBuilder.and;
-import static org.apache.camel.component.exec.ExecBinding.EXEC_COMMAND_ARGS;
-import static org.fcrepo.camel.FcrepoHeaders.FCREPO_IDENTIFIER;
+import static org.apache.camel.builder.PredicateBuilder.*;
+import static org.fcrepo.camel.FcrepoHeaders.FCREPO_URI;
+import static org.fcrepo.camel.processor.ProcessorUtils.tokenizePropertyPlaceholder;
 import static org.slf4j.LoggerFactory.getLogger;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Collection;
-import java.util.HashSet;
-
-import org.apache.camel.Exchange;
-import org.apache.camel.RuntimeCamelException;
+import org.apache.camel.Predicate;
+import org.apache.camel.PropertyInject;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.builder.xml.Namespaces;
+import org.fcrepo.camel.processor.EventProcessor;
 import org.slf4j.Logger;
 
+import java.util.List;
+
 /**
- * A content router for handling JMS events.
+ * A content router for handling Fedora events.
  *
  * @author Aaron Coburn
  */
 public class EventRouter extends RouteBuilder {
 
-    private static final String IMAGE_OUTPUT = "CamelImageOutput";
-    private static final String IMAGE_INPUT = "CamelImageInput";
-    private static final String HTTP_ACCEPT = "Accept";
-    private static final String DEFAULT_OUTPUT_FORMAT = "jp2";
-    private static final String HTTP_QUERY_OPTIONS = "options";
-
     private static final Logger LOGGER = getLogger(EventRouter.class);
 
+    private static final String REPOSITORY = "http://fedora.info/definitions/v4/repository#";
+
+    public static final String SERIALIZATION_PATH = "CamelSerializationPath";
+
+    public final List<Predicate> uriFilter = tokenizePropertyPlaceholder(getContext(), "{{filter.containers}}", ",")
+            .stream().map(uri -> or(
+                    header(FCREPO_URI).startsWith(constant(uri + "/")),
+                    header(FCREPO_URI).isEqualTo(constant(uri))))
+            .collect(toList());
+    
+    @PropertyInject("{{fcrepo.collection.uri}}")
+    public String COLLECTION_URI;
+    
     /**
      * Configure the message route workflow.
      */
     public void configure() throws Exception {
 
-        from("jetty:http://{{rest.host}}:{{rest.port}}{{rest.prefix}}?" +
-                "matchOnUriPrefix=true&sendServerVersion=false&httpMethodRestrict=GET,OPTIONS")
-                .routeId("ImageRouter")
-                .process(e -> e.getIn().setHeader(FCREPO_IDENTIFIER,
-                        e.getIn().getHeader("Apix-Ldp-Resource-Path",
-                                e.getIn().getHeader(HTTP_PATH))))
-                .setHeader(IMAGE_OUTPUT).header(HTTP_ACCEPT)
-                .removeHeaders(HTTP_ACCEPT)
-                .choice()
-                .when(header(HTTP_METHOD).isEqualTo("GET"))
-                .to("direct:get")
-                .when(header(HTTP_METHOD).isEqualTo("OPTIONS"))
-                .setHeader(CONTENT_TYPE).constant("text/turtle")
-                .setHeader(HTTP_ACCEPT).constant("GET,OPTIONS")
-                .to("language:simple:resource:classpath:options.ttl");
+        final Namespaces ns = new Namespaces("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#")
+                .add("fedora", REPOSITORY);
+
+        /*
+         * A generic error handler (specific to this RouteBuilder)
+         */
+        onException(Exception.class)
+                .maximumRedeliveries("{{error.maxRedeliveries}}")
+                .log("Index Routing Error: ${routeId}");
+
+        from("{{input.stream}}")
+                .routeId("PandoraEncoder")
+                .process(new EventProcessor())
+                .process(exchange -> {
+                    final String uri = exchange.getIn().getHeader(FCREPO_URI, "", String.class);
+                    exchange.getIn().setHeader(SERIALIZATION_PATH, create(uri).getPath());
+                })
+                .filter(not(in(uriFilter)))
+                .to("direct:get");
+
+        from("{{reserialization.stream}}")
+                .routeId("PandoraReEncoder")
+                .filter(not(in(uriFilter)))
+                .process(exchange -> {
+                    final String uri = exchange.getIn().getHeader(FCREPO_URI, "", String.class);
+                    exchange.getIn().setHeader(SERIALIZATION_PATH, create(uri).getPath());
+                })
+                .to("direct:get");
 
         from("direct:get")
                 .routeId("ImageGet")
-                .setHeader(HTTP_PATH, header(FCREPO_IDENTIFIER))
-                .setHeader(HTTP_METHOD).constant("HEAD")
-                .setHeader(HTTP_URI).simple("http://{{fcrepo.baseUrl}}")
-                .to("http4://{{fcrepo.baseUrl}}?authUsername={{fcrepo.authUsername}}" +
-                        "&authPassword={{fcrepo.authPassword}}&throwExceptionOnFailure=false")
-                .choice()
-                .when(and(header(CONTENT_TYPE).startsWith("image/"),
-                        header("Link").contains("<http://www.w3.org/ns/ldp#NonRDFSource>;rel=\"type\"")))
-                .log(INFO, LOGGER, "Image Processing ${headers[CamelHttpPath]}")
-                .to("direct:convert")
-                .when(header("Link").contains("<http://www.w3.org/ns/ldp#NonRDFSource>;rel=\"type\""))
-                .setBody(constant("Error: this resource is not an image"))
-                .to("direct:invalidFormat")
-                .when(header(HTTP_RESPONSE_CODE).isEqualTo(200))
-                .setBody(constant("Error: this resource is not a fedora:Binary"))
-                .to("direct:invalidFormat")
-                .otherwise()
-                .to("direct:error");
-
-        from("direct:invalidFormat")
-                .routeId("ImageInvalidFormat")
-                .removeHeaders("*")
-                .setHeader(CONTENT_TYPE).constant("text/plain")
-                .setHeader(HTTP_RESPONSE_CODE).constant(400);
-
-        from("direct:error")
-                .routeId("ImageError")
-                .setBody(constant("Error: this resource is not accessible"))
-                .setHeader(CONTENT_TYPE).constant("text/plain");
-
-        from("direct:convert")
-                .routeId("ImageConvert")
-                .setHeader(HTTP_METHOD).constant("GET")
-                .setHeader(HTTP_PATH).header(FCREPO_IDENTIFIER)
-                .to("http4://{{fcrepo.baseUrl}}?authUsername={{fcrepo.authUsername}}" +
-                        "&authPassword={{fcrepo.authPassword}}&throwExceptionOnFailure=true")
-                .setHeader(IMAGE_INPUT).header(CONTENT_TYPE)
-                .process(exchange -> {
-                    final String accept = exchange.getIn().getHeader(IMAGE_OUTPUT, "", String.class);
-                    final String fmt = accept.matches("^image/\\w+$") ? accept.replace("image/", "") :
-                            DEFAULT_OUTPUT_FORMAT;
-                    final boolean valid;
-                    try {
-                        valid = stream(getContext().resolvePropertyPlaceholders("{{valid.formats}}").split(","))
-                                .anyMatch(fmt::equals);
-                    } catch (final Exception ex) {
-                        throw new RuntimeCamelException("Couldn't resolve property placeholder", ex);
-                    }
-                    InputStream is = exchange.getIn().getBody(InputStream.class);
-                    OutputStream os = exchange.getOut().getBody(OutputStream.class);
-                    if (valid) {
-                        exchange.getIn().setHeader(IMAGE_OUTPUT, "image/" + fmt);
-                        exchange.getIn().setHeader(EXEC_COMMAND_ARGS,
-                                "\"-jp2_space sRGB\" -i " + is + "-o " + os );
-                    } else {
-                        throw new RuntimeCamelException("Invalid format: " + fmt);
-                    }
-                })
                 .removeHeaders("CamelHttp*")
-                .log(INFO, LOGGER, "Converting from ${headers[CamelImageInput]} to ${headers[CamelImageOutput]}")
-                .to("exec:{{kdu_compress.path}}")
-                .process(exchange -> {
-                    exchange.getOut().setBody(exchange.getIn().getBody(InputStream.class));
-                });
-    }
-
-    // Hack - cmdline options are often an array of repeated elements.  Fix that
-    @SuppressWarnings("unchecked")
-    static final String cmdOptions(final Exchange e) {
-        final Object optHdr = e.getIn().getHeader(HTTP_QUERY_OPTIONS);
-
-        if (optHdr instanceof Collection) {
-            return String.join(" ", new HashSet<>((Collection<String>) optHdr));
-        } else if (optHdr != null) {
-            return (String) optHdr;
-        }
-        return "";
+                // set up a request to request the headers of the resource
+                .setHeader(HTTP_METHOD).constant("HEAD")
+                .setHeader(HTTP_URI).header(FCREPO_URI)
+                .to("http4://localhost")
+                // keep only LDP-NRs with a content-type of image/tiff (
+                .log(INFO, LOGGER, "Encoder Processing ${headers[CamelHttpUri]}")
+                .filter(header(CONTENT_TYPE).isEqualTo("image/tiff"))
+                .removeHeaders("CamelHttp*")
+                // fetch the derivative image from the image service
+                .setHeader(HTTP_METHOD).constant("GET")
+                .setHeader(HTTP_URI).simple("{{image.server.uri}}")
+                .process(ex -> {
+                    // rewrite the path
+                    final String uri = ex.getIn().getHeader(FCREPO_URI, String.class);
+                    final String collection_replace = COLLECTION_URI + "(.+?)";
+                    final String path = uri.replaceAll(collection_replace, "$1");
+                    final String newpath = path.replaceAll("/", "_");
+                    final String getpath= "iiif:" + newpath;
+                    ex.getIn().setHeader(HTTP_PATH, getpath);
+                })
+                .log(INFO, LOGGER, "Encoder Replacing " + COLLECTION_URI + "in ${headers[CamelFcrepoUri]}")
+                .log(INFO, LOGGER, "Encoder Requesting ${headers[CamelHttpPath]}")
+                .to("http4://localhost");
     }
 }
+

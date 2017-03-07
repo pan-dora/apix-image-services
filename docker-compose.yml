@@ -1,0 +1,23 @@
+version: "2.1"
+
+services:
+  activemq:
+    image: pandoraframework/activemq
+    container_name: activemq
+    ports:
+      - "61616:61616"
+      - "8161:8181"
+  fcrepo:
+    image: pandorasystems/fcrepo:4.7.2q
+    container_name: fcrepo
+    environment:
+      CATALINA_OPTS: -Dfcrepo.home=/mnt/fcrepo-data -Dfcrepo.spring.jms.configuration=file:/etc/spring/jms.xml
+    ports:
+      - "8080:8080"
+    depends_on:
+      - activemq
+    volumes:
+      - fcrepo-volume:/mnt/fcrepo-data
+
+volumes:
+  fcrepo-volume:
