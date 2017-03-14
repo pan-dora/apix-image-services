@@ -21,6 +21,7 @@ import static org.apache.camel.Exchange.*;
 import static org.apache.camel.Exchange.HTTP_URI;
 import static org.apache.camel.LoggingLevel.INFO;
 import static org.apache.camel.builder.PredicateBuilder.*;
+import static org.fcrepo.camel.FcrepoHeaders.FCREPO_EVENT_TYPE;
 import static org.fcrepo.camel.FcrepoHeaders.FCREPO_URI;
 import static org.fcrepo.camel.processor.ProcessorUtils.tokenizePropertyPlaceholder;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -44,6 +45,7 @@ public class EventRouter extends RouteBuilder {
     private static final Logger LOGGER = getLogger(EventRouter.class);
 
     private static final String REPOSITORY = "http://fedora.info/definitions/v4/repository#";
+    private static final String RESOURCE_CREATION = "http://fedora.info/definitions/v4/event#ResourceCreation";
 
     public static final String SERIALIZATION_PATH = "CamelSerializationPath";
 
@@ -74,12 +76,14 @@ public class EventRouter extends RouteBuilder {
         from("{{input.stream}}")
                 .routeId("PandoraEncoder")
                 .process(new EventProcessor())
-                .process(exchange -> {
-                    final String uri = exchange.getIn().getHeader(FCREPO_URI, "", String.class);
-                    exchange.getIn().setHeader(SERIALIZATION_PATH, create(uri).getPath());
-                })
-                .filter(not(in(uriFilter)))
-                .to("direct:get");
+                .choice()
+                    .when(header(FCREPO_EVENT_TYPE).contains(RESOURCE_CREATION))
+                        .process(exchange -> {
+                            final String uri = exchange.getIn().getHeader(FCREPO_URI, "", String.class);
+                            exchange.getIn().setHeader(SERIALIZATION_PATH, create(uri).getPath());
+                        })
+                        .filter(not(in(uriFilter)))
+                        .to("direct:get");
 
         from("{{reserialization.stream}}")
                 .routeId("PandoraReEncoder")
@@ -106,7 +110,7 @@ public class EventRouter extends RouteBuilder {
                 .setHeader(HTTP_URI).simple("{{image.processor.uri}}")
                 .process(ex -> {
                     final String uri = ex.getIn().getHeader(FCREPO_URI, String.class);
-                    final String path = uri.replace(FCREPO_BASEURI, "") + "/svc:image" ;
+                    final String path = uri.replace(FCREPO_BASEURI, "") + "/svc:image";
                     ex.getIn().setHeader(HTTP_PATH, path);
                 })
                 .log(INFO, LOGGER, "Encoder Replacing " + FCREPO_BASEURI + " in ${headers[CamelFcrepoUri]}")
@@ -114,10 +118,10 @@ public class EventRouter extends RouteBuilder {
                 .to("http4://localhost")
                 // put the image into an external system
                 .process(ex -> {
-                        final String resource = ex.getIn().getHeader(HTTP_PATH, String.class);
-                        final String jp2ext = resource.replace("tif/svc:image", "jp2");
-                        final String filename = jp2ext.replace("/", "_");
-                        ex.getIn().setHeader(FILE_NAME, filename);
+                    final String resource = ex.getIn().getHeader(HTTP_PATH, String.class);
+                    final String jp2ext = resource.replace("tif/svc:image", "jp2");
+                    final String filename = jp2ext.replace("/", "_");
+                    ex.getIn().setHeader(FILE_NAME, filename);
                 })
                 .log(INFO, LOGGER, "Filename is: ${headers[CamelFileName]}")
                 .to("file://{{serialization.binaries}}");
