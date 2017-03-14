@@ -16,8 +16,8 @@
             <cm:property name="filter.containers" value="http://localhost:8080/fcrepo/rest/audit"/>
             <cm:property name="image.processor.uri" value="http://localhost/services"/>
             <cm:property name="image.server.uri" value="http://loris:5004"/>
-            <cm:property name="loris.IRItemplate.prefix" value="/iiif:"/>
-            <cm:property name="fcrepo.collection.uri" value="http://localhost:8080/fcrepo/rest/collection/"/>
+            <cm:property name="serialization.binaries" value="/tmp/binaries"/>
+            <cm:property name="fcrepo.base.uri" value="http://localhost:8080/fcrepo/rest/collection/"/>
         </cm:default-properties>
     </cm:property-placeholder>
 

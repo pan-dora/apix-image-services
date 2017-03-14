@@ -52,10 +52,10 @@ public class EventRouter extends RouteBuilder {
                     header(FCREPO_URI).startsWith(constant(uri + "/")),
                     header(FCREPO_URI).isEqualTo(constant(uri))))
             .collect(toList());
-    
-    @PropertyInject("{{fcrepo.collection.uri}}")
-    public String COLLECTION_URI;
-    
+
+    @PropertyInject("{{fcrepo.base.uri}}")
+    public String FCREPO_BASEURI;
+
     /**
      * Configure the message route workflow.
      */
@@ -103,19 +103,24 @@ public class EventRouter extends RouteBuilder {
                 .removeHeaders("CamelHttp*")
                 // fetch the derivative image from the image service
                 .setHeader(HTTP_METHOD).constant("GET")
-                .setHeader(HTTP_URI).simple("{{image.server.uri}}")
+                .setHeader(HTTP_URI).simple("{{image.processor.uri}}")
                 .process(ex -> {
-                    // rewrite the path
                     final String uri = ex.getIn().getHeader(FCREPO_URI, String.class);
-                    final String collection_replace = COLLECTION_URI + "(.+?)";
-                    final String path = uri.replaceAll(collection_replace, "$1");
-                    final String newpath = path.replaceAll("/", "_");
-                    final String getpath= "iiif:" + newpath;
-                    ex.getIn().setHeader(HTTP_PATH, getpath);
+                    final String path = uri.replace(FCREPO_BASEURI, "") + "/svc:image" ;
+                    ex.getIn().setHeader(HTTP_PATH, path);
                 })
-                .log(INFO, LOGGER, "Encoder Replacing " + COLLECTION_URI + "in ${headers[CamelFcrepoUri]}")
+                .log(INFO, LOGGER, "Encoder Replacing " + FCREPO_BASEURI + " in ${headers[CamelFcrepoUri]}")
                 .log(INFO, LOGGER, "Encoder Requesting ${headers[CamelHttpPath]}")
-                .to("http4://localhost");
+                .to("http4://localhost")
+                // put the image into an external system
+                .process(ex -> {
+                        final String resource = ex.getIn().getHeader(HTTP_PATH, String.class);
+                        final String jp2ext = resource.replace("tif/svc:image", "jp2");
+                        final String filename = jp2ext.replace("/", "_");
+                        ex.getIn().setHeader(FILE_NAME, filename);
+                })
+                .log(INFO, LOGGER, "Filename is: ${headers[CamelFileName]}")
+                .to("file://{{serialization.binaries}}");
     }
 }
 
