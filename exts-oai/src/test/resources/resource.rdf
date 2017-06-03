@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+    xmlns:bf="http://id.loc.gov/ontologies/bibframe/"
+    xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:fedora="http://fedora.info/definitions/v4/repository#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<rdf:Description rdf:about="http://localhost:8080/fcrepo/rest/acdc/manuscript">
+    <rdf:type rdf:resource="http://fedora.info/definitions/v4/repository#Container"/>
+    <rdf:type rdf:resource="http://fedora.info/definitions/v4/repository#Resource"/>
+    <rdf:type rdf:resource="http://pcdm.org/models#Object"/>
+    <rdf:type rdf:resource="http://www.w3.org/ns/ldp#RDFSource"/>
+    <rdf:type rdf:resource="http://www.w3.org/ns/ldp#Container"/>
+    <fedora:created rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2016-06-20T19:17:15.823Z</fedora:created>
+    <fedora:createdBy>bypassAdmin</fedora:createdBy>
+    <fedora:lastModified rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2016-06-20T19:41:58.643Z</fedora:lastModified>
+    <fedora:lastModifiedBy>bypassAdmin</fedora:lastModifiedBy>
+    <fedora:hasParent rdf:resource="http://localhost:8080/fcrepo/rest/acdc"/>
+    <fedora:writable rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</fedora:writable>
+    <skos:note>This is a sample manuscript record</skos:note>
+    <skos:prefLabel>Manuscript Title</skos:prefLabel>
+    <dc:identifier>Amherst Manuscript # 681</dc:identifier>
+    <dcterms:abstract>This is a textual description of the manuscript</dcterms:abstract>
+    <dcterms:created rdf:datatype="http://id.loc.gov/datatypes/edtf/EDTF">2001-02-03</dcterms:created>
+    <dcterms:extent>1 volume (420 pages): photographs</dcterms:extent>
+    <dcterms:format rdf:resource="http://pcdm.org/file-format-types#Document"/>
+    <dcterms:identifier rdf:resource="doi:123456/12"/>
+    <dcterms:identifier rdf:resource="http://acdc.amherst.edu/id/abcdefg"/>
+    <dcterms:isPartOf rdf:resource="http://acdc.amherst.edu/repository"/>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng"/>
+    <dcterms:medium>Pen and ink on linen</dcterms:medium>
+    <dcterms:relatedItem rdf:resource="http://localhost:8080/fcrepo/rest/test"/>
+    <dcterms:rights rdf:resource="http://rightsstatements.org/vocab/NKC/1.0/"/>
+    <dcterms:subject rdf:resource="http://localhost:8080/fcrepo/rest/test"/>
+    <dcterms:tableOfContents>First this, then that</dcterms:tableOfContents>
+    <dcterms:type rdf:resource="http://id.loc.gov/vocabulary/resourceTypes/txt"/>
+    <dcterms:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dcterms:type rdf:resource="http://vocab.getty.edu/aat/30002491"/>
+    <bf:descriptionLanguage rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng"/>
+    <bf:heldBy rdf:resource="http://acdc.amherst.edu/"/>
+</rdf:Description>
+</rdf:RDF>
