@@ -85,7 +85,7 @@ public class EventRouter extends RouteBuilder {
                 .setHeader(CONTENT_TYPE).constant("application/x-www-form-urlencoded; charset=utf-8")
                 .process(e -> e.getIn().setBody(sparqlSelect(SelectAll(FCREPO_URI))))
                 .to("{{triplestore.baseUrl}}?useSystemProperties=true&bridgeEndpoint=true")
-                .to("direct:getResource")
+               // .to("direct:getResource")
                 .filter(header(HTTP_RESPONSE_CODE).isEqualTo(200))
                 .setHeader(CONTENT_TYPE).constant("application/xml")
                 .convertBodyTo(org.w3c.dom.Document.class);

@@ -185,6 +185,11 @@ subprojects {
                 from components.java
             }
         }
+        repositories {
+            maven {
+                url "$buildDir/maven"
+            }
+        }
     }
 
  //   signing {

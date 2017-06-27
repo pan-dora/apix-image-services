@@ -1,5 +1,4 @@
 apply plugin: 'osgi'
-
 description = 'RDF to XML (MODS and DC) serialization service'
 dependencies {
     compile group: 'org.apache.camel', name: 'camel-core', version: camelVersion

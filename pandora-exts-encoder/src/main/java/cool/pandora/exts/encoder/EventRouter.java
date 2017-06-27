@@ -25,7 +25,7 @@ import static org.fcrepo.camel.FcrepoHeaders.FCREPO_EVENT_TYPE;
 import static org.fcrepo.camel.FcrepoHeaders.FCREPO_URI;
 import static org.fcrepo.camel.processor.ProcessorUtils.tokenizePropertyPlaceholder;
 import static org.slf4j.LoggerFactory.getLogger;
-
+import static org.apache.camel.builder.PredicateBuilder.or;
 import org.apache.camel.Predicate;
 import org.apache.camel.PropertyInject;
 import org.apache.camel.builder.RouteBuilder;
@@ -103,7 +103,7 @@ public class EventRouter extends RouteBuilder {
                 .to("http4://localhost")
                 // keep only LDP-NRs with a content-type of image/tiff (
                 .log(INFO, LOGGER, "Encoder Processing ${headers[CamelHttpUri]}")
-                .filter(header(CONTENT_TYPE).isEqualTo("image/tiff"))
+                .filter(or(header(CONTENT_TYPE).isEqualTo("image/tiff"), header(CONTENT_TYPE).isEqualTo("image/jp2")))
                 .removeHeaders("CamelHttp*")
                 // fetch the derivative image from the image service
                 .setHeader(HTTP_METHOD).constant("GET")
@@ -119,8 +119,9 @@ public class EventRouter extends RouteBuilder {
                 // put the image into an external system
                 .process(ex -> {
                     final String resource = ex.getIn().getHeader(HTTP_PATH, String.class);
-                    final String jp2ext = resource.replace("tif/svc:image", "jp2");
-                    final String filename = jp2ext.replace("/", "_");
+                    final String svcext = resource.replace("/svc:image", "");
+                    final String tif = svcext.replace("tif", "jp2");
+                    final String filename = tif.replace("/", "_");
                     ex.getIn().setHeader(FILE_NAME, filename);
                 })
                 .log(INFO, LOGGER, "Filename is: ${headers[CamelFileName]}")
