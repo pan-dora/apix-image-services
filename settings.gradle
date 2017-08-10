@@ -1,10 +1,8 @@
-rootProject.name = 'apix-services'
-include ':pandora-karaf'
-include ':pandora-exts-encoder'
-include ':acrepo-exts-image'
-include ':exts-oai'
+rootProject.name = 'apix-image-services'
+include ':imaging-karaf'
+include ':exts-encoder'
+include ':exts-image'
 
-project(':pandora-karaf').projectDir = "$rootDir/pandora-karaf" as File
-project(':pandora-exts-encoder').projectDir = "$rootDir/pandora-exts-encoder" as File
-project(':acrepo-exts-image').projectDir = "$rootDir/acrepo-exts-image" as File
-project(':exts-oai').projectDir = "$rootDir/exts-oai" as File
+project(':imaging-karaf').projectDir = "$rootDir/imaging-karaf" as File
+project(':exts-encoder').projectDir = "$rootDir/exts-encoder" as File
+project(':exts-image').projectDir = "$rootDir/exts-image" as File

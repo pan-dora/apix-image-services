@@ -1,22 +1,21 @@
+import net.researchgate.release.GitAdapter
+
 buildscript {
     repositories {
         mavenCentral()
         jcenter()
     }
     dependencies {
-        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.1"
         classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
     }
 }
 
 plugins {
     id 'com.github.hierynomus.license' version '0.13.1'
-    id 'net.researchgate.release' version '2.4.0'
-    id 'org.sonarqube' version '2.2.1'
+    id 'net.researchgate.release' version '2.6.0'
+    id 'io.codearte.nexus-staging' version '0.9.0'
+    id 'com.palantir.docker' version '0.13.0'
 }
-
-apply plugin: 'com.bmuschko.nexus'
-apply plugin: 'io.codearte.nexus-staging'
 
 allprojects  {
     apply plugin: 'maven'
@@ -31,14 +30,15 @@ allprojects  {
 
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
-            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+            options.compilerArgs.add("-Xlint:unchecked")
+            options.compilerArgs.add("-Xlint:deprecation")
         }
     }
 
     release {
         tagTemplate = '$name-$version'
         scmAdapters = [
-                net.researchgate.release.GitAdapter
+                GitAdapter
         ]
 
         git {
@@ -52,6 +52,7 @@ allprojects  {
 }
 
 subprojects {
+    apply plugin: 'com.bmuschko.nexus'
     apply plugin: 'java'
     apply plugin: 'maven-publish'
     apply plugin: 'signing'
@@ -63,9 +64,9 @@ subprojects {
     targetCompatibility = 1.8
 
     ext {
-        vendor = 'Amherst College'
-        homepage = 'https://www.amherst.edu'
-        docURL = 'https://acdc.amherst.edu/wiki'
+        vendor = 'Pandora Ecosystem'
+        homepage = 'http://cool.pandora'
+        docURL = 'https://github.com/pan-dora/pandora-demo/wiki'
         license = 'Apache 2'
 
         camelVersionRange = '[2.18,3)'
@@ -75,7 +76,7 @@ subprojects {
 
         /* Dependencies */
         activemqVersion = '5.14.1'
-        camelVersion = '2.18.0'
+        camelVersion = '2.19.2'
         commonsIoVersion = '2.5'
         commonsLangVersion = '3.4'
         derbyVersion = '10.12.1.1'
@@ -84,15 +85,15 @@ subprojects {
         hk2Version = '2.4.0'
         httpclientVersion = '4.5.2'
         httpcoreVersion = '4.4.5'
-        jacksonVersion = '2.7.5'
+        jacksonVersion = '2.9.0'
         jenaVersion = '3.1.1'
         junitVersion = '4.12'
-        jsonldVersion = '0.8.3'
-        logbackVersion = '1.1.7'
+        jsonldVersion = '0.10.4'
+        logbackVersion = '1.2.3'
         marmottaVersion = '3.3.0'
         postgresqlVersion = '9.4.1208'
         saxonVersion = '9.6.0-7'
-        slf4jVersion = '1.7.21'
+        slf4jVersion = '1.7.25'
         springVersion = '4.1.7.RELEASE'
         woodstoxVersion = '4.4.1'
         xercesVersion = '2.11.0'
@@ -119,7 +120,6 @@ subprojects {
         semarglVersion = '0.6.1'
         sesameVersion = '2.7.13'
         thriftVersion = '0.9.2'
-        wrappedBundleLocation = 'http://www.ats.amherst.edu/bundles'
 
         /* Testing */
         paxExamVersion = '4.9.1'
@@ -146,14 +146,7 @@ subprojects {
         from sourceSets.main.allSource
     }
 
-
-    task javadocJar(type: Jar) {
-        classifier 'javadoc'
-        from javadoc
-    }
-
     artifacts {
-        archives javadocJar
         archives sourceJar
     }
 
@@ -164,6 +157,7 @@ subprojects {
     checkstyle {
         configFile = rootProject.file('build/checkstyle/checkstyle.xml')
         configProperties.checkstyleConfigDir = rootProject.file('build/checkstyle/')
+        toolVersion = "8.1"
     }
 
     jacoco {
@@ -192,30 +186,14 @@ subprojects {
         }
     }
 
- //   signing {
-    //      sign configurations.archives
-    //   }
-
-    uploadArchives {
-        repositories.mavenDeployer {
-            def sonatypeUsername = project.hasProperty('ossrhUsername') ? ossrhUsername : ""
-            def sonatypePassword = project.hasProperty('ossrhPassword') ? ossrhPassword : ""
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: sonatypeUsername, password: sonatypePassword)
-            }
-
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: sonatypeUsername, password: sonatypePassword)
-            }
-
-            pom.project {
-                packaging 'jar'
-                url 'https://pandora.cool'
+    modifyPom {
+        project {
+            name 'APIX Image Services'
+            description 'APIX services that support image serialization and encoding'
+            url 'https://github.com/pan-dora/apix-sparqler/'
                 inceptionYear '2017'
-                name 'API-X Services'
-                description 'Repository Extension Services'
+                name 'APIX Image Services'
+                description 'APIX Image Services'
 
                 organization {
                     name project.vendor
@@ -259,9 +237,9 @@ subprojects {
                 }
 
                 scm {
-                    connection 'scm:git:git://github.com/pan-dora/apix-services.git'
-                    developerConnection 'scm:git:git@github.com/pan-dora/apix-services.git'
-                    url 'https://github.com/pan-dora/apix-services/'
+                    connection 'scm:git:git://github.com/pan-dora/apix-image-services.git'
+                    developerConnection 'scm:git:git@github.com/pan-dora/apix-image-services.git'
+                    url 'https://github.com/pan-dora/apix-image-services/'
                     tag 'HEAD'
                 }
 
@@ -269,15 +247,20 @@ subprojects {
                     license {
                         name 'Apache License, Version 2.0'
                         url 'http://www.apache.org/licenses/LICENSE-2.0'
-                        comments 'Copyright (c) 2016 Amherst College'
                     }
                 }
             }
         }
+
+    nexusStaging {
+        packageGroup = "cool.pandora"
+        stagingProfileId = "4d5f13c386f543"
     }
 
-    if (project.name != 'acrepo-itests') {
-        afterReleaseBuild.dependsOn uploadArchives
+    nexus {
+        sign = true
+        repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+        snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
     }
 }
 
@@ -287,7 +270,7 @@ configurations {
 
 
 dependencies {
-    buildToolsConfig "edu.amherst.acdc:acrepo-build-tools:0.1.0"
+    buildToolsConfig "cool.pandora:pandora-build-tools:0.1.2"
 }
 
 task processBuildTools(type: Copy) {
@@ -302,34 +285,25 @@ task processBuildTools(type: Copy) {
     into 'build'
 }
 
-sonarqube {
-    properties {
-        property "sonar.projectName", "Amherst College Repository Extension Services"
-        property "sonar.projectKey", "cool.pandora:repository-services"
-    }
+def homeDir = System.getProperty('user.home')
+def mavenLocal = new File(homeDir, ".m2/repository/cool/pandora")
+
+docker {
+    name 'pandorasystems/image-services'
+    tags 'latest'
+    dockerfile file('image-services/latest/Dockerfile')
+    copySpec.from("${buildDir}/maven").into("repository/cool/pandora")
+    files "${projectDir}/cfg", "entrypoint.sh"
+    buildArgs([BUILD_VERSION: 'version'])
+    labels(['key': 'value'])
+    pull true
+    noCache true
 }
 
-nexusStaging {
-    packageGroup = "cool.pandora"
-    stagingProfileId = "4d5f13c386f543"
-}
-extraArchive {
-    sources = false
-    tests = false
-}
-
-nexus {
-    sign = true
-    repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
-    snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
-}
-
-task docs(type: Javadoc) {
-    source subprojects.collect {project -> project.sourceSets.main.allJava }
-    classpath = files(subprojects.collect {project -> project.sourceSets.main.compileClasspath})
-    destinationDir = new File(projectDir, "docs/${version}")
+task copyTask(type: Copy) {
+    from mavenLocal
+    into 'build/maven'
 }
 
 check.dependsOn processBuildTools
-afterReleaseBuild.dependsOn docs
 
