@@ -79,8 +79,6 @@ services:
     container_name: image-services
     ports:
       - "9105:9105"
-    environment:
-      - FCREPO_BASEURI=http://localhost:8080/fcrepo/rest
     depends_on:
       apix:
         condition: service_healthy

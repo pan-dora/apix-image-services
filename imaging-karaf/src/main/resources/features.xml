@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<features xmlns="http://karaf.apache.org/xmlns/features/v1.3.0" name="imaging-karaf-${project.version}">
-  <feature name="exts-encoder" version="${project.version}">
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.3.0" name="imaging-karaf-${version}">
+  <feature name="exts-encoder" version="${version}">
     <details>Installs the encoding service</details>
 
     <feature version="${camelVersionRange}">camel</feature>
@@ -10,11 +10,11 @@
     <feature version="${fcrepoCamelVersionRange}">fcrepo-service-activemq</feature>
     <feature version="${activemqVersionRange}">activemq-camel</feature>
 
-    <bundle>mvn:cool.pandora/exts-encoder/${project.version}</bundle>
+    <bundle>mvn:cool.pandora.exts/exts-encoder/${project.version}</bundle>
 
-    <configfile finalname="/etc/cool.pandora.exts.encoder.cfg">mvn:cool.pandora/exts-encoder/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/cool.pandora.exts.encoder.cfg">mvn:cool.pandora.exts/exts-encoder/${project.version}/cfg/configuration</configfile>
   </feature>
-  <feature name="exts-image" version="${project.version}">
+  <feature name="exts-image" version="${version}">
     <details>Installs the Image service</details>
 
     <feature version="${camelVersionRange}">camel</feature>
@@ -23,8 +23,8 @@
     <feature version="${camelVersionRange}">camel-http4</feature>
     <feature version="${camelVersionRange}">camel-exec</feature>
 
-    <bundle>mvn:cool.pandora/exts-image/${project.version}</bundle>
+    <bundle>mvn:cool.pandora.exts/exts-image/${project.version}</bundle>
 
-    <configfile finalname="/etc/cool.pandora.exts.image.cfg">mvn:cool.pandora/exts-image/${project.version}/cfg/configuration</configfile>
+    <configfile finalname="/etc/cool.pandora.exts.image.cfg">mvn:cool.pandora.exts/exts-image/${project.version}/cfg/configuration</configfile>
   </feature>
 </features>

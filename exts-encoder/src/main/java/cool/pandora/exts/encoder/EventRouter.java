@@ -35,6 +35,8 @@ import static org.fcrepo.camel.processor.ProcessorUtils.tokenizePropertyPlacehol
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.util.List;
+
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.Predicate;
 import org.apache.camel.PropertyInject;
 import org.apache.camel.builder.RouteBuilder;
@@ -48,6 +50,7 @@ import org.slf4j.Logger;
  * A content router for handling Fedora events.
  *
  * @author Aaron Coburn
+ * @author Christopher Johnson
  */
 public class EventRouter extends RouteBuilder {
 
@@ -112,13 +115,15 @@ public class EventRouter extends RouteBuilder {
                 .setHeader(HTTP_METHOD).constant("HEAD")
                 .setHeader(HTTP_URI).header(FCREPO_URI)
                 .to("http4://localhost")
-                // keep only LDP-NRs with a content-type of image/tiff (
+                // keep only LDP-NRs with a content-type of image/tiff or image/jp2
                 .log(INFO, LOGGER, "Encoder Processing ${headers[CamelHttpUri]}")
                 .filter(or(header(CONTENT_TYPE).isEqualTo("image/tiff"), header(CONTENT_TYPE)
                         .isEqualTo("image/jp2")))
                 .removeHeaders("CamelHttp*")
                 // fetch the derivative image from the image service
                 .setHeader(HTTP_METHOD).constant("GET")
+                .log(LoggingLevel.INFO, LOGGER, "Processing service update for "
+                        + "${headers}")
                 .setHeader(HTTP_URI).simple("{{image.processor.uri}}")
                 .process(ex -> {
                     final String uri = ex.getIn().getHeader(FCREPO_URI, String.class);

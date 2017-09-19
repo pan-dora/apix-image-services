@@ -19,12 +19,12 @@
        <cm:property name="convert.path" value="convert"/>
        <cm:property name="valid.formats" value="jpeg,jp2,tiff"/>
        <cm:property name="extension.load" value="true" />
-       <cm:property name="extension.load.uri" value="http://apix/services//apix:load" />
+       <cm:property name="extension.load.uri" value="http://apix:8081/load" />
        <cm:property name="extension.load.maximumRedeliveries" value="60" />
      </cm:default-properties>
    </cm:property-placeholder>
 
-  <camelContext id="AcrepoImageService" xmlns="http://camel.apache.org/schema/blueprint">
+  <camelContext id="ImageService" xmlns="http://camel.apache.org/schema/blueprint">
     <package>cool.pandora.exts.image</package>
     
     <!-- Self-register the loader service as an extension -->

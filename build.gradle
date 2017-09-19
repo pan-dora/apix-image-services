@@ -15,12 +15,48 @@ plugins {
     id 'net.researchgate.release' version '2.6.0'
     id 'io.codearte.nexus-staging' version '0.9.0'
     id 'com.palantir.docker' version '0.13.0'
+    id 'org.dm.bundle' version '0.10.0'
 }
 
-allprojects  {
-    apply plugin: 'maven'
+ext {
+    name = 'Api-X Image Services'
+    description = 'An Image encoding pipeline'
+    url = 'https://github.com/pan-dora/apix-image-services'
+    inceptionYear = '2017'
+    vendor = 'pandorasystems'
+    homepage = 'https://pan-dora.github.io/'
+    license = 'Apache 2'
+}
 
-    group = 'cool.pandora'
+configurations {
+    buildToolsConfig
+}
+
+dependencies {
+    buildToolsConfig "cool.pandora:pandora-build-tools:0.1.3"
+}
+
+task processBuildTools(type: Copy) {
+    from {
+        configurations.buildToolsConfig.collect {
+            zipTree(it).matching {
+                include 'checkstyle/*.xml'
+                include 'license/*.txt'
+            }
+        }
+    }
+    into 'build'
+}
+
+apply plugin: 'com.github.hierynomus.license'
+
+configure(allprojects) { project ->
+    apply plugin: 'maven'
+    apply plugin: 'java'
+    apply plugin: 'org.dm.bundle'
+
+
+    group = 'cool.pandora.exts'
 
     repositories {
         jcenter()
@@ -28,9 +64,61 @@ allprojects  {
         mavenLocal()
     }
 
+    ext.camelVersionRange = '[2.18,3)'
+    ext.activemqVersionRange = '[5.14,6)'
+    ext.fcrepoCamelVersionRange = '[4.5,5)'
+    ext.fcrepoCamelToolboxVersionRange = '[4.7.1,5)'
+    ext.fcrepoCamelVersion = '4.5.0'
+    ext.fcrepoCamelToolboxVersion = "4.7.2"
+    ext.activemqVersion = '5.15.0'
+    ext.camelVersion = '2.19.2'
+    ext.commonsCodecVersion = '1.10'
+    ext.commonsIoVersion = '2.5'
+    ext.commonslangVersion = '3.6'
+    ext.dexxcollectionVersion = "0.6"
+    ext.httpclientVersion = '4.5.2'
+    ext.httpcoreVersion = '4.4.5'
+    ext.jacksonVersion = '2.9.0'
+    ext.jenaVersion = '3.1.1'
+    ext.junitVersion = "4.12"
+    ext.jsonldVersion = '0.11.1'
+    ext.logbackVersion = '1.2.3'
+    ext.openJpegVersion = "2.1.2"
+    ext.thriftVersion = "0.9.3"
+    ext.defaultOsgiImports = 'org.osgi.service.blueprint;version="[1,2)",*'
+    ext.projectOsgiVersion = project.version.replaceAll("-SNAPSHOT", ".SNAPSHOT")
+
+
+    compileJava {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+        options.encoding = 'UTF-8'
+    }
+
+    compileTestJava {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+        options.encoding = 'UTF-8'
+        options.compilerArgs += "-parameters"
+    }
+
+    processResources {
+        filesMatching(["**/Dockerfile", "**/*.cfg"]) {
+            expand(project.properties)
+        }
+    }
+
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
             options.compilerArgs.add("-Xlint:unchecked")
+            options.compilerArgs.add("-Xlint:deprecation")
+//                options.compilerArgs.addAll(["--add-modules", "java.se.ee"])
+        }
+    }
+
+    compileTestJava {
+        doFirst {
+//                options.compilerArgs.addAll(['--add-modules', 'java.se.ee'])
             options.compilerArgs.add("-Xlint:deprecation")
         }
     }
@@ -49,90 +137,39 @@ allprojects  {
         }
     }
 
+    check.dependsOn processBuildTools
+
+    def dockerResourceDir = "${rootProject.buildDir}/resources/main/docker"
+    def mavenInstallPath = "repository/cool/pandora/exts"
+
+    docker {
+        name 'pandorasystems/image-services'
+        tags "${version}"
+        dockerfile file("${dockerResourceDir}/Dockerfile")
+        files "${dockerResourceDir}/cfg", "${dockerResourceDir}/entrypoint.sh"
+        copySpec.from("${buildDir}/maven").into("${mavenInstallPath}")
+        pull true
+        noCache true
 }
 
-subprojects {
+    def homeDir = System.getProperty('user.home')
+    def mavenLocal = new File(homeDir, ".m2/repository/cool/pandora/exts")
+
+    task copyTask(type: Copy) {
+        from mavenLocal
+        into "${rootProject.buildDir}/maven"
+    }
+
+    copyTask.dependsOn install
+}
+
+configure(subprojects) { subproject ->
     apply plugin: 'com.bmuschko.nexus'
-    apply plugin: 'java'
     apply plugin: 'maven-publish'
     apply plugin: 'signing'
     apply plugin: 'checkstyle'
-    apply plugin: 'com.github.hierynomus.license'
+
     apply plugin: 'jacoco'
-
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-
-    ext {
-        vendor = 'Pandora Ecosystem'
-        homepage = 'http://cool.pandora'
-        docURL = 'https://github.com/pan-dora/pandora-demo/wiki'
-        license = 'Apache 2'
-
-        camelVersionRange = '[2.18,3)'
-        activemqVersionRange = '[5.14,6)'
-        fcrepoCamelVersionRange = '[4.5,5)'
-        fcrepoCamelToolboxVersionRange = '[4.7.1,5)'
-
-        /* Dependencies */
-        activemqVersion = '5.14.1'
-        camelVersion = '2.19.2'
-        commonsIoVersion = '2.5'
-        commonsLangVersion = '3.4'
-        derbyVersion = '10.12.1.1'
-        fcrepoCamelVersion = '4.5.0'
-        fcrepoCamelToolboxVersion = '4.7.1'
-        hk2Version = '2.4.0'
-        httpclientVersion = '4.5.2'
-        httpcoreVersion = '4.4.5'
-        jacksonVersion = '2.9.0'
-        jenaVersion = '3.1.1'
-        junitVersion = '4.12'
-        jsonldVersion = '0.10.4'
-        logbackVersion = '1.2.3'
-        marmottaVersion = '3.3.0'
-        postgresqlVersion = '9.4.1208'
-        saxonVersion = '9.6.0-7'
-        slf4jVersion = '1.7.25'
-        springVersion = '4.1.7.RELEASE'
-        woodstoxVersion = '4.4.1'
-        xercesVersion = '2.11.0'
-
-        /* Transitive deps */
-        cal10nVersion = '0.8.1'
-        commonsBeanutilsVersion = '1.8.3'
-        commonsCodecVersion = '1.10'
-        commonsCollectionsVersion = '3.2.1'
-        commonsCsvVersion = '1.4'
-        commonsDigesterVersion = '1.8'
-        commonsHttpclientVersion = '3.1'
-        commonsValidatorVersion = '1.4.0'
-        dexxVersion = '0.6'
-        fluentHcVersion = '4.5.2'
-        fcrepoClientVersion = '0.2.1'
-        httpclientCacheVersion = '4.3.5'
-        httpmimeVersion = '4.5.2'
-        httpcoreNioVersion = '4.4.4'
-        jaxenVersion = '1.1.6'
-        jdom2Version = '2.0.5'
-        jodaTimeVersion = '2.5'
-        jsonldSesameVersion = '0.5.1'
-        semarglVersion = '0.6.1'
-        sesameVersion = '2.7.13'
-        thriftVersion = '0.9.2'
-
-        /* Testing */
-        paxExamVersion = '4.9.1'
-        karafVersion = '4.0.5'
-        fcrepoVersion = '4.6.0'
-        fusekiVersion = '2.3.1'
-        xercesVersion = '2.11.0'
-        osgiVersion = '4.3.1'
-
-        /* OSGi */
-        defaultOsgiImports = 'org.osgi.service.blueprint;version="[1,2)",*'
-        projectOsgiVersion = project.version.replaceAll("-SNAPSHOT", ".SNAPSHOT")
-    }
 
     task processConfig(type: Copy) {
         from('src/main/cfg') {
@@ -161,12 +198,11 @@ subprojects {
     }
 
     jacoco {
-        toolVersion = "0.7.6.201602180812"
+        toolVersion = "0.7.9"
     }
 
     license {
         include "**/*.java"
-        header rootProject.file('build/license/HEADER.txt')
         strictCheck true
         mapping {
             java = 'SLASHSTAR_STYLE'
@@ -181,23 +217,27 @@ subprojects {
         }
         repositories {
             maven {
-                url "$buildDir/maven"
+                url "${rootProject.buildDir}/maven"
             }
         }
     }
 
+    bundle {
+        includeTransitiveDependencies = true
+        passProjectProperties = false
+    }
+
     modifyPom {
+        //noinspection GroovyAssignabilityCheck
         project {
-            name 'APIX Image Services'
-            description 'APIX services that support image serialization and encoding'
-            url 'https://github.com/pan-dora/apix-sparqler/'
-                inceptionYear '2017'
-                name 'APIX Image Services'
-                description 'APIX Image Services'
+            name name
+            description description
+            url url
+            inceptionYear inceptionYear
 
                 organization {
-                    name project.vendor
-                    url project.homepage
+                name vendor
+                url homepage
                 }
 
                 developers {
@@ -264,46 +304,80 @@ subprojects {
     }
 }
 
-configurations {
-    buildToolsConfig
-}
+project("exts-encoder") {
 
+    description = 'Binary Encoding service'
+    dependencies {
+        compile group: 'org.apache.camel', name: 'camel-core', version: camelVersion
+        compile group: 'org.apache.camel', name: 'camel-blueprint', version: camelVersion
+        compile group: 'org.apache.camel', name: 'camel-jetty9', version: camelVersion
+        compile group: 'org.apache.camel', name: 'camel-exec', version: camelVersion
+        compile(group: 'org.fcrepo.camel', name: 'fcrepo-camel', version: fcrepoCamelVersion) {
+            exclude(module: 'slf4j-log4j12')
+        }
+        testCompile group: 'junit', name: 'junit', version: junitVersion
+        testCompile group: 'org.apache.camel', name: 'camel-test-blueprint', version: camelVersion
+        testCompile group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
+    }
 
-dependencies {
-    buildToolsConfig "cool.pandora:pandora-build-tools:0.1.2"
-}
-
-task processBuildTools(type: Copy) {
-    from {
-        configurations.buildToolsConfig.collect {
-            zipTree(it).matching {
-                include 'checkstyle/*.xml'
-                include 'license/*.txt'
-            }
+    jar {
+        manifest {
+            attributes 'Import-Package': "org.apache.camel,${defaultOsgiImports}",
+                'Export-Package': "cool.pandora.exts.encoder;version=${projectOsgiVersion}"
         }
     }
-    into 'build'
+
+    artifacts {
+        archives (file('build/cfg/main/cool.pandora.exts.encoder.cfg')) {
+            classifier 'configuration'
+            type 'cfg'
+        }
+    }
 }
 
-def homeDir = System.getProperty('user.home')
-def mavenLocal = new File(homeDir, ".m2/repository/cool/pandora")
+project("exts-image") {
 
-docker {
-    name 'pandorasystems/image-services'
-    tags 'latest'
-    dockerfile file('image-services/latest/Dockerfile')
-    copySpec.from("${buildDir}/maven").into("repository/cool/pandora")
-    files "${projectDir}/cfg", "entrypoint.sh"
-    buildArgs([BUILD_VERSION: 'version'])
-    labels(['key': 'value'])
-    pull true
-    noCache true
+    description = 'Image manipulation service'
+    dependencies {
+        compile group: 'org.apache.camel', name: 'camel-core', version: camelVersion
+        compile group: 'org.apache.camel', name: 'camel-blueprint', version: camelVersion
+        compile group: 'org.apache.camel', name: 'camel-jetty9', version: camelVersion
+        compile group: 'org.apache.camel', name: 'camel-exec', version: camelVersion
+        compile(group: 'org.fcrepo.camel', name: 'fcrepo-camel', version: fcrepoCamelVersion) {
+            exclude(module: 'slf4j-log4j12')
+        }
+        testCompile group: 'junit', name: 'junit', version: junitVersion
+        testCompile group: 'org.apache.camel', name: 'camel-test-blueprint', version: camelVersion
+        testCompile group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
+    }
+
+    jar {
+        manifest {
+            attributes 'Import-Package': "org.apache.camel,${defaultOsgiImports}",
+                'Export-Package': "cool.pandora.exts.image;version=${projectOsgiVersion}"
+        }
+    }
+
+    artifacts {
+        archives (file('build/cfg/main/cool.pandora.exts.image.cfg')) {
+            classifier 'configuration'
+            type 'cfg'
+        }
+    }
 }
 
-task copyTask(type: Copy) {
-    from mavenLocal
-    into 'build/maven'
+project("imaging-karaf") {
+    description = 'Karaf Provisioning Features for Imaging services'
+
+    processResources {
+        outputs.upToDateWhen { false }
+        expand project.properties
+    }
+
+    artifacts {
+        archives (file('build/resources/main/features.xml')) {
+            classifier 'features'
+            type 'xml'
+        }
+    }
 }
-
-check.dependsOn processBuildTools
-

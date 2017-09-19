@@ -1,7 +1,12 @@
-APIX Image Services
+Api-X Image Services
 ===================================
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/cool.pandora/imaging-karaf/badge.svg)](https://maven-badges.herokuapp.com/maven-central/cool.pandora/acrepo-karaf/)
+
+### Image on Docker Hub
+`pandorasystems/image-services`
+-----------------
+[![](https://images.microbadger.com/badges/image/pandorasystems/image-services.svg)](https://microbadger.com/images/pandorasystems/image-services "pandorasystems/image-services")[![](https://images.microbadger.com/badges/version/pandorasystems/image-services.svg)](https://microbadger.com/images/pandorasystems/image-services "pandorasystems/image-services")
+
 
 This contains image serialization and encoding extensions for API-X.
 These are OSGi services that extend the functionality of a [Fedora4](https://wiki.duraspace.org/display/FF/Fedora+Repository+Home) repository.
@@ -13,10 +18,6 @@ Extensions
 
 Building
 --------
-Create gradle.properties
-```sh 
-    $ echo "version=0.0.1" > gradle.properties
-```
 
 Create OSGI bundles
 ```sh 
